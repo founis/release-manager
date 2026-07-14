@@ -199,6 +199,7 @@
 
   <!-- TODAY VIEW -->
   <section class="view active" id="view-today">
+    <div id="urgentBanner"></div>
     <div class="stats" id="statsBox"></div>
     <div id="todayLists"></div>
   </section>
@@ -234,8 +235,30 @@
       <input type="file" id="importFile" accept="application/json" style="display:none" onchange="importData(event)" />
     </div>
     <div class="set-card">
+      <h3>🔔 תזכורות</h3>
+      <p>כמה ימים לפני מועד השחרור להתחיל להזכיר לך.</p>
+      <div class="seg" id="leadSeg" style="margin-bottom:12px">
+        <div class="opt" data-lead="0">ביום עצמו</div>
+        <div class="opt" data-lead="1">יום לפני</div>
+        <div class="opt" data-lead="2">יומיים</div>
+        <div class="opt" data-lead="3">3 ימים</div>
+      </div>
+      <button class="ghost-btn" onclick="enableNotifications()">🔔 הפעל התראות בנייד</button>
+      <p id="notifyStatus" style="margin:8px 0 0"></p>
+    </div>
+    <div class="set-card">
       <h3>☁️ סנכרון ענן</h3>
-      <p>כרגע הנתונים נשמרים על המכשיר הזה. לחיבור ענן (נגיש מכל מקום + גיבוי אוטומטי) — דבר איתי ואחבר Supabase. פאזה 2.</p>
+      <p id="cloudStatus">לא מחובר. הנתונים נשמרים על המכשיר בלבד.</p>
+      <div id="cloudForm">
+        <input id="setCloudUrl" placeholder="Project URL (https://xxx.supabase.co)" style="width:100%;background:var(--panel2);border:1px solid var(--line);color:var(--txt);padding:12px;border-radius:11px;margin-bottom:8px" />
+        <input id="setCloudKey" placeholder="API Key (מפתח anon / publishable)" style="width:100%;background:var(--panel2);border:1px solid var(--line);color:var(--txt);padding:12px;border-radius:11px;margin-bottom:10px" />
+        <button class="ghost-btn" onclick="connectCloud()">התחבר לענן ובדוק</button>
+      </div>
+      <div id="cloudConnected" style="display:none">
+        <button class="ghost-btn" onclick="cloudSyncNow()">🔄 סנכרן עכשיו</button>
+        <button class="ghost-btn" style="margin-top:8px" onclick="makePhoneLink()">📲 צור קישור חיבור לטלפון</button>
+        <button class="ghost-btn" style="margin-top:8px" onclick="disconnectCloud()">נתק מהענן</button>
+      </div>
     </div>
     <div class="set-card">
       <h3>📱 התקנה למסך הבית</h3>
@@ -319,7 +342,8 @@
 <script>
 /* ============ STATE ============ */
 const DB_KEY='rm_clients_v1', CFG_KEY='rm_cfg_v1';
-let clients=[], cfg={bizName:'שחרור חשבונות', pin:null};
+let clients=[], cfg={bizName:'שחרור חשבונות', pin:null, remindLeadDays:1, notifyEnabled:false, lastNotifyDate:null, cloudUrl:'', cloudKey:''};
+let cloudBusy=false;
 let curFilter='active', pinBuffer='', pinMode='unlock', pinTemp='';
 
 /* ============ STORAGE ============ */
@@ -381,6 +405,15 @@ function renderToday(){
     <div class="stat ${overdue.length?'danger':'ok'}"><div class="v">${overdue.length}</div><div class="l">באיחור</div></div>
     <div class="stat"><div class="v">${clients.filter(c=>c.status==='done').length}</div><div class="l">הושלמו</div></div>`;
 
+  const dueToday=act.filter(c=>daysUntil(c.release)===0).length;
+  let banner='';
+  if(overdue.length){
+    banner=`<div style="background:var(--redbg);border:1px solid #5b2530;color:#fca5a5;border-radius:14px;padding:13px 15px;margin-bottom:14px;font-weight:700;display:flex;align-items:center;gap:9px"><span style="font-size:20px">⚠️</span>יש ${overdue.length} חשבונות באיחור — צריך טיפול דחוף</div>`;
+  }else if(dueToday){
+    banner=`<div style="background:var(--amberbg);border:1px solid #5c4718;color:#fcd34d;border-radius:14px;padding:13px 15px;margin-bottom:14px;font-weight:700;display:flex;align-items:center;gap:9px"><span style="font-size:20px">🔔</span>${dueToday} חשבונות משתחררים היום</div>`;
+  }
+  document.getElementById('urgentBanner').innerHTML=banner;
+
   const buckets={
     overdue:{title:'🔴 באיחור — טפל עכשיו',items:[]},
     today:{title:'🟠 משתחרר היום',items:[]},
@@ -431,7 +464,7 @@ function cardHTML(c,bucket){
   const waNum=phone?('972'+phone.replace(/^0/,'')):'';
   const waMsg=encodeURIComponent(`שלום ${c.name}, לגבי שחרור ה${c.service} שלך.`);
   const waBtn=waNum?`<a class="act wa" href="https://wa.me/${waNum}?text=${waMsg}" target="_blank" onclick="event.stopPropagation()">💬 וואטסאפ</a>`:'';
-  const calBtn=c.release?`<button class="act" onclick="event.stopPropagation();addToCalendar('${c.id}')">📅 ליומן</button>`:'';
+  const calBtn=c.release?`<button class="act" onclick="event.stopPropagation();icsReminder('${c.id}')">🔔 תזכורת</button>`:'';
 
   return `<div class="card ${cls}" onclick="openForm('${c.id}')">
     <div class="edge"></div>
@@ -537,47 +570,167 @@ function saveClient(){
     paidAmount:+document.getElementById('f_paidAmount').value||0,
     notes:document.getElementById('f_notes').value.trim(),
   };
+  let saved;
   if(id){
-    const c=clients.find(x=>x.id===id); Object.assign(c,data);
+    saved=clients.find(x=>x.id===id); Object.assign(saved,data);
   }else{
     data.id='c'+Date.now().toString(36)+Math.floor(Math.random()*1000);
     data.status='active';
     data.created=todayStr();
-    clients.push(data);
+    clients.push(data); saved=data;
   }
+  saved.updated_at=new Date().toISOString();
   saveDB(); closeForm(); refresh(); toast('נשמר ✓');
+  cloudPush(saved);
 }
 function deleteClient(){
   const id=document.getElementById('f_id').value;
   if(!confirm('למחוק את הלקוח לצמיתות?'))return;
   clients=clients.filter(c=>c.id!==id);
   saveDB(); closeForm(); refresh(); toast('נמחק');
+  cloudDelete(id);
 }
 function markPaid(id){
   const c=clients.find(x=>x.id===id); if(!c)return;
-  c.pay='paid'; c.paidAmount=c.amount;
+  c.pay='paid'; c.paidAmount=c.amount; c.updated_at=new Date().toISOString();
   saveDB(); refresh(); toast('סומן כשולם ✓');
+  cloudPush(c);
 }
 function markReleased(id){
   const c=clients.find(x=>x.id===id); if(!c)return;
   if(!isFullyPaid(c)){
     if(!confirm('החשבון עדיין לא שולם במלואו. לסמן כשוחרר בכל זאת?'))return;
   }
-  c.status='done'; c.releasedOn=todayStr();
+  c.status='done'; c.releasedOn=todayStr(); c.updated_at=new Date().toISOString();
   saveDB(); refresh(); toast('סומן כשוחרר 🔓');
+  cloudPush(c);
 }
 
-/* ============ CALENDAR ============ */
-function addToCalendar(id){
+/* ============ CALENDAR REMINDER (.ics with alarms) ============ */
+function icsReminder(id){
   const c=clients.find(x=>x.id===id); if(!c||!c.release)return;
   const d=c.release.replace(/-/g,'');
   const dEnd=new Date(c.release+'T00:00:00'); dEnd.setDate(dEnd.getDate()+1);
   const dEndStr=dEnd.toISOString().slice(0,10).replace(/-/g,'');
-  const title=encodeURIComponent(`שחרור ${c.service} — ${c.name}`);
   const owedTxt=owed(c)>0?`לגבות ₪${owed(c)}`:'שולם';
-  const details=encodeURIComponent(`לקוח: ${c.name}\nטלפון: ${c.phone||'-'}\nתשלום: ${owedTxt}\n${c.notes||''}`);
-  const url=`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${d}/${dEndStr}&details=${details}`;
-  window.open(url,'_blank');
+  const title=`🔓 שחרור ${c.service} — ${c.name}`;
+  const desc=`לקוח: ${c.name}\\nטלפון: ${c.phone||'-'}\\nתשלום: ${owedTxt}`.replace(/\n/g,'\\n');
+  const lead=+cfg.remindLeadDays||0;
+  // alarm on release morning (09:00) — all-day DTSTART is midnight, so +9h
+  let alarms='BEGIN:VALARM\nACTION:DISPLAY\nDESCRIPTION:'+title+'\nTRIGGER:PT9H\nEND:VALARM\n';
+  if(lead>0){ // lead days before at 09:00
+    const hrs=lead*24-9;
+    alarms+='BEGIN:VALARM\nACTION:DISPLAY\nDESCRIPTION:'+title+'\nTRIGGER:-PT'+hrs+'H\nEND:VALARM\n';
+  }
+  const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//release-manager//HE','CALSCALE:GREGORIAN','METHOD:PUBLISH',
+    'BEGIN:VEVENT','UID:rm-'+c.id+'@release-manager','DTSTAMP:'+d+'T000000Z',
+    'DTSTART;VALUE=DATE:'+d,'DTEND;VALUE=DATE:'+dEndStr,'SUMMARY:'+title,'DESCRIPTION:'+desc,
+    alarms.trim(),'END:VEVENT','END:VCALENDAR'].join('\n');
+  const blob=new Blob([ics],{type:'text/calendar;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url; a.download='reminder-'+(c.name||'client')+'.ics';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),5000);
+  toast('פותח תזכורת ליומן…');
+}
+
+/* ============ CLOUD SYNC (Supabase REST) ============ */
+function cloudOn(){return !!(cfg.cloudUrl && cfg.cloudKey)}
+function cloudHeaders(){return {apikey:cfg.cloudKey,Authorization:'Bearer '+cfg.cloudKey,'Content-Type':'application/json'}}
+function toRow(c){return {id:c.id,name:c.name||'',phone:c.phone||'',service:c.service||'',release_date:c.release||'',
+  amount:+c.amount||0,pay:c.pay||'later',paid_amount:+c.paidAmount||0,notes:c.notes||'',
+  status:c.status||'active',created:c.created||todayStr(),released_on:c.releasedOn||null,
+  updated_at:c.updated_at||new Date().toISOString()}}
+function fromRow(r){return {id:r.id,name:r.name,phone:r.phone,service:r.service,release:r.release_date,
+  amount:+r.amount||0,pay:r.pay,paidAmount:+r.paid_amount||0,notes:r.notes,status:r.status,
+  created:r.created,releasedOn:r.released_on,updated_at:r.updated_at}}
+async function cloudPush(c){
+  if(!cloudOn())return;
+  try{
+    await fetch(cfg.cloudUrl+'/rest/v1/clients',{method:'POST',
+      headers:Object.assign(cloudHeaders(),{Prefer:'resolution=merge-duplicates,return=minimal'}),
+      body:JSON.stringify(toRow(c))});
+  }catch(e){/* offline — will sync on next pull */}
+}
+async function cloudDelete(id){
+  if(!cloudOn())return;
+  try{await fetch(cfg.cloudUrl+'/rest/v1/clients?id=eq.'+encodeURIComponent(id),{method:'DELETE',headers:cloudHeaders()});}catch(e){}
+}
+async function cloudPull(silent){
+  if(!cloudOn())return false;
+  try{
+    const res=await fetch(cfg.cloudUrl+'/rest/v1/clients?select=*',{headers:cloudHeaders()});
+    if(!res.ok)throw new Error('http '+res.status);
+    const rows=await res.json();
+    const remote=rows.map(fromRow);
+    // merge by updated_at; push local-only or locally-newer items
+    const byId={}; clients.forEach(c=>byId[c.id]={local:c});
+    remote.forEach(r=>{byId[r.id]=Object.assign(byId[r.id]||{},{remote:r})});
+    const merged=[]; const toUpload=[];
+    for(const id in byId){
+      const {local,remote:rem}=byId[id];
+      if(local&&rem){
+        const lu=local.updated_at||'', ru=rem.updated_at||'';
+        if(lu>ru){merged.push(local);toUpload.push(local)} else merged.push(rem);
+      }else if(rem){merged.push(rem)}
+      else if(local){merged.push(local);toUpload.push(local)}
+    }
+    clients=merged; saveDB();
+    for(const c of toUpload){await cloudPush(c)}
+    if(!silent)refresh();
+    return true;
+  }catch(e){ if(!silent)toast('שגיאת סנכרון — בדוק חיבור/מפתח'); return false; }
+}
+async function connectCloud(){
+  const url=(document.getElementById('setCloudUrl').value||'').trim().replace(/\/$/,'');
+  const key=(document.getElementById('setCloudKey').value||'').trim();
+  if(!url||!key){toast('צריך URL ומפתח');return}
+  cfg.cloudUrl=url; cfg.cloudKey=key;
+  toast('בודק חיבור…');
+  const ok=await cloudPull(true);
+  if(ok){ saveCfg(); applyCfg(); refresh(); toast('מחובר לענן ✓'); }
+  else { cfg.cloudUrl=''; cfg.cloudKey=''; toast('החיבור נכשל — בדוק URL ומפתח'); }
+}
+async function cloudSyncNow(){ if(cloudBusy)return; cloudBusy=true; toast('מסנכרן…'); const ok=await cloudPull(false); cloudBusy=false; if(ok)toast('סונכרן ✓'); }
+function disconnectCloud(){
+  if(!confirm('לנתק מהענן? הנתונים יישארו על המכשיר.'))return;
+  cfg.cloudUrl=''; cfg.cloudKey=''; saveCfg(); applyCfg(); toast('נותק מהענן');
+}
+function makePhoneLink(){
+  const code=btoa(unescape(encodeURIComponent(cfg.cloudUrl+'|'+cfg.cloudKey)));
+  const link=location.origin+location.pathname+'#connect='+code;
+  navigator.clipboard&&navigator.clipboard.writeText(link).catch(()=>{});
+  prompt('קישור חיבור לטלפון (הועתק). שלח לעצמך בוואטסאפ ופתח פעם אחת בטלפון:', link);
+}
+
+/* ============ REMINDERS: badge + notifications ============ */
+function dueCount(){
+  const lead=+cfg.remindLeadDays||0;
+  return activeClients().filter(c=>{const n=daysUntil(c.release);return n!==null&&n<=lead;}).length;
+}
+function updateBadge(){
+  try{ const n=dueCount();
+    if(navigator.setAppBadge){ n>0?navigator.setAppBadge(n):navigator.clearAppBadge&&navigator.clearAppBadge(); }
+  }catch(e){}
+}
+function maybeNotify(){
+  if(!cfg.notifyEnabled)return;
+  if(!('Notification' in window)||Notification.permission!=='granted')return;
+  if(cfg.lastNotifyDate===todayStr())return;
+  const lead=+cfg.remindLeadDays||0;
+  const due=activeClients().filter(c=>{const n=daysUntil(c.release);return n!==null&&n<=lead;});
+  if(!due.length)return;
+  const od=due.filter(c=>daysUntil(c.release)<0).length;
+  const body=od?`${od} באיחור · ${due.length} דורשים טיפול`:`${due.length} חשבונות לשחרור`;
+  try{ new Notification('תזכורת שחרור חשבונות',{body,icon:'icon.png'}); cfg.lastNotifyDate=todayStr(); saveCfg(); }catch(e){}
+}
+async function enableNotifications(){
+  if(!('Notification' in window)){toast('הדפדפן לא תומך בהתראות');return}
+  let p=Notification.permission;
+  if(p!=='granted'){ try{p=await Notification.requestPermission()}catch(e){} }
+  if(p==='granted'){ cfg.notifyEnabled=true; saveCfg(); applyCfg(); toast('התראות הופעלו ✓'); cfg.lastNotifyDate=null; maybeNotify(); }
+  else { toast('ההרשאה נדחתה — אפשר לאשר בהגדרות הדפדפן'); }
 }
 
 /* ============ BACKUP ============ */
@@ -613,6 +766,20 @@ function applyCfg(){
   document.getElementById('bizName').textContent=cfg.bizName;
   document.getElementById('setBizName').value=cfg.bizName;
   document.getElementById('pinStatus').textContent=cfg.pin?'נעילה פעילה ✓':'אין נעילה. מומלץ להגדיר קוד.';
+  // reminders
+  document.querySelectorAll('#leadSeg .opt').forEach(o=>o.classList.toggle('sel',+o.dataset.lead===(+cfg.remindLeadDays||0)));
+  const ns=document.getElementById('notifyStatus');
+  if(ns){
+    if(!('Notification' in window))ns.textContent='הדפדפן לא תומך בהתראות';
+    else if(cfg.notifyEnabled&&Notification.permission==='granted')ns.textContent='התראות פעילות ✓';
+    else ns.textContent='התראות כבויות';
+  }
+  // cloud
+  const connected=cloudOn();
+  document.getElementById('cloudStatus').textContent=connected?('מחובר לענן ✓ — הנתונים מסתנכרנים בין המכשירים.'):'לא מחובר. הנתונים נשמרים על המכשיר בלבד.';
+  document.getElementById('cloudForm').style.display=connected?'none':'block';
+  document.getElementById('cloudConnected').style.display=connected?'block':'none';
+  if(!connected){document.getElementById('setCloudUrl').value=cfg.cloudUrl||'';}
 }
 
 /* ============ PIN LOCK ============ */
@@ -678,7 +845,7 @@ function switchView(v){
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active',n.dataset.v===v));
   window.scrollTo(0,0);
 }
-function refresh(){renderToday();renderAll()}
+function refresh(){renderToday();renderAll();updateBadge();maybeNotify()}
 function esc(s){return (s||'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
 let toastT;
 function toast(msg){
@@ -687,9 +854,31 @@ function toast(msg){
 }
 
 /* ============ INIT ============ */
+function handleConnectHash(){
+  const m=(location.hash||'').match(/connect=([^&]+)/);
+  if(!m)return false;
+  try{
+    const decoded=decodeURIComponent(escape(atob(decodeURIComponent(m[1]))));
+    const [url,key]=decoded.split('|');
+    if(url&&key){ cfg.cloudUrl=url.replace(/\/$/,''); cfg.cloudKey=key; saveCfg();
+      history.replaceState(null,'',location.pathname); return true; }
+  }catch(e){}
+  return false;
+}
 function init(){
-  load();buildKeys();applyCfg();refresh();
+  load();
+  const gotConnect=handleConnectHash();
+  buildKeys();applyCfg();refresh();
   if(cfg.pin){lockNow()}
+  // reminder lead-days selector
+  document.getElementById('leadSeg').addEventListener('click',e=>{
+    const o=e.target.closest('.opt'); if(!o)return;
+    cfg.remindLeadDays=+o.dataset.lead; saveCfg(); applyCfg(); refresh(); toast('נשמר ✓');
+  });
+  // cloud: pull on load and when app returns to foreground
+  if(cloudOn()){ cloudPull(false).then(()=>{applyCfg()}); }
+  if(gotConnect){ applyCfg(); toast('מחובר לענן ✓'); }
+  document.addEventListener('visibilitychange',()=>{ if(!document.hidden){ if(cloudOn())cloudPull(false); else refresh(); }});
   if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{})}
 }
 init();
