@@ -206,6 +206,7 @@
 
   <!-- ALL CLIENTS VIEW -->
   <section class="view" id="view-all">
+    <button class="ghost-btn" style="margin-bottom:12px;background:#0e2e26;border-color:#155e4d;color:#5eead4;font-weight:700" onclick="openBulk()">📋 הוספה מהירה מטקסט</button>
     <div class="searchbar">
       <input id="search" placeholder="חיפוש לפי שם או טלפון…" oninput="renderAll()" />
     </div>
@@ -373,6 +374,21 @@
     </div>
     <button class="save-btn" onclick="saveClient()">שמור</button>
     <button class="del-btn" id="delBtn" style="display:none" onclick="deleteClient()">מחק לקוח</button>
+  </div>
+</div>
+
+<!-- BULK ADD MODAL -->
+<div class="modal" id="bulkModal">
+  <div class="backdrop" onclick="closeBulk()"></div>
+  <div class="sheet">
+    <div class="grip"></div>
+    <h2>📋 הוספה מהירה מטקסט</h2>
+    <p class="hint" style="margin:0 0 12px">כתוב לקוח בכל שורה, בשפה חופשית. לדוגמה:<br><span style="color:var(--muted)">יוסי כהן, 050-1234567, וואטסאפ, 25/7, 500 ₪ ישולם בשחרור</span></p>
+    <div class="field">
+      <textarea id="bulkText" style="min-height:120px" placeholder="שם, טלפון, שירות, תאריך שחרור, סכום, תשלום&#10;לקוח נוסף בשורה חדשה…"></textarea>
+    </div>
+    <button class="save-btn" onclick="parseBulk()">נתח והצג תצוגה מקדימה</button>
+    <div id="bulkPreview" style="margin-top:14px"></div>
   </div>
 </div>
 
@@ -702,6 +718,85 @@ function markReleased(id){
   saveDB(); refresh();
   cloudPush(c);
   toast(owed(c)>0?`שוחרר 🔓 · זכור לגבות ₪${owed(c).toLocaleString('he-IL')}`:'סומן כשוחרר 🔓');
+}
+
+/* ============ BULK ADD FROM TEXT ============ */
+function openBulk(){ document.getElementById('bulkText').value=''; document.getElementById('bulkPreview').innerHTML=''; document.getElementById('bulkModal').classList.add('open'); }
+function closeBulk(){ document.getElementById('bulkModal').classList.remove('open'); }
+function isoDay(d){ return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10); }
+function parseDate(s){
+  const t=new Date(todayStr()+'T00:00:00'); let m;
+  if(/מחרתיים/.test(s)){const d=new Date(t);d.setDate(d.getDate()+2);return{iso:isoDay(d),raw:'מחרתיים'};}
+  if(/(?:בעוד\s+)?יומיים/.test(s)){const d=new Date(t);d.setDate(d.getDate()+2);return{iso:isoDay(d),raw:(s.match(/(?:בעוד\s+)?יומיים/)||[])[0]};}
+  if(/מחר/.test(s)){const d=new Date(t);d.setDate(d.getDate()+1);return{iso:isoDay(d),raw:'מחר'};}
+  if(/היום/.test(s))return{iso:isoDay(t),raw:'היום'};
+  m=s.match(/(?:בעוד|עוד)\s+(\d+)\s*ימים?/); if(m){const d=new Date(t);d.setDate(d.getDate()+ +m[1]);return{iso:isoDay(d),raw:m[0]};}
+  if(/(?:בעוד|עוד)\s+שבועיים/.test(s)){const d=new Date(t);d.setDate(d.getDate()+14);return{iso:isoDay(d),raw:(s.match(/(?:בעוד|עוד)\s+שבועיים/)||[])[0]};}
+  m=s.match(/(?:בעוד|עוד)\s+(\d+)\s*שבועות/); if(m){const d=new Date(t);d.setDate(d.getDate()+7*+m[1]);return{iso:isoDay(d),raw:m[0]};}
+  if(/(?:בעוד|עוד)\s+שבוע/.test(s)){const d=new Date(t);d.setDate(d.getDate()+7);return{iso:isoDay(d),raw:(s.match(/(?:בעוד|עוד)\s+שבוע/)||[])[0]};}
+  m=s.match(/(\d{1,2})[\/\.\-](\d{1,2})(?:[\/\.\-](\d{2,4}))?/);
+  if(m){ let dd=+m[1],mm=+m[2],yy=m[3]?+m[3]:t.getFullYear(); if(yy<100)yy+=2000;
+    let d=new Date(yy,mm-1,dd); if(!m[3]&&isoDay(d)<todayStr())d=new Date(yy+1,mm-1,dd); return{iso:isoDay(d),raw:m[0]}; }
+  const months=['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];
+  m=s.match(/(\d{1,2})\s*ב?(ינואר|פברואר|מרץ|אפריל|מאי|יוני|יולי|אוגוסט|ספטמבר|אוקטובר|נובמבר|דצמבר)/);
+  if(m){ let dd=+m[1],mm=months.indexOf(m[2]),yy=t.getFullYear(); let d=new Date(yy,mm,dd); if(isoDay(d)<todayStr())d=new Date(yy+1,mm,dd); return{iso:isoDay(d),raw:m[0]}; }
+  return null;
+}
+function parseClientLine(line){
+  let s=' '+line.trim().replace(/\s+/g,' ')+' ';
+  const c={service:'אחר',pay:'later',amount:0,paidAmount:0};
+  let m=s.match(/0\d[\d\-\s]{6,12}\d/); if(m){c.phone=m[0].replace(/[\s\-]/g,'');s=s.replace(m[0],' ');}
+  const svc=[[/וואטסא?פ|וטסאפ|whatsapp/i,'וואטסאפ'],[/גוגל|google|gmail|ג׳ימייל|ג'ימייל/i,'Google / Gmail'],[/פייסבוק|פייס\b|facebook/i,'פייסבוק'],[/אינסטגרם|אינסטה|instagram/i,'אינסטגרם']];
+  for(const [re,v] of svc){ if(re.test(s)){c.service=v;s=s.replace(re,' ');break;} }
+  let pm=s.match(/חלקי\s*(\d[\d,]*)?/);
+  if(pm){c.pay='partial'; if(pm[1])c.paidAmount=+pm[1].replace(/,/g,''); s=s.replace(pm[0],' ');}
+  else if(/ישולם|ישלם|בשחרור|בסוף|בסיום|לתשלום/.test(s)){c.pay='later'; s=s.replace(/ישולם|ישלם|בשחרור|בסוף|בסיום|לתשלום/g,' ');}
+  else if(/שול(ם|מה)|שילמ|שילם|paid/i.test(s)){c.pay='paid'; s=s.replace(/שול(ם|מה)|שילמ(ה|)|שילם|paid/gi,' ');}
+  let am=s.match(/(\d[\d,]*)\s*(?:₪|ש"?ח|שקל|שח)/)||s.match(/(?:₪|ש"?ח|שקל|שח)\s*(\d[\d,]*)/);
+  if(am){c.amount=+am[1].replace(/,/g,'');s=s.replace(am[0],' ');}
+  const di=parseDate(s); if(di){c.release=di.iso; s=s.replace(di.raw,' ');}
+  if(!c.amount){let n=s.match(/\b(\d{2,6})\b/); if(n){c.amount=+n[1];s=s.replace(n[0],' ');}}
+  const fillers=new Set(['משתחרר','שחרור','תאריך','טלפון','לקוח','סכום','שירות','מתוך','בעוד','עוד','של','ב','ל','שקל','שח','₪']);
+  const name=s.replace(/[,\|\/\\]+/g,' ').split(/\s+/).filter(w=>w&&!fillers.has(w)).join(' ').trim();
+  c.name=name;
+  return c;
+}
+let bulkParsed=[];
+function parseBulk(){
+  const raw=(document.getElementById('bulkText').value||'').trim();
+  if(!raw){toast('כתוב לפחות לקוח אחד');return}
+  const lines=raw.split(/\n+/).map(l=>l.trim()).filter(Boolean);
+  bulkParsed=lines.map(parseClientLine);
+  const pv=document.getElementById('bulkPreview');
+  const svcIcon={'וואטסאפ':'💬','Google / Gmail':'📧','פייסבוק':'👤','אינסטגרם':'📷','אחר':'🔓'};
+  const payTxt={paid:'שולם',partial:'חלקי',later:'ישולם בשחרור'};
+  let okCount=0;
+  const rows=bulkParsed.map((c,i)=>{
+    const bad=!c.name||!c.release;
+    if(!bad)okCount++;
+    return `<div style="background:var(--panel2);border:1px solid ${bad?'#5b2530':'var(--line)'};border-radius:11px;padding:11px;margin-bottom:8px">
+      <div style="font-weight:800">${svcIcon[c.service]||'🔓'} ${esc(c.name)||'<span style=\'color:#fca5a5\'>חסר שם</span>'}</div>
+      <div style="font-size:12.5px;color:var(--muted);margin-top:4px">
+        📅 ${c.release?fmtDate(c.release)+' · '+relText(c.release):'<span style=\'color:#fca5a5\'>חסר תאריך</span>'}
+        ${c.phone?' · 📞 '+esc(c.phone):''}
+        ${c.amount?' · 💰 ₪'+c.amount:''} · ${payTxt[c.pay]}${c.pay==='partial'&&c.paidAmount?' (שולם ₪'+c.paidAmount+')':''}
+      </div>
+      ${bad?'<div style="font-size:12px;color:#fca5a5;margin-top:5px">⚠️ חסר שם או תאריך — שורה זו לא תתווסף. תקן ונתח שוב.</div>':''}
+    </div>`;
+  }).join('');
+  pv.innerHTML=rows+(okCount?`<button class="save-btn" style="margin-top:6px" onclick="commitBulk()">✓ הוסף ${okCount} לקוחות</button>`:`<p class="hint">אף שורה לא תקינה. ודא שיש שם ותאריך בכל שורה.</p>`);
+}
+function commitBulk(){
+  const good=bulkParsed.filter(c=>c.name&&c.release);
+  let n=0;
+  good.forEach(c=>{
+    const cl={id:'c'+Date.now().toString(36)+Math.floor(Math.random()*10000),name:c.name,phone:c.phone||'',
+      service:c.service,release:c.release,amount:+c.amount||0,pay:c.pay,paidAmount:+c.paidAmount||0,notes:'',
+      status:'active',created:todayStr(),updated_at:new Date().toISOString()};
+    if(isFullyPaid(cl))cl.paidOn=todayStr();
+    clients.push(cl); cloudPush(cl); n++;
+  });
+  saveDB(); refresh(); closeBulk(); toast(n+' לקוחות נוספו ✓');
 }
 
 /* ============ EXPORT / PRICES / SYNC-STATUS ============ */
