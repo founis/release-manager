@@ -226,6 +226,10 @@
   <!-- MONEY VIEW -->
   <section class="view" id="view-money">
     <div class="stats" id="moneyStats"></div>
+    <div id="insightBox"></div>
+    <div class="set-card"><h3>📈 הכנסות — 6 חודשים אחרונים</h3><div id="incomeChart"></div></div>
+    <div class="set-card"><h3>🧩 הכנסות לפי שירות</h3><div id="serviceChart"></div></div>
+    <div class="set-card"><h3>🔮 צפי גבייה קרוב</h3><div id="pipelineChart"></div></div>
     <div class="section-title" style="margin-top:8px">💸 ממתינים לגבייה<span class="cnt" id="collectCount">0</span></div>
     <div id="collectList"></div>
   </section>
@@ -595,17 +599,81 @@ function collectedInMonth(offset){
   return clients.filter(c=>isFullyPaid(c)&&(c.paidOn||'').slice(0,7)===ym)
     .reduce((s,c)=>s+(+c.amount||0),0);
 }
+const HE_MONTHS=['ינו׳','פבר׳','מרץ','אפר׳','מאי','יונ׳','יול׳','אוג׳','ספט׳','אוק׳','נוב׳','דצמ׳'];
+function fmtK(v){return v>=1000?'₪'+(v/1000).toFixed(v%1000?1:0)+'k':'₪'+v;}
+function vBars(series){
+  const max=Math.max(1,...series.map(s=>s.value));
+  return `<div style="display:flex;align-items:flex-end;gap:7px;height:130px;padding-top:6px">`+
+    series.map(s=>{const pct=Math.round(s.value/max*100);
+      return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%">
+        <div style="font-size:9.5px;color:var(--muted);margin-bottom:3px;white-space:nowrap">${s.value?fmtK(s.value):''}</div>
+        <div style="width:100%;height:${Math.max(pct,2)}%;background:linear-gradient(180deg,var(--accent),var(--accent2));border-radius:7px 7px 0 0;min-height:3px;transition:height .4s"></div>
+        <div style="font-size:10.5px;color:${s.hot?'var(--red)':'var(--muted)'};margin-top:5px">${s.label}</div>
+      </div>`;}).join('')+`</div>`;
+}
+function hBars(rows){
+  if(!rows.length)return `<p class="hint">אין נתונים עדיין.</p>`;
+  const max=Math.max(1,...rows.map(r=>r.value));
+  return rows.map(r=>{const pct=Math.round(r.value/max*100);
+    return `<div style="margin-bottom:11px">
+      <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:5px"><span>${r.icon||''} ${esc(r.label)}</span><span style="font-weight:800">₪${r.value.toLocaleString('he-IL')}</span></div>
+      <div style="background:var(--panel2);border-radius:7px;height:9px;overflow:hidden"><div style="width:${pct}%;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:7px;transition:width .4s"></div></div>
+    </div>`;}).join('');
+}
 function renderMoney(){
   const owing=clients.filter(c=>owed(c)>0);
   const totalOwed=owing.reduce((s,c)=>s+owed(c),0);
   const thisMonth=collectedInMonth(0);
   const lastMonth=collectedInMonth(-1);
-  const allTime=clients.filter(c=>isFullyPaid(c)).reduce((s,c)=>s+(+c.amount||0),0);
+  const paidClients=clients.filter(c=>isFullyPaid(c));
+  const allTime=paidClients.reduce((s,c)=>s+(+c.amount||0),0);
+  const avgDeal=paidClients.length?Math.round(allTime/paidClients.length):0;
+  const collRate=(allTime+totalOwed)>0?Math.round(allTime/(allTime+totalOwed)*100):0;
   document.getElementById('moneyStats').innerHTML=`
     <div class="stat ok"><div class="v">₪${thisMonth.toLocaleString('he-IL')}</div><div class="l">נגבה החודש</div></div>
     <div class="stat money"><div class="v">₪${totalOwed.toLocaleString('he-IL')}</div><div class="l">ממתין לגבייה</div></div>
-    <div class="stat"><div class="v">₪${lastMonth.toLocaleString('he-IL')}</div><div class="l">חודש שעבר</div></div>
-    <div class="stat"><div class="v">₪${allTime.toLocaleString('he-IL')}</div><div class="l">סה״כ הכנסות</div></div>`;
+    <div class="stat"><div class="v">${collRate}%</div><div class="l">אחוז גבייה</div></div>
+    <div class="stat"><div class="v">₪${avgDeal.toLocaleString('he-IL')}</div><div class="l">עסקה ממוצעת</div></div>`;
+
+  // smart insights
+  const svcRev={};
+  paidClients.forEach(c=>{svcRev[c.service]=(svcRev[c.service]||0)+(+c.amount||0);});
+  const bestSvc=Object.keys(svcRev).sort((a,b)=>svcRev[b]-svcRev[a])[0];
+  let ins=[];
+  if(lastMonth>0){const g=Math.round((thisMonth-lastMonth)/lastMonth*100);
+    ins.push(g>=0?`📈 גידול של ${g}% בהכנסות מול חודש שעבר`:`📉 ירידה של ${Math.abs(g)}% מול חודש שעבר`);}
+  else if(thisMonth>0)ins.push('🚀 החודש הראשון עם הכנסות!');
+  if(bestSvc)ins.push(`🏆 השירות הרווחי ביותר: <b>${esc(bestSvc)}</b> (₪${svcRev[bestSvc].toLocaleString('he-IL')})`);
+  const overdueOwe=owing.filter(c=>c.status==='done'||daysUntil(c.release)<0).reduce((s,c)=>s+owed(c),0);
+  if(overdueOwe>0)ins.push(`⏰ ₪${overdueOwe.toLocaleString('he-IL')} ממתינים לגבייה שכבר עברו את מועד השחרור`);
+  document.getElementById('insightBox').innerHTML = ins.length?
+    `<div class="set-card" style="background:linear-gradient(135deg,#10233f,#131c2e);border-color:#1d477e"><div style="font-size:13.5px;line-height:2">${ins.map(x=>'• '+x).join('<br>')}</div></div>`:'';
+
+  // income chart — last 6 months
+  const inc=[];
+  for(let m=-5;m<=0;m++){const d=new Date(todayStr()+'T00:00:00');d.setDate(1);d.setMonth(d.getMonth()+m);
+    const ym=d.toISOString().slice(0,7);
+    inc.push({label:HE_MONTHS[d.getMonth()],value:paidClients.filter(c=>(c.paidOn||'').slice(0,7)===ym).reduce((s,c)=>s+(+c.amount||0),0)});}
+  document.getElementById('incomeChart').innerHTML=vBars(inc);
+
+  // service breakdown
+  const svcIcon={'וואטסאפ':'💬','Google / Gmail':'📧','פייסבוק':'👤','אינסטגרם':'📷','אחר':'🔓'};
+  const svcRows=Object.keys(svcRev).map(s=>({label:s,value:svcRev[s],icon:svcIcon[s]||'🔓'})).sort((a,b)=>b.value-a.value);
+  document.getElementById('serviceChart').innerHTML=hBars(svcRows);
+
+  // pipeline — expected collection by month (owed), incl overdue bucket
+  const pipe={}; let overdue=0;
+  owing.forEach(c=>{const n=daysUntil(c.release);
+    if(c.status==='done'||(n!==null&&n<0)){overdue+=owed(c);return;}
+    if(!c.release){return;}
+    const d=new Date(c.release+'T00:00:00'); const key=HE_MONTHS[d.getMonth()];
+    pipe[key]=(pipe[key]||0)+owed(c);});
+  const prows=[];
+  if(overdue>0)prows.push({label:'באיחור ⏰',value:overdue,hot:true});
+  for(let m=0;m<=3;m++){const d=new Date(todayStr()+'T00:00:00');d.setDate(1);d.setMonth(d.getMonth()+m);
+    const lbl=HE_MONTHS[d.getMonth()]; if(pipe[lbl])prows.push({label:lbl,value:pipe[lbl]});}
+  document.getElementById('pipelineChart').innerHTML = prows.length?vBars(prows):`<p class="hint">אין גבייה צפויה. הכל שולם 🎉</p>`;
+
   document.getElementById('collectCount').textContent=owing.length;
   // sort: overdue-released first, then by amount owed
   owing.sort((a,b)=>{
