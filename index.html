@@ -660,7 +660,7 @@ async function cloudDelete(id){
 async function cloudPull(silent){
   if(!cloudOn())return false;
   try{
-    const res=await fetch(cfg.cloudUrl+'/rest/v1/clients?select=*',{headers:cloudHeaders()});
+    const res=await fetch(cfg.cloudUrl+'/rest/v1/clients?select=*&limit=5000&order=updated_at.desc',{headers:cloudHeaders()});
     if(!res.ok)throw new Error('http '+res.status);
     const rows=await res.json();
     const remote=rows.map(fromRow);
