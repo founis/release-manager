@@ -1,5 +1,5 @@
 /* Service worker — offline cache for the app shell */
-const CACHE='rm-v4';
+const CACHE='rm-v5';
 const ASSETS=['index.html','manifest.json'];
 self.addEventListener('install',e=>{
   e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting()));

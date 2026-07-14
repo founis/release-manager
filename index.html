@@ -250,9 +250,16 @@
       <h3>☁️ סנכרון ענן</h3>
       <p id="cloudStatus">לא מחובר. הנתונים נשמרים על המכשיר בלבד.</p>
       <div id="cloudForm">
-        <input id="setCloudUrl" placeholder="Project URL (https://xxx.supabase.co)" style="width:100%;background:var(--panel2);border:1px solid var(--line);color:var(--txt);padding:12px;border-radius:11px;margin-bottom:8px" />
-        <input id="setCloudKey" placeholder="API Key (מפתח anon / publishable)" style="width:100%;background:var(--panel2);border:1px solid var(--line);color:var(--txt);padding:12px;border-radius:11px;margin-bottom:10px" />
-        <button class="ghost-btn" onclick="connectCloud()">התחבר לענן ובדוק</button>
+        <p style="font-size:13px;color:var(--txt);margin:0 0 8px;font-weight:700">📲 חיבור מהיר (מומלץ)</p>
+        <p style="font-size:12.5px;color:var(--muted);margin:0 0 8px;line-height:1.7">הדבק כאן את קוד/קישור החיבור שקיבלת מהמחשב:</p>
+        <input id="setCloudCode" placeholder="הדבק כאן…" style="width:100%;background:var(--panel2);border:1px solid var(--line);color:var(--txt);padding:12px;border-radius:11px;margin-bottom:8px;direction:ltr" />
+        <button class="ghost-btn" style="background:#0e2e26;border-color:#155e4d;color:#5eead4" onclick="connectWithCode()">התחבר</button>
+        <details style="margin-top:14px">
+          <summary style="font-size:12.5px;color:var(--muted);cursor:pointer">חיבור ידני (מתקדם)</summary>
+          <input id="setCloudUrl" placeholder="Project URL (https://xxx.supabase.co)" style="width:100%;background:var(--panel2);border:1px solid var(--line);color:var(--txt);padding:12px;border-radius:11px;margin:8px 0" />
+          <input id="setCloudKey" placeholder="API Key (מפתח anon / publishable)" style="width:100%;background:var(--panel2);border:1px solid var(--line);color:var(--txt);padding:12px;border-radius:11px;margin-bottom:10px" />
+          <button class="ghost-btn" onclick="connectCloud()">התחבר עם URL ומפתח</button>
+        </details>
       </div>
       <div id="cloudConnected" style="display:none">
         <button class="ghost-btn" onclick="cloudSyncNow()">🔄 סנכרן עכשיו</button>
@@ -688,6 +695,21 @@ async function cloudPull(silent){
     if(!silent)refresh();
     return true;
   }catch(e){ if(!silent)toast('שגיאת סנכרון — בדוק חיבור/מפתח'); return false; }
+}
+function connectWithCode(){
+  let t=(document.getElementById('setCloudCode').value||'').trim();
+  if(!t){toast('הדבק קוד חיבור');return}
+  const m=t.match(/connect=([^&\s]+)/);
+  let code=m?m[1]:t;
+  try{
+    const decoded=decodeURIComponent(escape(atob(decodeURIComponent(code))));
+    const [url,key]=decoded.split('|');
+    if(url&&key){
+      document.getElementById('setCloudUrl').value=url;
+      document.getElementById('setCloudKey').value=key;
+      connectCloud();
+    }else toast('קוד לא תקין');
+  }catch(e){toast('קוד לא תקין')}
 }
 async function connectCloud(){
   const url=(document.getElementById('setCloudUrl').value||'').trim().replace(/\/$/,'');
