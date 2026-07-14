@@ -210,7 +210,23 @@
       <input id="search" placeholder="חיפוש לפי שם או טלפון…" oninput="renderAll()" />
     </div>
     <div class="filters" id="filterBar"></div>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+      <span style="font-size:12.5px;color:var(--muted)">מיון:</span>
+      <select id="sortBy" onchange="setSortBy(this.value)" style="flex:1;background:var(--panel);border:1px solid var(--line);color:var(--txt);padding:8px 10px;border-radius:10px;font-size:13px">
+        <option value="release">תאריך שחרור (הקרוב קודם)</option>
+        <option value="amount">סכום (הגבוה קודם)</option>
+        <option value="name">שם (א׳-ת׳)</option>
+        <option value="created">נוסף לאחרונה</option>
+      </select>
+    </div>
     <div id="allList"></div>
+  </section>
+
+  <!-- MONEY VIEW -->
+  <section class="view" id="view-money">
+    <div class="stats" id="moneyStats"></div>
+    <div class="section-title" style="margin-top:8px">💸 ממתינים לגבייה<span class="cnt" id="collectCount">0</span></div>
+    <div id="collectList"></div>
   </section>
 
   <!-- SETTINGS VIEW -->
@@ -228,10 +244,17 @@
       <button class="ghost-btn" style="margin-top:8px" onclick="removePin()">בטל נעילה</button>
     </div>
     <div class="set-card">
-      <h3>💾 גיבוי מקומי</h3>
-      <p>ייצוא כל הנתונים לקובץ, או שחזור מקובץ. שמור גיבוי מדי פעם.</p>
-      <button class="ghost-btn" onclick="exportData()">ייצוא לקובץ (גיבוי)</button>
-      <button class="ghost-btn" style="margin-top:8px" onclick="document.getElementById('importFile').click()">שחזור מקובץ</button>
+      <h3>🏷️ מחירון שירותים</h3>
+      <p>מחיר ברירת מחדל לכל שירות — יתמלא אוטומטית כשתבחר סוג שירות בלקוח חדש.</p>
+      <div id="priceList"></div>
+      <button class="ghost-btn" style="margin-top:8px" onclick="savePrices()">שמור מחירון</button>
+    </div>
+    <div class="set-card">
+      <h3>💾 גיבוי וייצוא</h3>
+      <p>ייצוא לאקסל (CSV) להנהלת חשבונות, גיבוי מלא לקובץ, או שחזור.</p>
+      <button class="ghost-btn" onclick="exportCSV()">📊 ייצוא לאקסל (CSV)</button>
+      <button class="ghost-btn" style="margin-top:8px" onclick="exportData()">💾 גיבוי מלא לקובץ</button>
+      <button class="ghost-btn" style="margin-top:8px" onclick="document.getElementById('importFile').click()">↩️ שחזור מקובץ</button>
       <input type="file" id="importFile" accept="application/json" style="display:none" onchange="importData(event)" />
     </div>
     <div class="set-card">
@@ -278,7 +301,7 @@
       <h3>📱 התקנה למסך הבית</h3>
       <p>באייפון: פתח באפליקציית <b>Safari</b> → כפתור השיתוף (⬆️) → <b>"הוסף למסך הבית"</b>. האפליקציה תיפתח במסך מלא כמו אפליקציה רגילה.</p>
     </div>
-    <div style="text-align:center;color:var(--muted);font-size:12px;margin-top:18px">גרסה 1.0 · נבנה עבורך</div>
+    <div style="text-align:center;color:var(--muted);font-size:12px;margin-top:18px">גרסה 2.0 · נבנה עבורך</div>
   </section>
 </div>
 
@@ -291,6 +314,8 @@
     <span class="ic">📅</span><span>היום</span></button>
   <button class="nav-item" data-v="all" onclick="switchView('all')">
     <span class="ic">👥</span><span>לקוחות</span></button>
+  <button class="nav-item" data-v="money" onclick="switchView('money')">
+    <span class="ic">💰</span><span>כספים</span></button>
   <button class="nav-item" data-v="settings" onclick="switchView('settings')">
     <span class="ic">⚙️</span><span>הגדרות</span></button>
 </nav>
@@ -312,7 +337,7 @@
     </div>
     <div class="field">
       <label>סוג שירות</label>
-      <select id="f_service">
+      <select id="f_service" onchange="applyServicePrice()">
         <option>וואטסאפ</option>
         <option>Google / Gmail</option>
         <option>פייסבוק</option>
@@ -356,8 +381,9 @@
 <script>
 /* ============ STATE ============ */
 const DB_KEY='rm_clients_v1', CFG_KEY='rm_cfg_v1';
-let clients=[], cfg={bizName:'שחרור חשבונות', pin:null, remindLeadDays:1, notifyEnabled:false, lastNotifyDate:null, cloudUrl:'', cloudKey:''};
+let clients=[], cfg={bizName:'שחרור חשבונות', pin:null, remindLeadDays:1, notifyEnabled:false, lastNotifyDate:null, cloudUrl:'', cloudKey:'', servicePrices:{}, deletedIds:[], lastSync:null, sortBy:'release'};
 let cloudBusy=false;
+const SERVICES=['וואטסאפ','Google / Gmail','פייסבוק','אינסטגרם','אחר'];
 let curFilter='active', pinBuffer='', pinMode='unlock', pinTemp='';
 
 /* ============ STORAGE ============ */
@@ -471,13 +497,16 @@ function cardHTML(c,bucket){
   else if(c.pay==='partial')payBadge=`<span class="pay-badge pay-partial">חלקי · חייב ₪${owed(c).toLocaleString('he-IL')}</span>`;
   else payBadge=`<span class="pay-badge pay-later">ישולם ₪${(+c.amount||0).toLocaleString('he-IL')}</span>`;
 
-  const relChip = c.release?`<span class="chip ${n<0?'red':n===0?'amber':''}">📅 ${fmtDate(c.release)} · ${relText(c.release)}</span>`:'';
+  const relChip = c.status==='done'
+    ? `<span class="chip green">🔓 שוחרר${c.releasedOn?' · '+fmtDate(c.releasedOn):''}</span>`
+    : (c.release?`<span class="chip ${n<0?'red':n===0?'amber':''}">📅 ${fmtDate(c.release)} · ${relText(c.release)}</span>`:'');
   const svcIcon={'וואטסאפ':'💬','Google / Gmail':'📧','פייסבוק':'👤','אינסטגרם':'📷','אחר':'🔓'}[c.service]||'🔓';
 
   const phone=(c.phone||'').replace(/\D/g,'');
   const waNum=phone?('972'+phone.replace(/^0/,'')):'';
   const waMsg=encodeURIComponent(`שלום ${c.name}, לגבי שחרור ה${c.service} שלך.`);
   const waBtn=waNum?`<a class="act wa" href="https://wa.me/${waNum}?text=${waMsg}" target="_blank" onclick="event.stopPropagation()">💬 וואטסאפ</a>`:'';
+  const callBtn=phone?`<a class="act" href="tel:${esc((c.phone||'').replace(/[^\d+]/g,''))}" onclick="event.stopPropagation()">📞 חייג</a>`:'';
   const calBtn=c.release?`<button class="act" onclick="event.stopPropagation();icsReminder('${c.id}')">🔔 תזכורת</button>`:'';
 
   return `<div class="card ${cls}" onclick="openForm('${c.id}')">
@@ -497,9 +526,12 @@ function cardHTML(c,bucket){
     ${c.notes?`<div class="hint" style="margin-top:9px">📝 ${esc(c.notes)}</div>`:''}
     <div class="c-actions">
       ${waBtn}
+      ${callBtn}
       ${calBtn}
       ${!isFullyPaid(c)?`<button class="act pay" onclick="event.stopPropagation();markPaid('${c.id}')">✓ שולם</button>`:''}
-      ${c.status!=='done'?`<button class="act rel" onclick="event.stopPropagation();markReleased('${c.id}')">🔓 שוחרר</button>`:''}
+      ${c.status!=='done'
+        ?`<button class="act rel" onclick="event.stopPropagation();markReleased('${c.id}')">🔓 שוחרר</button>`
+        :`<button class="act" onclick="event.stopPropagation();reactivate('${c.id}')">↩️ החזר לפעיל</button>`}
     </div>
   </div>`;
 }
@@ -514,8 +546,19 @@ function renderFilters(){
     `<button class="fbtn ${curFilter===f.k?'active':''}" onclick="setFilter('${f.k}')">${f.l}</button>`).join('');
 }
 function setFilter(k){curFilter=k;renderFilters();renderAll()}
+function setSortBy(v){cfg.sortBy=v;saveCfg();renderAll()}
+function sortClients(list){
+  const by=cfg.sortBy||'release';
+  const s=list.slice();
+  if(by==='amount')s.sort((a,b)=>(+b.amount||0)-(+a.amount||0));
+  else if(by==='name')s.sort((a,b)=>(a.name||'').localeCompare(b.name||'','he'));
+  else if(by==='created')s.sort((a,b)=>(b.created||'').localeCompare(a.created||''));
+  else s.sort((a,b)=>(a.release||'9999').localeCompare(b.release||'9999'));
+  return s;
+}
 function renderAll(){
   renderFilters();
+  const ss=document.getElementById('sortBy'); if(ss)ss.value=cfg.sortBy||'release';
   const q=(document.getElementById('search').value||'').trim().toLowerCase();
   let list=clients.slice();
   if(curFilter==='active')list=list.filter(c=>c.status!=='done');
@@ -523,10 +566,41 @@ function renderAll(){
   else if(curFilter==='overdue')list=list.filter(c=>c.status!=='done'&&daysUntil(c.release)<0);
   else if(curFilter==='unpaid')list=list.filter(c=>!isFullyPaid(c)&&c.status!=='done');
   if(q)list=list.filter(c=>(c.name||'').toLowerCase().includes(q)||(c.phone||'').includes(q));
-  list.sort((a,b)=>(a.release||'9999').localeCompare(b.release||'9999'));
+  list=sortClients(list);
   const el=document.getElementById('allList');
   if(!list.length){el.innerHTML=`<div class="empty"><span class="big">🔍</span>לא נמצאו לקוחות בקטגוריה זו.</div>`;return}
   el.innerHTML=list.map(c=>cardHTML(c)).join('');
+}
+
+/* ============ RENDER: MONEY ============ */
+function collectedInMonth(offset){
+  const d=new Date(); d.setDate(1); d.setMonth(d.getMonth()+(offset||0));
+  const ym=d.toISOString().slice(0,7);
+  return clients.filter(c=>isFullyPaid(c)&&(c.paidOn||'').slice(0,7)===ym)
+    .reduce((s,c)=>s+(+c.amount||0),0);
+}
+function renderMoney(){
+  const owing=clients.filter(c=>owed(c)>0);
+  const totalOwed=owing.reduce((s,c)=>s+owed(c),0);
+  const thisMonth=collectedInMonth(0);
+  const lastMonth=collectedInMonth(-1);
+  const allTime=clients.filter(c=>isFullyPaid(c)).reduce((s,c)=>s+(+c.amount||0),0);
+  document.getElementById('moneyStats').innerHTML=`
+    <div class="stat ok"><div class="v">₪${thisMonth.toLocaleString('he-IL')}</div><div class="l">נגבה החודש</div></div>
+    <div class="stat money"><div class="v">₪${totalOwed.toLocaleString('he-IL')}</div><div class="l">ממתין לגבייה</div></div>
+    <div class="stat"><div class="v">₪${lastMonth.toLocaleString('he-IL')}</div><div class="l">חודש שעבר</div></div>
+    <div class="stat"><div class="v">₪${allTime.toLocaleString('he-IL')}</div><div class="l">סה״כ הכנסות</div></div>`;
+  document.getElementById('collectCount').textContent=owing.length;
+  // sort: overdue-released first, then by amount owed
+  owing.sort((a,b)=>{
+    const ao=(a.status==='done'||daysUntil(a.release)<0)?0:1;
+    const bo=(b.status==='done'||daysUntil(b.release)<0)?0:1;
+    if(ao!==bo)return ao-bo;
+    return owed(b)-owed(a);
+  });
+  const el=document.getElementById('collectList');
+  el.innerHTML=owing.length?owing.map(c=>cardHTML(c)).join('')
+    :`<div class="empty"><span class="big">🎉</span>אין חובות פתוחים!<br>כל הלקוחות שילמו.</div>`;
 }
 
 /* ============ FORM ============ */
@@ -593,6 +667,8 @@ function saveClient(){
     data.created=todayStr();
     clients.push(data); saved=data;
   }
+  if(isFullyPaid(saved)&&!saved.paidOn)saved.paidOn=todayStr();
+  if(!isFullyPaid(saved))saved.paidOn=null;
   saved.updated_at=new Date().toISOString();
   saveDB(); closeForm(); refresh(); toast('נשמר ✓');
   cloudPush(saved);
@@ -600,14 +676,21 @@ function saveClient(){
 function deleteClient(){
   const id=document.getElementById('f_id').value;
   if(!confirm('למחוק את הלקוח לצמיתות?'))return;
+  cfg.deletedIds=(cfg.deletedIds||[]).concat(id).slice(-400); saveCfg();
   clients=clients.filter(c=>c.id!==id);
   saveDB(); closeForm(); refresh(); toast('נמחק');
   cloudDelete(id);
 }
 function markPaid(id){
   const c=clients.find(x=>x.id===id); if(!c)return;
-  c.pay='paid'; c.paidAmount=c.amount; c.updated_at=new Date().toISOString();
+  c.pay='paid'; c.paidAmount=c.amount; c.paidOn=todayStr(); c.updated_at=new Date().toISOString();
   saveDB(); refresh(); toast('סומן כשולם ✓');
+  cloudPush(c);
+}
+function reactivate(id){
+  const c=clients.find(x=>x.id===id); if(!c)return;
+  c.status='active'; c.releasedOn=null; c.updated_at=new Date().toISOString();
+  saveDB(); refresh(); toast('הוחזר לפעיל ↩️');
   cloudPush(c);
 }
 function markReleased(id){
@@ -616,8 +699,56 @@ function markReleased(id){
     if(!confirm('החשבון עדיין לא שולם במלואו. לסמן כשוחרר בכל זאת?'))return;
   }
   c.status='done'; c.releasedOn=todayStr(); c.updated_at=new Date().toISOString();
-  saveDB(); refresh(); toast('סומן כשוחרר 🔓');
+  saveDB(); refresh();
   cloudPush(c);
+  toast(owed(c)>0?`שוחרר 🔓 · זכור לגבות ₪${owed(c).toLocaleString('he-IL')}`:'סומן כשוחרר 🔓');
+}
+
+/* ============ EXPORT / PRICES / SYNC-STATUS ============ */
+function csvEsc(v){v=(v==null?'':String(v)); return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;}
+function exportCSV(){
+  const cols=['שם','טלפון','שירות','תאריך שחרור','סכום','שולם','נותר לגבייה','סטטוס תשלום','סטטוס','נגבה בתאריך','הערות'];
+  const rows=clients.map(c=>[c.name,c.phone,c.service,c.release,(+c.amount||0),
+    isFullyPaid(c)?'כן':'לא',owed(c),
+    c.pay==='paid'?'שולם':c.pay==='partial'?'חלקי':'ישולם בשחרור',
+    c.status==='done'?'שוחרר':'פעיל',c.paidOn||'',c.notes].map(csvEsc).join(','));
+  const csv='﻿'+cols.join(',')+'\n'+rows.join('\n');
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='clients-'+todayStr()+'.csv'; a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),4000); toast('הקובץ הורד ✓');
+}
+function renderPrices(){
+  const el=document.getElementById('priceList'); if(!el)return;
+  el.innerHTML=SERVICES.map(s=>`<div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
+    <span style="flex:1;font-size:13px">${esc(s)}</span>
+    <input type="number" inputmode="numeric" data-svc="${esc(s)}" value="${cfg.servicePrices[s]||''}" placeholder="₪" style="width:92px;background:var(--panel2);border:1px solid var(--line);color:var(--txt);padding:8px;border-radius:9px" />
+  </div>`).join('');
+}
+function savePrices(){
+  const m={};
+  document.querySelectorAll('#priceList input[data-svc]').forEach(i=>{const v=+i.value||0; if(v>0)m[i.dataset.svc]=v;});
+  cfg.servicePrices=m; saveCfg(); toast('המחירון נשמר ✓');
+}
+function applyServicePrice(){
+  const svc=document.getElementById('f_service').value;
+  const amt=document.getElementById('f_amount');
+  const p=cfg.servicePrices[svc];
+  if(p&&(!amt.value||+amt.value===0))amt.value=p;
+}
+function timeAgo(iso){
+  if(!iso)return 'לא סונכרן';
+  const diff=(new Date()-new Date(iso))/1000;
+  if(diff<60)return 'עכשיו';
+  if(diff<3600)return 'לפני '+Math.floor(diff/60)+' דק׳';
+  if(diff<86400)return 'לפני '+Math.floor(diff/3600)+' שעות';
+  return 'לפני '+Math.floor(diff/86400)+' ימים';
+}
+function updateSyncDot(state){
+  const dot=document.querySelector('header .h-title .dot'); if(!dot)return;
+  let color='#93a1bd';
+  if(cloudOn())color=(state==='err')?'#f87171':'#14b8a6';
+  dot.style.background=color; dot.style.boxShadow='0 0 12px '+color;
 }
 
 /* ============ CALENDAR REMINDER (.ics with alarms) ============ */
@@ -654,11 +785,11 @@ function cloudOn(){return !!(cfg.cloudUrl && cfg.cloudKey)}
 function cloudHeaders(){return {apikey:cfg.cloudKey,Authorization:'Bearer '+cfg.cloudKey,'Content-Type':'application/json'}}
 function toRow(c){return {id:c.id,name:c.name||'',phone:c.phone||'',service:c.service||'',release_date:c.release||'',
   amount:+c.amount||0,pay:c.pay||'later',paid_amount:+c.paidAmount||0,notes:c.notes||'',
-  status:c.status||'active',created:c.created||todayStr(),released_on:c.releasedOn||null,
+  status:c.status||'active',created:c.created||todayStr(),released_on:c.releasedOn||null,paid_on:c.paidOn||null,
   updated_at:c.updated_at||new Date().toISOString()}}
 function fromRow(r){return {id:r.id,name:r.name,phone:r.phone,service:r.service,release:r.release_date,
   amount:+r.amount||0,pay:r.pay,paidAmount:+r.paid_amount||0,notes:r.notes,status:r.status,
-  created:r.created,releasedOn:r.released_on,updated_at:r.updated_at}}
+  created:r.created,releasedOn:r.released_on,paidOn:r.paid_on,updated_at:r.updated_at}}
 async function cloudPush(c){
   if(!cloudOn())return;
   try{
@@ -678,12 +809,14 @@ async function cloudPull(silent){
     if(!res.ok)throw new Error('http '+res.status);
     const rows=await res.json();
     const remote=rows.map(fromRow);
-    // merge by updated_at; push local-only or locally-newer items
+    const del=new Set(cfg.deletedIds||[]);
+    // merge by updated_at; push local-only/newer; respect delete tombstones
     const byId={}; clients.forEach(c=>byId[c.id]={local:c});
     remote.forEach(r=>{byId[r.id]=Object.assign(byId[r.id]||{},{remote:r})});
-    const merged=[]; const toUpload=[];
+    const merged=[]; const toUpload=[]; const toRemove=[];
     for(const id in byId){
       const {local,remote:rem}=byId[id];
+      if(del.has(id)){ if(rem)toRemove.push(id); continue; }
       if(local&&rem){
         const lu=local.updated_at||'', ru=rem.updated_at||'';
         if(lu>ru){merged.push(local);toUpload.push(local)} else merged.push(rem);
@@ -691,10 +824,13 @@ async function cloudPull(silent){
       else if(local){merged.push(local);toUpload.push(local)}
     }
     clients=merged; saveDB();
+    cfg.lastSync=new Date().toISOString(); saveCfg();
     for(const c of toUpload){await cloudPush(c)}
+    for(const rid of toRemove){await cloudDelete(rid)}
+    updateSyncDot('ok');
     if(!silent)refresh();
     return true;
-  }catch(e){ if(!silent)toast('שגיאת סנכרון — בדוק חיבור/מפתח'); return false; }
+  }catch(e){ updateSyncDot('err'); if(!silent)toast('שגיאת סנכרון — בדוק חיבור/מפתח'); return false; }
 }
 function connectWithCode(){
   let t=(document.getElementById('setCloudCode').value||'').trim();
@@ -814,12 +950,15 @@ function applyCfg(){
     else if(cfg.notifyEnabled&&Notification.permission==='granted')ns.textContent='התראות פעילות ✓';
     else ns.textContent='התראות כבויות';
   }
+  // prices
+  renderPrices();
   // cloud
   const connected=cloudOn();
-  document.getElementById('cloudStatus').textContent=connected?('מחובר לענן ✓ — הנתונים מסתנכרנים בין המכשירים.'):'לא מחובר. הנתונים נשמרים על המכשיר בלבד.';
+  document.getElementById('cloudStatus').textContent=connected?('מחובר לענן ✓ · סונכרן '+timeAgo(cfg.lastSync)):'לא מחובר. הנתונים נשמרים על המכשיר בלבד.';
   document.getElementById('cloudForm').style.display=connected?'none':'block';
   document.getElementById('cloudConnected').style.display=connected?'block':'none';
   if(!connected){document.getElementById('setCloudUrl').value=cfg.cloudUrl||'';}
+  updateSyncDot('ok');
 }
 
 /* ============ PIN LOCK ============ */
@@ -885,7 +1024,7 @@ function switchView(v){
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active',n.dataset.v===v));
   window.scrollTo(0,0);
 }
-function refresh(){renderToday();renderAll();updateBadge();maybeNotify()}
+function refresh(){renderToday();renderAll();renderMoney();updateBadge();maybeNotify()}
 function esc(s){return (s||'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
 let toastT;
 function toast(msg){
@@ -915,10 +1054,14 @@ function init(){
     const o=e.target.closest('.opt'); if(!o)return;
     cfg.remindLeadDays=+o.dataset.lead; saveCfg(); applyCfg(); refresh(); toast('נשמר ✓');
   });
-  // cloud: pull on load and when app returns to foreground
+  // cloud: pull on load, on foreground, and periodically
+  const formOpen=()=>document.getElementById('formModal').classList.contains('open');
+  const autoPull=()=>{ if(cloudOn() && !document.hidden && !cloudBusy && !formOpen()) cloudPull(false); };
   if(cloudOn()){ cloudPull(false).then(()=>{applyCfg()}); }
   if(gotConnect){ applyCfg(); toast('מחובר לענן ✓'); }
-  document.addEventListener('visibilitychange',()=>{ if(!document.hidden){ if(cloudOn())cloudPull(false); else refresh(); }});
+  document.addEventListener('visibilitychange',()=>{ if(!document.hidden){ if(cloudOn())autoPull(); else refresh(); }});
+  setInterval(autoPull, 45000);
+  setInterval(()=>{ if(document.getElementById('view-settings').classList.contains('active'))applyCfg(); }, 30000);
   if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{})}
 }
 init();
