@@ -256,7 +256,14 @@
       </div>
       <div id="cloudConnected" style="display:none">
         <button class="ghost-btn" onclick="cloudSyncNow()">🔄 סנכרן עכשיו</button>
-        <button class="ghost-btn" style="margin-top:8px" onclick="makePhoneLink()">📲 צור קישור חיבור לטלפון</button>
+        <button class="ghost-btn" style="margin-top:8px;background:#0e2e26;border-color:#155e4d;color:#5eead4" onclick="makePhoneLink()">📲 חבר את הטלפון</button>
+        <div id="phoneLinkBox" style="display:none;margin-top:12px;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px">
+          <p style="font-size:13px;color:var(--txt);margin:0 0 8px;font-weight:700">איך מחברים את הטלפון:</p>
+          <p style="font-size:12.5px;color:var(--muted);margin:0 0 10px;line-height:1.7">לחץ "שלח לי בוואטסאפ" → פתח את ההודעה <b>בטלפון</b> → לחץ על הקישור → הטלפון יתחבר לבד. אחר כך הוסף למסך הבית.</p>
+          <a id="phoneWaBtn" class="ghost-btn" style="display:block;text-align:center;text-decoration:none;background:#0e2e26;border-color:#155e4d;color:#5eead4;margin-bottom:8px" target="_blank">💬 שלח לי את הקישור בוואטסאפ</a>
+          <button class="ghost-btn" onclick="copyPhoneLink()">📋 העתק קישור</button>
+          <input id="phoneLinkInput" readonly onclick="this.select()" style="width:100%;background:var(--bg);border:1px solid var(--line);color:var(--muted);padding:9px;border-radius:9px;font-size:11px;direction:ltr;margin-top:8px" />
+        </div>
         <button class="ghost-btn" style="margin-top:8px" onclick="disconnectCloud()">נתק מהענן</button>
       </div>
     </div>
@@ -697,11 +704,22 @@ function disconnectCloud(){
   if(!confirm('לנתק מהענן? הנתונים יישארו על המכשיר.'))return;
   cfg.cloudUrl=''; cfg.cloudKey=''; saveCfg(); applyCfg(); toast('נותק מהענן');
 }
-function makePhoneLink(){
+function phoneConnectLink(){
   const code=btoa(unescape(encodeURIComponent(cfg.cloudUrl+'|'+cfg.cloudKey)));
-  const link=location.origin+location.pathname+'#connect='+code;
+  return location.origin+location.pathname+'#connect='+encodeURIComponent(code);
+}
+function makePhoneLink(){
+  const link=phoneConnectLink();
+  document.getElementById('phoneLinkInput').value=link;
+  document.getElementById('phoneWaBtn').href='https://wa.me/?text='+encodeURIComponent('קישור חיבור למערכת שחרור החשבונות (פתח בטלפון): '+link);
+  document.getElementById('phoneLinkBox').style.display='block';
   navigator.clipboard&&navigator.clipboard.writeText(link).catch(()=>{});
-  prompt('קישור חיבור לטלפון (הועתק). שלח לעצמך בוואטסאפ ופתח פעם אחת בטלפון:', link);
+}
+function copyPhoneLink(){
+  const el=document.getElementById('phoneLinkInput'); el.select();
+  const done=()=>toast('הקישור הועתק ✓');
+  if(navigator.clipboard)navigator.clipboard.writeText(el.value).then(done).catch(()=>{try{document.execCommand('copy');done()}catch(e){}});
+  else{try{document.execCommand('copy');done()}catch(e){}}
 }
 
 /* ============ REMINDERS: badge + notifications ============ */
