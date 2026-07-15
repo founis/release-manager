@@ -263,6 +263,15 @@
       <input type="file" id="importFile" accept="application/json" style="display:none" onchange="importData(event)" />
     </div>
     <div class="set-card">
+      <h3>🔒 ימים מחסימה עד שחרור</h3>
+      <p>ברירת המחדל שממנה מחושב תאריך השחרור אוטומטית (חסימה + מספר הימים).</p>
+      <div style="display:flex;align-items:center;gap:8px">
+        <input id="setBlockDays" type="number" inputmode="numeric" style="width:100px;background:var(--panel2);border:1px solid var(--line);color:var(--txt);padding:10px;border-radius:10px" />
+        <span style="color:var(--muted);font-size:13px">ימים</span>
+        <button class="ghost-btn" style="flex:1" onclick="saveBlockDays()">שמור</button>
+      </div>
+    </div>
+    <div class="set-card">
       <h3>🔔 תזכורות</h3>
       <p>כמה ימים לפני מועד השחרור להתחיל להזכיר לך.</p>
       <div class="seg" id="leadSeg" style="margin-bottom:12px">
@@ -354,6 +363,17 @@
     </div>
     <div class="row2">
       <div class="field">
+        <label>תאריך חסימה</label>
+        <input id="f_block" type="date" onchange="computeRelease()" />
+      </div>
+      <div class="field">
+        <label>ימים עד שחרור</label>
+        <input id="f_days" type="number" inputmode="numeric" value="60" onchange="computeRelease()" />
+      </div>
+    </div>
+    <p class="hint" style="margin:-6px 0 12px">💡 בחר תאריך חסימה — תאריך השחרור יחושב אוטומטית (חסימה + הימים).</p>
+    <div class="row2">
+      <div class="field">
         <label>תאריך שחרור צפוי *</label>
         <input id="f_release" type="date" />
       </div>
@@ -428,7 +448,7 @@
 <script>
 /* ============ STATE ============ */
 const DB_KEY='rm_clients_v1', CFG_KEY='rm_cfg_v1';
-let clients=[], cfg={bizName:'שחרור חשבונות', pin:null, remindLeadDays:1, notifyEnabled:false, lastNotifyDate:null, cloudUrl:'', cloudKey:'', servicePrices:{}, deletedIds:[], lastSync:null, sortBy:'release', lastBriefDate:null};
+let clients=[], cfg={bizName:'שחרור חשבונות', pin:null, remindLeadDays:1, notifyEnabled:false, lastNotifyDate:null, cloudUrl:'', cloudKey:'', servicePrices:{}, deletedIds:[], lastSync:null, sortBy:'release', lastBriefDate:null, blockDays:60};
 let cloudBusy=false;
 const SERVICES=['וואטסאפ','Google / Gmail','פייסבוק','אינסטגרם','אחר'];
 let curFilter='active', pinBuffer='', pinMode='unlock', pinTemp='';
@@ -736,7 +756,16 @@ function openForm(id){
     selectPay('later');
     document.getElementById('delBtn').style.display='none';
   }
+  document.getElementById('f_block').value='';
+  document.getElementById('f_days').value=cfg.blockDays||60;
   m.classList.add('open');
+}
+function computeRelease(){
+  const b=document.getElementById('f_block').value;
+  const d=+document.getElementById('f_days').value||0;
+  if(!b)return;
+  const dt=new Date(b+'T00:00:00'); dt.setDate(dt.getDate()+d);
+  document.getElementById('f_release').value=isoDay(dt);
 }
 function closeForm(){document.getElementById('formModal').classList.remove('open')}
 function selectPay(v){
@@ -1126,9 +1155,14 @@ function saveBizName(){
   cfg.bizName=document.getElementById('setBizName').value.trim()||'שחרור חשבונות';
   saveCfg();applyCfg();toast('נשמר ✓');
 }
+function saveBlockDays(){
+  cfg.blockDays=+document.getElementById('setBlockDays').value||60;
+  saveCfg();applyCfg();toast('נשמר ✓');
+}
 function applyCfg(){
   document.getElementById('bizName').textContent=cfg.bizName;
   document.getElementById('setBizName').value=cfg.bizName;
+  const sbd=document.getElementById('setBlockDays'); if(sbd)sbd.value=cfg.blockDays||60;
   document.getElementById('pinStatus').textContent=cfg.pin?'נעילה פעילה ✓':'אין נעילה. מומלץ להגדיר קוד.';
   // reminders
   document.querySelectorAll('#leadSeg .opt').forEach(o=>o.classList.toggle('sel',+o.dataset.lead===(+cfg.remindLeadDays||0)));
