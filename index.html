@@ -398,6 +398,17 @@
   </div>
 </div>
 
+<!-- WHATSAPP TEMPLATES MODAL -->
+<div class="modal" id="waModal">
+  <div class="backdrop" onclick="closeWa()"></div>
+  <div class="sheet">
+    <div class="grip"></div>
+    <h2>💬 שלח וואטסאפ ל<span id="waName"></span></h2>
+    <p class="hint" style="margin:-8px 0 14px">בחר הודעה מוכנה — היא נפתחת בוואטסאפ עם השם והסכום מולאים.</p>
+    <div id="waTemplates"></div>
+  </div>
+</div>
+
 <!-- MORNING BRIEF MODAL -->
 <div class="modal" id="briefModal">
   <div class="backdrop" onclick="closeBrief()"></div>
@@ -539,9 +550,7 @@ function cardHTML(c,bucket){
   const svcIcon={'וואטסאפ':'💬','Google / Gmail':'📧','פייסבוק':'👤','אינסטגרם':'📷','אחר':'🔓'}[c.service]||'🔓';
 
   const phone=(c.phone||'').replace(/\D/g,'');
-  const waNum=phone?('972'+phone.replace(/^0/,'')):'';
-  const waMsg=encodeURIComponent(`שלום ${c.name}, לגבי שחרור ה${c.service} שלך.`);
-  const waBtn=waNum?`<a class="act wa" href="https://wa.me/${waNum}?text=${waMsg}" target="_blank" onclick="event.stopPropagation()">💬 וואטסאפ</a>`:'';
+  const waBtn=phone?`<button class="act wa" onclick="event.stopPropagation();openWa('${c.id}')">💬 וואטסאפ</button>`:'';
   const callBtn=phone?`<a class="act" href="tel:${esc((c.phone||'').replace(/[^\d+]/g,''))}" onclick="event.stopPropagation()">📞 חייג</a>`:'';
   const calBtn=c.release?`<button class="act" onclick="event.stopPropagation();icsReminder('${c.id}')">🔔 תזכורת</button>`:'';
 
@@ -1138,6 +1147,37 @@ function applyCfg(){
   document.getElementById('cloudConnected').style.display=connected?'block':'none';
   if(!connected){document.getElementById('setCloudUrl').value=cfg.cloudUrl||'';}
   updateSyncDot('ok');
+}
+
+/* ============ WHATSAPP TEMPLATES ============ */
+let waClientId=null;
+function waTemplates(c){
+  const o=owed(c);
+  return [
+    {label:'🔓 שוחרר / מוכן', text:`שלום ${c.name}! 🎉 ה${c.service} שלך שוחרר בהצלחה.${o>0?` נותר להסדיר תשלום של ₪${o.toLocaleString('he-IL')}.`:' תודה שבחרת בי!'}`},
+    {label:'💰 תזכורת תשלום', text:`שלום ${c.name}, תזכורת ידידותית לגבי התשלום על שחרור ה${c.service}${o>0?` — ₪${o.toLocaleString('he-IL')}`:''}. אשמח להסדרה 🙏`},
+    {label:'⏳ בעבודה / עדכון', text:`שלום ${c.name}, אני מטפל בשחרור ה${c.service} שלך ואעדכן אותך בהקדם 🙏`},
+    {label:'💬 הודעה כללית', text:`שלום ${c.name}, לגבי שחרור ה${c.service} שלך.`}
+  ];
+}
+function openWa(id){
+  const c=clients.find(x=>x.id===id); if(!c)return;
+  waClientId=id;
+  document.getElementById('waName').textContent=c.name;
+  document.getElementById('waTemplates').innerHTML=waTemplates(c).map((t,i)=>
+    `<button class="ghost-btn" style="margin-bottom:9px;text-align:right;white-space:normal;line-height:1.6;padding:12px 14px" onclick="sendWa(${i})">
+      <b style="font-size:14px">${t.label}</b><br><span style="color:var(--muted);font-size:12px">${esc(t.text)}</span>
+    </button>`).join('');
+  document.getElementById('waModal').classList.add('open');
+}
+function closeWa(){ document.getElementById('waModal').classList.remove('open'); }
+function sendWa(i){
+  const c=clients.find(x=>x.id===waClientId); if(!c)return;
+  const phone=(c.phone||'').replace(/\D/g,'');
+  const waNum=phone?('972'+phone.replace(/^0/,'')):'';
+  if(!waNum){toast('אין מספר טלפון');return}
+  window.open('https://wa.me/'+waNum+'?text='+encodeURIComponent(waTemplates(c)[i].text),'_blank');
+  closeWa();
 }
 
 /* ============ MORNING BRIEF ============ */
