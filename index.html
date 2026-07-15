@@ -273,6 +273,8 @@
       </div>
       <button class="ghost-btn" onclick="enableNotifications()">🔔 הפעל התראות בנייד</button>
       <p id="notifyStatus" style="margin:8px 0 0"></p>
+      <button class="ghost-btn" style="margin-top:10px;background:#10233f;border-color:#1d477e;color:#93c5fd" onclick="showMorningBrief(true)">☀️ הצג בריף בוקר עכשיו</button>
+      <p class="hint" style="margin-top:6px">בריף הבוקר קופץ אוטומטית בפעם הראשונה שתפתח את האפליקציה בכל יום.</p>
     </div>
     <div class="set-card">
       <h3>☁️ סנכרון ענן</h3>
@@ -396,12 +398,26 @@
   </div>
 </div>
 
+<!-- MORNING BRIEF MODAL -->
+<div class="modal" id="briefModal">
+  <div class="backdrop" onclick="closeBrief()"></div>
+  <div class="sheet" style="text-align:center;max-height:88vh">
+    <div class="grip"></div>
+    <div style="font-size:46px;line-height:1;margin-top:6px">☀️</div>
+    <h2 id="briefTitle" style="text-align:center">בוקר טוב</h2>
+    <div id="briefSub" style="color:var(--muted);font-size:13px;margin:-8px 0 14px"></div>
+    <div id="briefStats" class="stats" style="margin-bottom:14px"></div>
+    <div id="briefList" style="text-align:right"></div>
+    <button class="save-btn" onclick="closeBrief()">בוא נתחיל 🚀</button>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
 /* ============ STATE ============ */
 const DB_KEY='rm_clients_v1', CFG_KEY='rm_cfg_v1';
-let clients=[], cfg={bizName:'שחרור חשבונות', pin:null, remindLeadDays:1, notifyEnabled:false, lastNotifyDate:null, cloudUrl:'', cloudKey:'', servicePrices:{}, deletedIds:[], lastSync:null, sortBy:'release'};
+let clients=[], cfg={bizName:'שחרור חשבונות', pin:null, remindLeadDays:1, notifyEnabled:false, lastNotifyDate:null, cloudUrl:'', cloudKey:'', servicePrices:{}, deletedIds:[], lastSync:null, sortBy:'release', lastBriefDate:null};
 let cloudBusy=false;
 const SERVICES=['וואטסאפ','Google / Gmail','פייסבוק','אינסטגרם','אחר'];
 let curFilter='active', pinBuffer='', pinMode='unlock', pinTemp='';
@@ -1124,6 +1140,39 @@ function applyCfg(){
   updateSyncDot('ok');
 }
 
+/* ============ MORNING BRIEF ============ */
+function closeBrief(){ document.getElementById('briefModal').classList.remove('open'); }
+function showMorningBrief(force){
+  if(!force && cfg.lastBriefDate===todayStr()) return;
+  if(!force){ cfg.lastBriefDate=todayStr(); saveCfg(); }
+  const act=activeClients();
+  const lead=+cfg.remindLeadDays||0;
+  const overdue=act.filter(c=>daysUntil(c.release)<0);
+  const dueToday=act.filter(c=>daysUntil(c.release)===0);
+  const soon=act.filter(c=>{const n=daysUntil(c.release);return n>0&&n<=Math.max(lead,3);});
+  const collectNow=[...overdue,...dueToday].reduce((s,c)=>s+owed(c),0);
+  if(!force && !overdue.length && !dueToday.length && !soon.length) return; // quiet day
+  const now=new Date();
+  document.getElementById('briefSub').textContent=now.toLocaleDateString('he-IL',{weekday:'long',day:'numeric',month:'long'});
+  document.getElementById('briefTitle').textContent = (overdue.length||dueToday.length)?'בוקר טוב, יש עבודה 💪':'בוקר טוב ☀️';
+  document.getElementById('briefStats').innerHTML=`
+    <div class="stat"><div class="v">${dueToday.length}</div><div class="l">משתחררים היום</div></div>
+    <div class="stat ${overdue.length?'danger':''}"><div class="v">${overdue.length}</div><div class="l">באיחור</div></div>
+    <div class="stat money" style="grid-column:1/-1"><div class="v">₪${collectNow.toLocaleString('he-IL')}</div><div class="l">לגבות עכשיו (היום + באיחור)</div></div>`;
+  const svcIcon={'וואטסאפ':'💬','Google / Gmail':'📧','פייסבוק':'👤','אינסטגרם':'📷','אחר':'🔓'};
+  const line=(c,tag)=>`<div style="display:flex;justify-content:space-between;align-items:center;background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:10px 12px;margin-bottom:7px">
+    <div><b>${svcIcon[c.service]||'🔓'} ${esc(c.name)}</b> <span style="color:${tag.c};font-size:12px">${tag.t}</span></div>
+    <div style="font-weight:800;font-size:13px;color:${owed(c)>0?'var(--amber)':'var(--green)'}">${owed(c)>0?'₪'+owed(c).toLocaleString('he-IL'):'שולם ✓'}</div>
+  </div>`;
+  let html='';
+  overdue.forEach(c=>html+=line(c,{t:'⏰ באיחור',c:'#fca5a5'}));
+  dueToday.forEach(c=>html+=line(c,{t:'🟠 היום',c:'#fcd34d'}));
+  if(soon.length)html+=`<div class="hint" style="margin-top:6px">🔵 בקרוב (עד ${Math.max(lead,3)} ימים): ${soon.length} חשבונות</div>`;
+  if(!html)html=`<div class="empty" style="padding:14px"><span class="big">🎉</span>אין מה לטפל בו היום. יום רגוע!</div>`;
+  document.getElementById('briefList').innerHTML=html;
+  document.getElementById('briefModal').classList.add('open');
+}
+
 /* ============ PIN LOCK ============ */
 function buildKeys(){
   const keys=['1','2','3','4','5','6','7','8','9','','0','⌫'];
@@ -1142,7 +1191,7 @@ function pinPress(k){
 }
 function pinComplete(){
   if(pinMode==='unlock'){
-    if(pinBuffer===cfg.pin){document.getElementById('lock').classList.remove('show');pinBuffer=''}
+    if(pinBuffer===cfg.pin){document.getElementById('lock').classList.remove('show');pinBuffer='';setTimeout(showMorningBrief,300)}
     else{pinBuffer='';renderPinDots();document.getElementById('lockSub').textContent='קוד שגוי, נסה שוב';navigator.vibrate&&navigator.vibrate(200)}
   }else if(pinMode==='set1'){
     pinTemp=pinBuffer;pinBuffer='';renderPinDots();
@@ -1220,7 +1269,8 @@ function init(){
   // cloud: pull on load, on foreground, and periodically
   const formOpen=()=>document.getElementById('formModal').classList.contains('open');
   const autoPull=()=>{ if(cloudOn() && !document.hidden && !cloudBusy && !formOpen()) cloudPull(false); };
-  if(cloudOn()){ cloudPull(false).then(()=>{applyCfg()}); }
+  if(cloudOn()){ cloudPull(false).then(()=>{applyCfg(); if(!cfg.pin)showMorningBrief();}); }
+  else if(!cfg.pin){ showMorningBrief(); }
   if(gotConnect){ applyCfg(); toast('מחובר לענן ✓'); }
   document.addEventListener('visibilitychange',()=>{ if(!document.hidden){ if(cloudOn())autoPull(); else refresh(); }});
   setInterval(autoPull, 45000);
