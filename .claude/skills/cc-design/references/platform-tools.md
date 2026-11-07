@@ -43,6 +43,19 @@ Claude Code is the primary target and uses Playwright MCP directly. Codex-style 
 4. Fix any issues, repeat
 ```
 
+### Without Playwright MCP (e.g. Claude Code on the web)
+
+When no `mcp__playwright__*` tools are available but Node + Playwright are (Claude Code cloud sessions ship both), use the bundled script:
+
+```bash
+node <skill-dir>/scripts/verify.js design.html --out shots            # 1440px + 390px
+node <skill-dir>/scripts/verify.js https://example.com --widths 1440,768,390
+```
+
+It prints console errors/warnings, failed requests, horizontal overflow (both sides, for RTL), `lang`/`dir`, whether the requested fonts loaded, small text and small tap targets, then writes `<name>-<width>-fold.png` and `-full.png`. Open the PNGs with `Read` for the visual review. Exit code 1 means an error-level problem.
+
+To use the Playwright MCP tools instead, register the server once: `claude mcp add playwright -- npx @playwright/mcp@latest`.
+
 ## Export Scripts
 
 Scripts live in the skill's `scripts/` directory. First run requires `npm install`:

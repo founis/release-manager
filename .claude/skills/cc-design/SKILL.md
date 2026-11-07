@@ -55,6 +55,7 @@ Classify the user's task by intent (output format, keywords), then load only the
 | Design system creation | `references/design-system-creation.md` | — | Tokens apply + visual coherence |
 | No design system provided | `references/frontend-design.md` + `references/design-excellence.md` | Choose template as needed | Aesthetic coherence |
 | Export (PPTX/PDF/inline) | `references/platform-tools.md` | — | File generated |
+| **Hebrew / RTL content** (add to any row above) | `references/hebrew-rtl.md` | — | `dir="rtl"`, Hebrew font actually renders, bidi of phones/prices |
 
 ## Workflow
 
@@ -76,6 +77,7 @@ cp <skill-dir>/templates/<component>.<ext> ./<component>.<ext>
   - **Visual:** screenshot review, design quality check
   - **Design excellence:** hierarchy clarity, spacing consistency, color harmony, emotional fit
   Fix and re-verify until all phases pass. See `references/platform-tools.md` for the full tool reference.
+  **No `mcp__playwright__*` tools in this session?** Run `node <skill-dir>/scripts/verify.js <file.html|url> --out <dir>` instead. It covers the structural checks at desktop and mobile widths and writes screenshots; open them with `Read` for the visual phase. Verify the existing page the same way before redesigning it, so you have a "before" to compare.
 
 **7. Deliver** — Hand off the file. Summarize caveats and next steps in one brief paragraph.
 
@@ -97,7 +99,7 @@ Output contracts are evaluated during the Verify step. If any contract fails, re
 - **Ask before adding material.** The user knows their audience better.
 - **Establish a layout system upfront.** After exploring assets, vocalize the grid/spacing/section approach. Use different backgrounds for section starters; full-bleed images when imagery is central.
 - **Appropriate scales:** text ≥24px for 1920x1080 slides; ≥12pt for print; hit targets ≥44px for mobile.
-- **Avoid AI slop:** aggressive gradients, emoji (unless brand), rounded-corner containers with left-border accents, SVG imagery (use placeholders), overused fonts (Inter, Roboto, Arial, Fraunces, system fonts).
+- **Avoid AI slop:** aggressive gradients, emoji (unless brand), rounded-corner containers with left-border accents, SVG imagery (use placeholders), overused fonts (Inter, Roboto, Arial, Fraunces, system fonts). For Hebrew pages, pick fonts from `references/hebrew-rtl.md` — the Latin fonts elsewhere in this skill have no Hebrew glyphs.
 - **Give 3+ variations** across layout, interaction, visual intensity, and motion. Mix by-the-book designs with novel approaches. Expose as tweaks when possible.
 - **Placeholder > bad asset.** If you don't have an icon or image, draw a placeholder. A clean placeholder beats a bad attempt at the real thing.
 - **Use colors from the design system.** If too restrictive, use oklch for harmonious matching.

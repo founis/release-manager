@@ -9,6 +9,8 @@
 
 Run these checks first. Any failure = stop and fix before proceeding to Phase 2.
 
+> No `mcp__playwright__*` tools? `node <skill-dir>/scripts/verify.js <file|url>` runs the checks below in one go and writes the screenshots for Phase 2 (see `platform-tools.md`).
+
 | Check | Method | Pass criteria | Fix if fail |
 |-------|--------|---------------|-------------|
 | Console errors | `browser_console_messages` (level: error) | 0 errors | Read error message, fix source, re-verify |
