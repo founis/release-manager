@@ -14,7 +14,7 @@
  *   - failed requests and HTTP responses >= 400 (marked third-party when off-origin)
  *   - horizontal overflow (RTL pages overflow to the left, so both sides are checked)
  *   - <html lang/dir>, and whether Hebrew text is present but the page is not RTL
- *   - the font each heading/body actually asks for, and whether it covers Hebrew
+ *   - the font the first visible h1/h2/p/button asks for, and whether it covers Hebrew
  *   - text smaller than 12px, and (at widths < 600) tap targets smaller than 44px
  * Writes <out>/<name>-<width>-fold.png (first screen) and -full.png (whole page).
  * Exit code 1 when an error-level problem was found, else 0.
@@ -46,9 +46,11 @@ async function main() {
     if (!fs.existsSync(p)) { console.error(`Not found: ${p}`); process.exit(2); }
     url = 'file://' + p;
   }
-  const origin = url.startsWith('file://') ? 'file://' : new URL(url).origin;
-  const name = (url.startsWith('file://') ? path.basename(url, '.html') : new URL(url).hostname)
-    .replace(/[^\w.-]+/g, '_') || 'page';
+  const parsed = new URL(url);
+  const origin = parsed.protocol === 'file:' ? 'file://' : parsed.origin;
+  // A #hash is kept in the name so variants of one file (page.html#a, #b) don't overwrite each other.
+  const base = parsed.protocol === 'file:' ? path.basename(decodeURIComponent(parsed.pathname), '.html') : parsed.hostname;
+  const name = (base + (parsed.hash.length > 1 ? '-' + parsed.hash.slice(1) : '')).replace(/[^\w.-]+/g, '_') || 'page';
   const widths = opts.widths.split(',').map(Number).filter(Boolean);
   fs.mkdirSync(opts.out, { recursive: true });
 
@@ -130,8 +132,9 @@ async function main() {
       });
       const faces = [...document.fonts];
       const fonts = {};
-      for (const sel of ['h1', 'h2', 'body', 'button']) {
-        const el = document.querySelector(sel);
+      for (const sel of ['h1', 'h2', 'p', 'button']) {
+        // First *visible* match: pages with variants keep the hidden ones in the DOM.
+        const el = [...document.querySelectorAll(sel)].find(visible);
         if (!el) continue;
         const s = getComputedStyle(el);
         const first = s.fontFamily.split(',')[0].trim().replace(/^["']|["']$/g, '');
