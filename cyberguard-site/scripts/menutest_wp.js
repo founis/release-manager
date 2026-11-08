@@ -1,0 +1,20 @@
+const { chromium, devices } = require('playwright'); const path = require('path');
+(async () => {
+  const b = await chromium.launch(); const p = await b.newPage({ ...devices['iPhone 13'] });
+  const errs = []; p.on('pageerror', e => errs.push(e.message));
+  await p.goto('file://' + encodeURI(path.resolve(process.argv[2])), { waitUntil: 'networkidle' });
+  const ok = (c, m) => console.log((c ? 'PASS ' : 'FAIL ') + m);
+  ok(await p.isVisible('.menu-btn'), 'menu button visible on phone');
+  await p.screenshot({ path: process.argv[3] + '/m-header.png' });
+  await p.click('.menu-btn'); await p.waitForTimeout(400);
+  ok(await p.isVisible('#cgx-mnav'), 'menu opens');
+  await p.screenshot({ path: process.argv[3] + '/m-menu.png' });
+  await p.click('#cgx-mnav .mnav-links a[href="#faq"]'); await p.waitForTimeout(3000);
+  ok(!(await p.isVisible('#cgx-mnav')), 'menu closes on link');
+  const top = await p.$eval('#faq', e => Math.round(e.getBoundingClientRect().top)); ok(top < 200, `jumped to FAQ (top ${top}px)`);
+  await p.click('.menu-btn'); await p.keyboard.press('Escape'); ok(!(await p.isVisible('#cgx-mnav')), 'Escape closes menu');
+  ok(errs.length === 0, 'no page errors ' + errs.join(';'));
+  const d = await b.newPage({ viewport: { width: 1440, height: 900 } }); await d.goto('file://' + encodeURI(path.resolve(process.argv[2])));
+  ok(!(await d.isVisible('.menu-btn')) && await d.isVisible('.nav'), 'desktop shows inline nav, no menu button');
+  await b.close();
+})();

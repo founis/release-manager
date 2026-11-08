@@ -1,0 +1,232 @@
+{
+ "bad_status": [],
+ "js_errors": [
+  [
+   "https://cyberguard.co.il/",
+   [
+    "An error has occurred: Failed to fetch"
+   ]
+  ],
+  [
+   "https://cyberguard.co.il/%d7%90%d7%99%d7%9a-%d7%99%d7%95%d7%93%d7%a2%d7%99%d7%9d-%d7%90%d7%9d-%d7%a4%d7%a8%d7%a6%d7%95-%d7%9c%d7%98%d7%9c%d7%a4%d7%95%d7%9f/",
+   [
+    "An error has occurred: Failed to fetch"
+   ]
+  ],
+  [
+   "https://cyberguard.co.il/%d7%90%d7%91%d7%98%d7%97%d7%aa-%d7%a1%d7%99%d7%99%d7%91%d7%a8-%d7%91%d7%99%d7%a9%d7%a8%d7%90%d7%9c/",
+   [
+    "An error has occurred: Failed to fetch"
+   ]
+  ],
+  [
+   "https://cyberguard.co.il/%d7%90%d7%91%d7%98%d7%97%d7%aa-%d7%97%d7%a9%d7%91%d7%95%d7%9f-%d7%a4%d7%99%d7%99%d7%a1%d7%91%d7%95%d7%a7/",
+   [
+    "An error has occurred: Failed to fetch"
+   ]
+  ]
+ ],
+ "overflow": [
+  [
+   "https://cyberguard.co.il/business-verification/",
+   10389
+  ]
+ ],
+ "no_h1": [
+  "https://cyberguard.co.il/category/%d7%90%d7%91%d7%98%d7%97%d7%aa-%d7%a1%d7%99%d7%99%d7%91%d7%a8/",
+  "https://cyberguard.co.il/category/%d7%95%d7%95%d7%90%d7%98%d7%a1%d7%90%d7%a4/",
+  "https://cyberguard.co.il/category/%d7%90%d7%99%d7%a0%d7%a1%d7%98%d7%92%d7%a8%d7%9d/",
+  "https://cyberguard.co.il/category/%d7%98%d7%99%d7%a7%d7%98%d7%95%d7%a7/",
+  "https://cyberguard.co.il/category/%d7%98%d7%9c%d7%92%d7%a8%d7%9d/",
+  "https://cyberguard.co.il/category/%d7%a4%d7%99%d7%99%d7%a1%d7%91%d7%95%d7%a7/",
+  "https://cyberguard.co.il/category/locked-phone-recovery/"
+ ],
+ "multi_h1": [],
+ "no_desc": [
+  "https://cyberguard.co.il/cyberguard-%d7%9e%d7%97%d7%96%d7%99%d7%a8%d7%99%d7%9d-%d7%9c%d7%9a-%d7%90%d7%aa-%d7%94%d7%a9%d7%9c%d7%99%d7%98%d7%94/",
+  "https://cyberguard.co.il/cyberguard-%d7%a2%d7%9e%d7%95%d7%93-%d7%90%d7%9c%d7%99%d7%98-v3-%d7%aa%d7%9c%d7%aa-%d7%9e%d7%99%d7%9e%d7%93-%d7%a1%d7%a8%d7%92%d7%9c-%d7%a2%d7%93%d7%9b%d7%95%d7%a0%d7%99%d7%9d/"
+ ],
+ "long_title": [
+  [
+   "https://cyberguard.co.il/%d7%90%d7%99%d7%9a-%d7%9c%d7%a9%d7%97%d7%96%d7%a8-%d7%97%d7%a9%d7%91%d7%95%d7%9f-%d7%98%d7%99%d7%a7%d7%98%d7%95%d7%a7/",
+   68
+  ],
+  [
+   "https://cyberguard.co.il/%d7%90%d7%99%d7%9e%d7%95%d7%aa-%d7%a2%d7%a1%d7%a7%d7%99-%d7%9e%d7%98%d7%90-%d7%a0%d7%93%d7%97%d7%94/",
+   106
+  ],
+  [
+   "https://cyberguard.co.il/%d7%90%d7%99%d7%a0%d7%a1%d7%98%d7%92%d7%a8%d7%9d-%d7%9c%d7%90-%d7%9e%d7%a2%d7%9c%d7%94-%d7%a4%d7%95%d7%a1%d7%98-%d7%a1%d7%98%d7%95%d7%a8%d7%99-%d7%a8%d7%99%d7%9c%d7%a1/",
+   70
+  ],
+  [
+   "https://cyberguard.co.il/%d7%90%d7%99%d7%9e%d7%95%d7%aa-%d7%a2%d7%a1%d7%a7-%d7%91-meta-business-manager/",
+   67
+  ],
+  [
+   "https://cyberguard.co.il/%d7%90%d7%a0%d7%99-%d7%9c%d7%90-%d7%9e%d7%a6%d7%9c%d7%99%d7%97%d7%94-%d7%9c%d7%90%d7%a4%d7%a1-%d7%a1%d7%99%d7%a1%d7%9e%d7%90-%d7%91%d7%a4%d7%99%d7%99%d7%a1%d7%91%d7%95%d7%a7/",
+   72
+  ],
+  [
+   "https://cyberguard.co.il/%d7%91%d7%a2%d7%9c%d7%95%d7%aa-%d7%a2%d7%9c-%d7%a2%d7%9e%d7%95%d7%93-%d7%a2%d7%a1%d7%a7%d7%99/",
+   101
+  ],
+  [
+   "https://cyberguard.co.il/%d7%94%d7%95%d7%a0%d7%90%d7%95%d7%aa-%d7%a2%d7%95%d7%a0%d7%aa-%d7%94%d7%97%d7%92%d7%99%d7%9d/",
+   114
+  ],
+  [
+   "https://cyberguard.co.il/%d7%94%d7%95%d7%a0%d7%90%d7%95%d7%aa-%d7%94%d7%a9%d7%a7%d7%a2%d7%95%d7%aa-%d7%95%d7%a8%d7%95%d7%9e%d7%a0%d7%98%d7%99%d7%a7%d7%94/",
+   110
+  ],
+  [
+   "https://cyberguard.co.il/%d7%94%d7%95%d7%a9%d7%91%d7%aa-%d7%9c%d7%99-%d7%94%d7%97%d7%a9%d7%91%d7%95%d7%9f-%d7%91%d7%90%d7%99%d7%a0%d7%a1%d7%98%d7%92%d7%a8%d7%9d/",
+   66
+  ],
+  [
+   "https://cyberguard.co.il/%d7%94%d7%97%d7%a9%d7%91%d7%95%d7%9f-%d7%94%d7%95%d7%a9%d7%91%d7%aa-%d7%9c%d7%a6%d7%9e%d7%99%d7%aa%d7%95%d7%aa/",
+   69
+  ],
+  [
+   "https://cyberguard.co.il/%d7%94%d7%a8%d7%a9%d7%90%d7%95%d7%aa-%d7%90%d7%a4%d7%9c%d7%99%d7%a7%d7%a6%d7%99%d7%95%d7%aa-%d7%a6%d7%93-%d7%a9%d7%9c%d7%99%d7%a9%d7%99/",
+   99
+  ],
+  [
+   "https://cyberguard.co.il/%d7%94%d7%a4%d7%99%d7%99%d7%a1%d7%91%d7%95%d7%a7-%d7%9c%d7%90-%d7%a9%d7%95%d7%9c%d7%97-%d7%9c%d7%99-%d7%a7%d7%95%d7%93/",
+   69
+  ],
+  [
+   "https://cyberguard.co.il/%d7%97%d7%a9%d7%91%d7%95%d7%9f-%d7%a9%d7%9c-%d7%99%d7%9c%d7%93-%d7%a0%d7%a4%d7%a8%d7%a5-%d7%9e%d7%93%d7%a8%d7%99%d7%9a-%d7%9c%d7%94%d7%95%d7%a8%d7%99%d7%9d/",
+   90
+  ],
+  [
+   "https://cyberguard.co.il/%d7%9e%d7%a4%d7%aa%d7%97%d7%95%d7%aa-%d7%92%d7%99%d7%a9%d7%94-passkeys/",
+   107
+  ],
+  [
+   "https://cyberguard.co.il/%d7%a0%d7%97%d7%a1%d7%9d-%d7%9c%d7%9b%d7%9d-whatsapp-7-%d7%93%d7%91%d7%a8%d7%99%d7%9d-%d7%9c%d7%a2%d7%a9%d7%95%d7%aa-%d7%9c%d7%a4%d7%a0%d7%99-%d7%a9%d7%9e%d7%95%d7%97%d7%a7%d7%99%d7%9d-%d7%90%d7%aa/",
+   71
+  ],
+  [
+   "https://cyberguard.co.il/%d7%a4%d7%a8%d7%a6%d7%95-%d7%9c%d7%99-%d7%9c%d7%90%d7%99%d7%a0%d7%a1%d7%98%d7%92%d7%a8%d7%9d-%d7%90%d7%99%d7%9a-%d7%9e%d7%a9%d7%97%d7%96%d7%a8%d7%99%d7%9d-%d7%97%d7%a9%d7%91%d7%95%d7%9f/",
+   69
+  ],
+  [
+   "https://cyberguard.co.il/%d7%a7%d7%95%d7%93%d7%99-%d7%a9%d7%97%d7%96%d7%95%d7%a8-recovery-codes/",
+   117
+  ],
+  [
+   "https://cyberguard.co.il/%d7%a9%d7%97%d7%96%d7%95%d7%a8-%d7%97%d7%a9%d7%91%d7%95%d7%9f-%d7%98%d7%9c%d7%92%d7%a8%d7%9d-%d7%a9%d7%a0%d7%a4%d7%a8%d7%a5/",
+   72
+  ],
+  [
+   "https://cyberguard.co.il/%d7%a9%d7%97%d7%96%d7%95%d7%a8-%d7%97%d7%a9%d7%91%d7%95%d7%9f-%d7%a4%d7%99%d7%99%d7%a1%d7%91%d7%95%d7%a7-%d7%a9%d7%a0%d7%9e%d7%97%d7%a7/",
+   69
+  ],
+  [
+   "https://cyberguard.co.il/%d7%a9%d7%99%d7%a8%d7%95%d7%aa%d7%99%d7%9d/",
+   74
+  ],
+  [
+   "https://cyberguard.co.il/%d7%a9%d7%99%d7%a8%d7%95%d7%aa-%d7%9c%d7%a7%d7%95%d7%97%d7%95%d7%aa-%d7%90%d7%99%d7%a0%d7%a1%d7%98%d7%92%d7%a8%d7%9d/",
+   69
+  ],
+  [
+   "https://cyberguard.co.il/%d7%a9%d7%99%d7%a8%d7%95%d7%aa-%d7%9c%d7%a7%d7%95%d7%97%d7%95%d7%aa-%d7%a4%d7%99%d7%99%d7%a1%d7%91%d7%95%d7%a7/",
+   66
+  ],
+  [
+   "https://cyberguard.co.il/15-%d7%9b%d7%9c%d7%9c%d7%99-%d7%90%d7%91%d7%98%d7%97%d7%94/",
+   110
+  ],
+  [
+   "https://cyberguard.co.il/cyberguard-%d7%9e%d7%97%d7%96%d7%99%d7%a8%d7%99%d7%9d-%d7%9c%d7%9a-%d7%90%d7%aa-%d7%94%d7%a9%d7%9c%d7%99%d7%98%d7%94/",
+   77
+  ],
+  [
+   "https://cyberguard.co.il/cyberguard-%d7%a2%d7%9e%d7%95%d7%93-%d7%90%d7%9c%d7%99%d7%98-v3-%d7%aa%d7%9c%d7%aa-%d7%9e%d7%99%d7%9e%d7%93-%d7%a1%d7%a8%d7%92%d7%9c-%d7%a2%d7%93%d7%9b%d7%95%d7%a0%d7%99%d7%9d/",
+   95
+  ]
+ ],
+ "dup_titles": [],
+ "dup_desc": [],
+ "no_alt_total": 0,
+ "wa_variants": [
+  [
+   "https://wa.me/972523001030?text=%D7%94%D7%99%D7%99%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%",
+   155
+  ],
+  [
+   "https://wa.me/972523001030",
+   128
+  ],
+  [
+   "https://www.google.com/search?q=https://wa.me/972523001030%3Ftext%3D%25D7%25A9%25D7%259C%2",
+   1
+  ],
+  [
+   "https://wa.me/972523001030?text=%D7%94%D7%99%D7%99%20CyberGuard%2C%20%D7%90%D7%A0%D7%99%20",
+   1
+  ],
+  [
+   "https://wa.me/972523001030?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%A6%D7%A8%",
+   1
+  ],
+  [
+   "https://www.google.com/search?q=https://wa.me/972523001030%3Ftext%3D%25D7%25A9%25D7%259C%2",
+   1
+  ],
+  [
+   "https://wa.me/972523001030?text=%D7%94%D7%99%D7%99%2C%20%D7%97%D7%A9%D7%91%D7%95%D7%9F%20%",
+   1
+  ],
+  [
+   "https://wa.me/972523001030?text=%D7%91%D7%93%D7%99%D7%A7%D7%94%20%D7%A2%D7%A8%D7%A2%D7%95%",
+   1
+  ]
+ ],
+ "tel_variants": [
+  [
+   "tel:0523001030",
+   155
+  ],
+  [
+   "tel:052-3001030",
+   120
+  ],
+  [
+   "tel:+972523001030",
+   5
+  ]
+ ],
+ "slow": [
+  [
+   "https://cyberguard.co.il/%d7%90%d7%91%d7%98%d7%97%d7%aa-%d7%97%d7%a9%d7%91%d7%95%d7%9f-%d7%a4%d7%99%d7%99%d7%a1%d7%91%d7%95%d7%a7/",
+   3922
+  ],
+  [
+   "https://cyberguard.co.il/%d7%90%d7%91%d7%98%d7%97%d7%aa-%d7%a1%d7%99%d7%99%d7%91%d7%a8-%d7%91%d7%99%d7%a9%d7%a8%d7%90%d7%9c/",
+   3861
+  ],
+  [
+   "https://cyberguard.co.il/%d7%94%d7%95%d7%93%d7%a2%d7%94-%d7%a2%d7%9c-%d7%94%d7%a4%d7%a8%d7%aa-%d7%96%d7%9b%d7%95%d7%99%d7%95%d7%aa-%d7%99%d7%95%d7%a6%d7%a8%d7%99%d7%9d/",
+   3816
+  ],
+  [
+   "https://cyberguard.co.il/%d7%94%d7%a4%d7%99%d7%99%d7%a1%d7%91%d7%95%d7%a7-%d7%9c%d7%90-%d7%a9%d7%95%d7%9c%d7%97-%d7%9c%d7%99-%d7%a7%d7%95%d7%93/",
+   3666
+  ],
+  [
+   "https://cyberguard.co.il/%d7%94%d7%a4%d7%95%d7%a8%d7%a5-%d7%93%d7%95%d7%a8%d7%a9-%d7%9b%d7%a1%d7%a3/",
+   3631
+  ]
+ ],
+ "pages_without_form": 10,
+ "internal_links_checked": 159,
+ "broken_links": [
+  [
+   "404",
+   "https://cyberguard.co.il/%D7%A9%D7%97%D7%96%D7%95%D7%A8-%D7%97%D7%A9%D7%91%D7%95%D7%9F-%D7%90%D7%99%D7%A0%D7%A1%D7%98%D7%92%D7%A8%D7%9D-%D7%A2%D7%A1%D7%A7%D7%99/"
+  ]
+ ]
+}
