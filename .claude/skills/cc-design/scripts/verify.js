@@ -178,6 +178,16 @@ async function main() {
     const fold = path.join(opts.out, `${name}-${width}-fold.png`);
     const full = path.join(opts.out, `${name}-${width}-full.png`);
     await page.screenshot({ path: fold });
+    // Scroll the whole page once so lazy images load and scroll-reveal content is shown,
+    // otherwise the full-page shot has blank sections that look like bugs.
+    await page.evaluate(async () => {
+      for (let y = 0; y < document.documentElement.scrollHeight; y += Math.round(innerHeight * 0.8)) {
+        // 'instant' so pages with scroll-behavior:smooth still reach each position
+        scrollTo({ top: y, behavior: 'instant' }); await new Promise((r) => setTimeout(r, 120));
+      }
+      scrollTo({ top: 0, behavior: 'instant' });
+    });
+    await page.waitForTimeout(900);
     await page.screenshot({ path: full, fullPage: true });
 
     const problems = [];
