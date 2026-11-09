@@ -642,6 +642,55 @@ html{scroll-behavior:smooth;scroll-padding-top:88px}
 #cgx .qc-opt{padding:8px 10px;gap:8px;font-size:14px}}
 @media (max-width:340px){#cgx .wrap{padding-inline:16px}
 #cgx .h1{font-size:min(40px, calc((100vw - 32px) / 9.5))}}
+#cgx .field span{color:var(--text);font-size:15px;font-weight:600;margin-bottom:8px}
+#cgx .field input,#cgx .field select,#cgx .hf .field input,#cgx .hf .field select,#cgx .qc-form input:not([type=checkbox]){background-color:#fff;color:oklch(0.20 0.03 278);border:2px solid oklch(1 0 0 / .9);font-size:16px;font-weight:500;box-shadow:inset 0 1px 2px oklch(0.2 0.03 278 / .08)}
+#cgx .field input::placeholder,#cgx .qc-form input::placeholder{color:oklch(0.58 0.02 278);font-weight:400;opacity:1}
+#cgx .field input:focus,#cgx .field select:focus,#cgx .qc-form input:not([type=checkbox]):focus{outline:none;border-color:var(--wa);box-shadow:0 0 0 4px oklch(0.74 0.17 152 / .32)}
+#cgx .field select{background-image:linear-gradient(45deg,transparent 50%,oklch(0.30 0.03 278) 50%),linear-gradient(135deg,oklch(0.30 0.03 278) 50%,transparent 50%)}
+#cgx .consent{color:oklch(0.86 0.02 278)}
+#cgx .consent input{border-color:oklch(1 0 0 / .85);background:transparent;width:24px;height:24px}
+#cgx .consent a{color:#fff}
+#cgx .hf .field select{background-image:linear-gradient(45deg,transparent 50%,oklch(0.30 0.03 278) 50%),linear-gradient(135deg,oklch(0.30 0.03 278) 50%,transparent 50%);background-position:18px 22px,24px 22px;background-size:6px 6px;background-repeat:no-repeat}
+#cgx form.tried input:invalid,#cgx form.tried select:invalid{border-color:oklch(0.68 0.2 25);box-shadow:0 0 0 4px oklch(0.68 0.2 25 / .25)}
+#cgx form.tried .consent input:invalid{border-color:oklch(0.68 0.2 25);box-shadow:0 0 0 3px oklch(0.68 0.2 25 / .3)}
+#cgx .aurora{position:fixed;inset:0;z-index:-5;pointer-events:none;overflow:hidden}
+#cgx .aurora i{position:absolute;width:62vmax;height:62vmax;border-radius:50%;opacity:.55;will-change:transform}
+#cgx .aurora i:nth-child(1){top:-22vmax;left:-14vmax;background:radial-gradient(closest-side,oklch(0.55 0.20 292 / .55),transparent);animation:cgx-au1 28s ease-in-out infinite alternate}
+#cgx .aurora i:nth-child(2){bottom:-26vmax;right:-18vmax;background:radial-gradient(closest-side,oklch(0.62 0.15 160 / .32),transparent);animation:cgx-au2 34s ease-in-out infinite alternate}
+#cgx .aurora i:nth-child(3){top:30%;left:35%;width:44vmax;height:44vmax;background:radial-gradient(closest-side,oklch(0.50 0.16 260 / .35),transparent);animation:cgx-au3 40s ease-in-out infinite alternate}
+@keyframes cgx-au1{to{transform:translate(18vmax,22vmax) scale(1.15)}}
+@keyframes cgx-au2{to{transform:translate(-20vmax,-16vmax) scale(1.1)}}
+@keyframes cgx-au3{to{transform:translate(-22vmax,10vmax) scale(.9)}}
+#cgx{background:var(--bg)}
+#cgx .sec,#cgx .strip,#cgx .plat{background-color:transparent}
+#cgx .grain{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.045;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");mix-blend-mode:overlay}
+#cgx .w-in{display:inline-block;opacity:0;filter:blur(10px);transform:translateY(.35em);transition:opacity .7s ease,filter .7s ease,transform .7s cubic-bezier(.2,.7,.2,1);transition-delay:calc(var(--wi,0) * 55ms)}
+#cgx .words-on .w-in{opacity:1;filter:none;transform:none}
+#cgx .img-wipe{clip-path:inset(0 0 0 100%);transition:clip-path 1.1s cubic-bezier(.7,0,.2,1)}
+#cgx .img-wipe.on{clip-path:inset(0)}
+#cgx .btn-wa{background:linear-gradient(180deg,oklch(0.80 0.16 152),oklch(0.70 0.17 152));box-shadow:inset 0 1px 0 oklch(1 0 0 / .45),0 10px 28px -10px oklch(0.74 0.17 152 / .75),0 2px 6px oklch(0 0 0 / .25)}
+#cgx .btn-wa:hover{background:linear-gradient(180deg,oklch(0.84 0.16 152),oklch(0.74 0.17 152));box-shadow:inset 0 1px 0 oklch(1 0 0 / .5),0 16px 36px -10px oklch(0.74 0.17 152 / .85),0 2px 6px oklch(0 0 0 / .25)}
+#cgx .btn-ghost{background:oklch(1 0 0 / .03);box-shadow:inset 0 1px 0 oklch(1 0 0 / .06)}
+#cgx .btn{transition:transform .2s cubic-bezier(.2,.7,.2,1),background .2s ease,box-shadow .25s ease,border-color .2s ease}
+@property --spin{syntax:'<angle>';inherits:false;initial-value:0deg}
+#cgx .qc,#cgx .lb{position:relative;isolation:isolate}
+#cgx .qc::after,#cgx .lb::after{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1.5px;pointer-events:none;z-index:1;background:conic-gradient(from var(--spin),transparent 0 55%,oklch(0.80 0.12 292 / .9) 70%,oklch(0.80 0.16 152 / .8) 80%,transparent 92%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:cgx-spin 7s linear infinite}
+@keyframes cgx-spin{to{--spin:360deg}}
+@media (hover:hover){#cgx .tilt{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(var(--ty,0));transition:transform .5s cubic-bezier(.2,.7,.2,1),border-color .25s ease,box-shadow .25s ease;transform-style:preserve-3d}
+#cgx .tilt.tilting{transition:transform .08s linear,border-color .25s ease,box-shadow .25s ease}
+#cgx .svc-card.tilt:hover{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(-6px)}
+
+}
+#cgx .foot{position:relative;overflow:hidden}
+#cgx .foot-mark{position:absolute;inset-inline:0;bottom:-.18em;text-align:center;font-size:clamp(80px,17vw,260px);font-weight:700;letter-spacing:-.02em;line-height:1;direction:ltr;color:transparent;-webkit-text-stroke:1px oklch(0.80 0.12 292 / .16);background:linear-gradient(180deg,oklch(0.80 0.12 292 / .10),transparent 75%);-webkit-background-clip:text;background-clip:text;pointer-events:none;user-select:none}
+#cgx .foot .wrap{position:relative}
+@media (prefers-reduced-motion:reduce){#cgx .aurora i:nth-child(n),#cgx .qc::after,#cgx .lb::after{animation:none}
+#cgx .w-in{opacity:1;filter:none;transform:none;transition:none}
+#cgx .img-wipe{clip-path:none;transition:none}
+
+}
+@media (max-width:720px){#cgx .grain{opacity:.035}
+#cgx .aurora i{opacity:.45}}
 #cgx .mbar{display:none}
 @media (prefers-reduced-motion:reduce){#cgx .hero-bg,#cgx .hero-kicker::before,#cgx .now .dot{animation:none}
 html{scroll-behavior:auto}
@@ -717,6 +766,8 @@ html{scroll-behavior:auto}
 </style>
 <div id="cgx" dir="rtl" lang="he">
 
+<div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+<div class="grain" aria-hidden="true"></div>
 <a class="skip" href="#cgx-top">דלגו לתוכן</a>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -807,8 +858,8 @@ html{scroll-behavior:auto}
         <div class="hf-head"><span class="hf-live" aria-hidden="true"></span><div><b>בדיקה ראשונית חינם</b><small>השאירו שם ונייד — נחזור אליכם בהקדם</small></div></div>
         <form class="hf" data-lead novalidate>
           <div class="hf-row">
-            <label class="field"><span>שם</span><input name="name" autocomplete="name" required></label>
-            <label class="field"><span>נייד</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" dir="ltr" required></label>
+            <label class="field"><span>שם</span><input name="name" autocomplete="name" placeholder="השם שלכם" required></label>
+            <label class="field"><span>נייד</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" dir="ltr" placeholder="050-1234567" pattern="[0-9+\s\-]{9,16}" required></label>
           </div>
           <label class="field"><span>מה קרה?</span><select name="issue"><option>פרצו לי לפייסבוק</option><option>פרצו לי לאינסטגרם</option><option>פרצו לי לוואטסאפ</option><option>מנהל המודעות נחסם</option><option>חשבון גוגל / Gmail נחסם</option><option>ערוץ יוטיוב נפרץ</option><option>חשבון טיקטוק נחסם</option><option>טלפון נעול</option><option>משהו אחר</option></select></label>
           <label class="consent"><input type="checkbox" name="consent" required><span>אני מאשר/ת את <a href="https://cyberguard.co.il/מדיניות-פרטיות/">מדיניות הפרטיות</a></span></label>
@@ -911,8 +962,8 @@ html{scroll-behavior:auto}
     <div class="lb" data-reveal>
       <div class="lb-text"><p class="eyebrow">בדיקה ראשונית ללא עלות</p><h2 class="h2 lb-h">רוצים שנחזור אליכם?</h2><p>השאירו שם ונייד, ונחזור עם בדיקה ראשונית — חינם וללא התחייבות.</p></div>
       <form class="lb-form" data-lead novalidate>
-        <label class="field"><span>שם</span><input name="name" autocomplete="name" required></label>
-        <label class="field"><span>נייד</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" dir="ltr" required></label>
+        <label class="field"><span>שם</span><input name="name" autocomplete="name" placeholder="השם שלכם" required></label>
+        <label class="field"><span>נייד</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" dir="ltr" placeholder="050-1234567" pattern="[0-9+\s\-]{9,16}" required></label>
         <label class="field"><span>מה קרה?</span><select name="issue"><option>פרצו לי לפייסבוק</option><option>פרצו לי לאינסטגרם</option><option>פרצו לי לוואטסאפ</option><option>מנהל המודעות נחסם</option><option>חשבון גוגל / Gmail נחסם</option><option>ערוץ יוטיוב נפרץ</option><option>חשבון טיקטוק נחסם</option><option>טלפון נעול</option><option>משהו אחר</option></select></label>
         <button class="btn btn-wa btn-lg" type="submit">חזרו אליי</button>
         <label class="consent"><input type="checkbox" name="consent" required><span>אני מאשר/ת את <a href="https://cyberguard.co.il/מדיניות-פרטיות/">מדיניות הפרטיות</a> ומסכים/ה שהמידע ישמש למענה לפנייה ולמטרות המפורטות בה</span></label>
@@ -1083,8 +1134,8 @@ html{scroll-behavior:auto}
     <form class="form" data-reveal id="cgx-leadForm" data-lead novalidate>
       <h3>בואו נבדוק את אפשרויות הגישה</h3>
       <p>מלאו את הפרטים ונחזור אליכם עם בדיקה ראשונית — חינם וללא התחייבות.</p>
-      <label class="field"><span>שם</span><input name="name" autocomplete="name" required></label>
-      <label class="field"><span>נייד</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" dir="ltr" required></label>
+      <label class="field"><span>שם</span><input name="name" autocomplete="name" placeholder="השם שלכם" required></label>
+      <label class="field"><span>נייד</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" dir="ltr" placeholder="050-1234567" pattern="[0-9+\s\-]{9,16}" required></label>
       <label class="field"><span>מה קרה?</span>
         <select name="issue">
           <option>פרצו לי לפייסבוק</option><option>פרצו לי לאינסטגרם</option><option>פרצו לי לוואטסאפ</option><option>מנהל המודעות נחסם</option><option>חשבון גוגל / Gmail נחסם</option><option>ערוץ יוטיוב נפרץ</option><option>חשבון טיקטוק נחסם</option><option>טלפון נעול</option><option>משהו אחר</option>
@@ -1096,7 +1147,7 @@ html{scroll-behavior:auto}
   </div></section>
 </main>
 
-<footer class="foot" data-screen-label="13 Footer"><div class="wrap">
+<footer class="foot" data-screen-label="13 Footer"><div class="foot-mark" aria-hidden="true">CyberGuard</div><div class="wrap">
   <div class="foot-grid">
     <div class="foot-brand">
       <a class="brand" href="#cgx-top"><img src="https://cyberguard.co.il/wp-content/uploads/2023/12/ChatGPT-Image-Jul-15-2026-11_30_37-PM-150x150.webp" alt=""><div><b>Cyber<span>Guard</span></b><small>שחרור ושחזור חשבונות</small></div></a>
@@ -1303,8 +1354,8 @@ if (qc) {
       <p class="qc-note">זו הערכה כללית לפי ניסיון, לא הבטחה — ההחלטה הסופית תמיד אצל הפלטפורמה. את המקרה שלכם נבדוק בשיחה הראשונית, חינם.</p>
       <details class="qc-callback"><summary>או השאירו שם ונייד, ונחזור אליכם</summary>
         <form class="qc-form" data-lead data-context="${esc(`פלטפורמה: ${NAMES[ans[0]]} · מה קרה: ${NAMES[ans[1]]} · ${NAMES[ans[2]]}`)}" novalidate>
-          <input name="name" aria-label="שם" placeholder="שם" autocomplete="name" required>
-          <input name="phone" type="tel" inputmode="tel" aria-label="נייד" placeholder="נייד" autocomplete="tel" dir="ltr" required>
+          <input name="name" aria-label="שם" placeholder="השם שלכם" autocomplete="name" required>
+          <input name="phone" type="tel" inputmode="tel" aria-label="נייד" placeholder="050-1234567" autocomplete="tel" dir="ltr" pattern="[0-9+\s\-]{9,16}" required>
           <label class="consent"><input type="checkbox" name="consent" required><span>אני מאשר/ת את <a href="https://cyberguard.co.il/מדיניות-פרטיות/">מדיניות הפרטיות</a></span></label>
           <button class="btn btn-ghost" type="submit">חזרו אליי</button>
         </form>
@@ -1397,6 +1448,69 @@ document.addEventListener('submit', (e) => {
   const was = btn.innerHTML; btn.dataset.sent = '1'; btn.innerHTML = '✓ פותחים לכם וואטסאפ…';
   setTimeout(() => { btn.innerHTML = was; delete btn.dataset.sent; }, 2600);
 });
+
+/* Hebrew validation messages */
+const HE_MSG = (el) => el.type === 'checkbox' ? 'נא לאשר את מדיניות הפרטיות' : el.name === 'phone' ? (el.value ? 'נא להזין מספר נייד תקין, למשל 050-1234567' : 'נא למלא מספר נייד') : el.name === 'name' ? 'נא למלא שם' : 'נא למלא את השדה';
+document.addEventListener('invalid', (e) => { const el = e.target; if (el.closest && el.closest('form[data-lead]')) el.setCustomValidity(HE_MSG(el)); }, true);
+document.addEventListener('input', (e) => { if (e.target.setCustomValidity) e.target.setCustomValidity(''); }, true);
+document.addEventListener('change', (e) => { if (e.target.setCustomValidity) e.target.setCustomValidity(''); }, true);
+
+/* ===================== Premium layer ===================== */
+const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
+/* Mark forms after a submit attempt so empty fields light up */
+document.addEventListener('submit', (e) => { const f = e.target.closest('form[data-lead]'); if (f) f.classList.add('tried'); }, true);
+document.addEventListener('click', (e) => { const b = e.target.closest('form[data-lead] [type=submit]'); if (b) b.form.classList.add('tried'); }, true);
+if (!calm && 'IntersectionObserver' in window) {
+  /* Split section headings into words (text nodes only, so inner markup stays) */
+  const heads = document.querySelectorAll('.sec .h2, .sec .big, .lb-h');
+  heads.forEach((h) => {
+    let n = 0; const walker = document.createTreeWalker(h, NodeFilter.SHOW_TEXT); const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach((t) => {
+      if (!t.textContent.trim()) return;
+      const frag = document.createDocumentFragment();
+      t.textContent.split(/(\s+)/).forEach((part) => {
+        if (!part) return;
+        if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+        const w = document.createElement('span'); w.className = 'w-in'; w.style.setProperty('--wi', n++); w.textContent = part; frag.appendChild(w);
+      });
+      t.replaceWith(frag);
+    });
+  });
+  const wo = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('words-on'); wo.unobserve(e.target); } }), { threshold: 0.4 });
+  heads.forEach((h) => { if (h.getBoundingClientRect().top < innerHeight * 0.9) h.classList.add('words-on'); else wo.observe(h); });
+  /* Image wipes */
+  /* observe the frame, not the image: a fully clipped image never counts as visible (and lazy images wouldn't load) */
+  const frames = document.querySelectorAll('.svc-img, .proc-img');
+  const io2 = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { const im = e.target.querySelector('img'); if (im) im.classList.add('on'); io2.unobserve(e.target); } }), { threshold: 0.25 });
+  frames.forEach((fr) => { const im = fr.querySelector('img'); if (im && fr.getBoundingClientRect().top > innerHeight * 0.95) { im.loading = 'eager'; im.classList.add('img-wipe'); io2.observe(fr); } });
+  /* Hero parallax: background drifts slower, content eases out */
+  const hb = document.querySelector('.hero-bg');
+  let ticking = false;
+  addEventListener('scroll', () => {
+    if (ticking) return; ticking = true;
+    requestAnimationFrame(() => {
+      const y = scrollY; ticking = false; if (y > innerHeight * 1.2) return;
+      if (hb) hb.style.translate = `0 ${y * 0.35}px`;
+    });
+  }, { passive: true });
+}
+if (!calm && fine) {
+  /* 3D tilt + glare on cards */
+  document.querySelectorAll('.svc-card, .case, .promise').forEach((c) => {
+    c.classList.add('tilt');
+    c.addEventListener('pointermove', (e) => {
+      const r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+      c.classList.add('tilting'); c.style.setProperty('--rx', `${(-y * 7).toFixed(2)}deg`); c.style.setProperty('--ry', `${(x * 9).toFixed(2)}deg`);
+    });
+    c.addEventListener('pointerleave', () => { c.classList.remove('tilting'); c.style.setProperty('--rx', '0deg'); c.style.setProperty('--ry', '0deg'); });
+  });
+  /* Magnetic primary buttons */
+  document.querySelectorAll('.btn-lg.btn-wa, .head-cta .btn-wa').forEach((b) => {
+    b.addEventListener('pointermove', (e) => { const r = b.getBoundingClientRect(); b.style.translate = `${((e.clientX - r.left) / r.width - 0.5) * 10}px ${((e.clientY - r.top) / r.height - 0.5) * 8}px`; });
+    b.addEventListener('pointerleave', () => { b.style.translate = ''; });
+  });
+}
 
 /* Mobile menu */
 const mnav = document.getElementById('cgx-mnav'), menuBtn = document.querySelector('.menu-btn');
