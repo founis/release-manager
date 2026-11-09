@@ -16,6 +16,19 @@ A redesign of the cyberguard.co.il homepage, built with the cc-design skill
   `live-site-audit.json` (crawl of all 155 live URLs, Nov 2026).
 - `scripts/` — the converter and the browser tests.
 
+## Live preview
+
+Published as page 5940, https://cyberguard.co.il/home-preview-2026/
+(password-protected, template Elementor Canvas). The homepage is unchanged.
+`scripts/livetest.js` checks the live page on phone and desktop.
+
+Notes for the WordPress version:
+- WordPress content filters rewrite some `&&` inside inline scripts, so the
+  converter ships the page script base64-encoded in a `data-cgx` attribute.
+- The site injects its own ticker (`.cg-tk`) and bottom dock (`.cg-pgdock`) on
+  every page; the page CSS hides those two on this page only. The cookie
+  banner and accessibility button stay.
+
 ## Rebuild the WordPress version
 
 ```bash

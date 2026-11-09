@@ -53,6 +53,8 @@ left = [n for n in re.findall(r'animation(?:-name)?\s*:\s*([\w-]+)', css2) if n 
 assert not left, f'unrenamed animations: {left}'
 # page-level background so overscroll and gaps match
 RESET = ('html,body{margin:0!important;background:oklch(0.165 0.028 278)!important}\n'
+  # the site injects its own ticker and bottom dock on every page; this design has both, so hide the site's copies on this page only
+  'body > .cg-tk,.cg-pgdock{display:none!important}\n'
   # the site's Elementor kit and Hello theme style a/h1-h4/label/input/button directly; undo that inside #cgx only
   '#cgx :is(a,h1,h2,h3,h4,h5,h6,p,span,b,small,em,i,li,ul,ol,label,input,select,option,button,blockquote,div,nav,header,footer,section,aside,article,figure){font-family:inherit;line-height:inherit;letter-spacing:inherit;text-transform:none}\n'
   '#cgx button{padding:0;border-radius:0;font-weight:inherit;text-align:center}\n'
@@ -84,6 +86,15 @@ css2 = re.sub(r'url\("img/([^"]+)"\)', lambda m: 'url("https://cyberguard.co.il/
 assert 'url("img/' not in css2
 assert 'thumbs/' not in body and 'logo.webp' not in body and 'hero.webp' not in css2
 
+# WordPress content filters rewrite some '&&' inside inline scripts to '&#038;&#038;' (breaking them).
+# Ship the script base64-encoded in a data attribute; the loader has no & < or quotes for filters to touch.
+import base64
+def _pack(m):
+    b64 = base64.b64encode(m.group(1).encode('utf-8')).decode('ascii')
+    loader = '(function(){var s=atob(document.currentScript.dataset.cgx),b=new Uint8Array(s.length);for(var i=0;i!==s.length;i++)b[i]=s.charCodeAt(i);new Function(new TextDecoder().decode(b))()})()'
+    return f'<script data-cgx="{b64}">{loader}</script>'
+body = re.sub(r'<script>(.*?)</script>', _pack, body, flags=re.S)
+assert '&&' not in re.sub(r'data-cgx="[^"]*"', '', body.split('<script data-cgx')[-1]) if '<script data-cgx' in body else True
 content = f'<!-- wp:html -->\n{fonts}\n<style>\n{css2}\n</style>\n<div id="cgx" dir="rtl" lang="he">\n{body}\n</div>\n<!-- /wp:html -->\n'
 open(out, 'w', encoding='utf-8').write(content)
 print('bytes', len(content.encode()))
