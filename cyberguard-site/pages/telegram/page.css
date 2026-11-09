@@ -224,3 +224,6 @@
 .odds span{color:var(--muted);font-size:15px}
 .odds-note{margin-top:16px;color:var(--faint);font-size:14px}
 @media (max-width:720px){.odds{grid-template-columns:minmax(0,1fr)}.odds li{padding:16px;gap:12px}}
+
+/* Service pages have longer rotating questions than the homepage: let them wrap on phones (the homepage keeps them on one line) */
+@media (max-width:720px){.h1 .pain{white-space:normal}}

@@ -209,3 +209,6 @@
   .guide{padding:16px 18px}
   .sec-head > .btn{align-self:flex-start}
 }
+
+/* Service pages have longer rotating questions than the homepage: let them wrap on phones (the homepage keeps them on one line) */
+@media (max-width:720px){.h1 .pain{white-space:normal}}
