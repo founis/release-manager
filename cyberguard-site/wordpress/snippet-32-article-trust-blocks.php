@@ -84,10 +84,19 @@ function cg26_voices() {
 	return '<div class="cga cgvs" dir="rtl"><div class="cgvs-head"><b>' . esc_html($head) . '</b><span>' . esc_html($sub) . '</span></div><div class="cgvs-grid">' . $cards . '</div></div>';
 }
 
+/* Contact card in the sidebar: same as [cg_cta_card], plus a plain "private service" label (audit A4). */
+function cg26_cta_card() {
+	if (!function_exists('cg_part_cta_card')) return '';
+	$html = cg_part_cta_card();
+	$label = '<p class="cgc-private" style="margin:8px 0 0;font-size:12.5px;line-height:1.5;opacity:.75">CyberGuard היא שירות פרטי, ולא התמיכה הרשמית של הפלטפורמה.</p>';
+	return preg_replace('~(<p class="cgc-text">.*?</p>)~s', '$1' . $label, $html, 1);
+}
+
 add_action('wp', function () {
 	if (is_admin() || !is_singular('post')) return;
 	if (shortcode_exists('cg_hero')) add_shortcode('cg_hero', 'cg26_hero');
 	if (shortcode_exists('cg_voices')) add_shortcode('cg_voices', 'cg26_voices');
+	if (shortcode_exists('cg_cta_card')) add_shortcode('cg_cta_card', 'cg26_cta_card');
 });
 
 add_filter('the_content', function ($content) {
@@ -122,5 +131,11 @@ add_filter('the_content', function ($content) {
 	}
 	return $content;
 }, 15);
+
+/* Mid-article CTA (content filter, priority 30): say it is a private service, and drop "ליווי מול הפלטפורמה". */
+add_filter('the_content', function ($content) {
+	if (is_admin() || !is_singular('post')) return $content;
+	return str_replace('בדיקת זכאות ראשונית ללא עלות · ליווי מול הפלטפורמה · תמחור ברור מראש', 'שירות פרטי · בדיקה ראשונית ללא עלות · עבודה דרך הערוצים הרשמיים', $content);
+}, 31);
 
 endif; // cg26_loaded
