@@ -13,7 +13,7 @@ const MIME = { '.html': 'text/html', '.webp': 'image/webp', '.png': 'image/png',
   const errs = [];
   // ---------- off-site (file://) ----------
   const ctx = await b.newContext({ viewport: { width: 1440, height: 900 } });
-  await ctx.addInitScript(() => { window.__opened = []; window.open = (u) => { window.__opened.push(String(u)); return null; }; });
+  await ctx.addInitScript(() => { window.__opened = []; window.open = (u) => { window.__opened.push(String(u)); return null; }; window.__submits = 0; document.addEventListener('submit', () => { window.__submits++; }, true); });
   const p = await ctx.newPage();
   p.on('pageerror', (e) => errs.push(e.message)); p.on('console', (m) => { if (m.type() === 'error') errs.push(m.text()); });
   await p.goto('file://' + encodeURI(path.resolve(file)), { waitUntil: 'load' });
@@ -46,11 +46,18 @@ const MIME = { '.html': 'text/html', '.webp': 'image/webp', '.png': 'image/png',
   const hero = p.locator('.hero-form form');
   await hero.locator('[type=submit]').click(); await p.waitForTimeout(200);
   ok(await p.evaluate(() => window.__opened.length === 0), 'empty form does not send');
-  ok(await hero.evaluate((f) => f.elements.issue.validationMessage === 'נא לבחור מה קרה' || f.elements.name.validationMessage === 'נא למלא שם'), 'Hebrew validation message');
+  ok(await p.evaluate(() => window.__submits === 0), 'empty form never fires a submit event (so Tag Manager counts no conversion)');
+  ok(await hero.evaluate((f) => f.elements.issue.validationMessage === 'נא לבחור מה קרה' && f.elements.name.validationMessage === 'נא למלא שם'), 'Hebrew validation messages on an empty form');
+  await hero.locator('[name=name]').fill('דנה'); await hero.locator('[name=phone]').fill('03-123456');
+  await hero.locator('[name=issue]').selectOption({ index: 1 }); await hero.locator('[name=consent]').check();
+  await hero.locator('[type=submit]').click(); await p.waitForTimeout(200);
+  ok(await p.evaluate(() => window.__submits === 0), 'a phone that is not a 10-digit mobile never fires a submit event');
+  ok(await hero.evaluate((f) => f.elements.phone.validationMessage.includes('10 ספרות')), 'Hebrew validation message for a wrong phone');
   await hero.locator('[name=name]').fill('דנה'); await hero.locator('[name=phone]').fill('050 123 4567');
   await hero.locator('[name=issue]').selectOption({ label: 'החשבון נפרץ' }); await hero.locator('[name=consent]').check();
   await hero.locator('[type=submit]').click(); await p.waitForTimeout(200);
   const op = await p.evaluate(() => window.__opened.slice());
+  ok(await p.evaluate(() => window.__submits === 1), 'a valid form fires exactly one submit event');
   ok(op.length === 1 && decodeURIComponent(op[0]).includes('שם: דנה') && decodeURIComponent(op[0]).includes('שחרור חשבון וואטסאפ פרוץ'), 'off the live site the form opens WhatsApp with the details');
   ok((await p.$$('form[data-lead] select[name=issue][required]')).length === 3, '3 lead forms ask what happened');
   // reviews
@@ -69,8 +76,7 @@ const MIME = { '.html': 'text/html', '.webp': 'image/webp', '.png': 'image/png',
   await p.keyboard.press('Escape');
   // FAQ + structured data + guides
   ok(await p.$$eval('#faq details', (d) => d.length) === 7, '7 WhatsApp questions');
-  const ld = await p.evaluate(() => { try { const j = JSON.parse(document.querySelector('script[type="application/ld+json"]').textContent); return j['@type'] + ':' + j.mainEntity.length; } catch (e) { return 'bad ' + e.message; } });
-  ok(ld === 'FAQPage:7', `FAQ structured data is valid (${ld})`);
+  ok(await p.evaluate(() => !document.querySelector('#cgx script[type="application/ld+json"], main script[type="application/ld+json"]')), 'page adds no FAQ data of its own (the site already adds it)');
   const guides = await p.$$eval('.guide', (g) => g.map((a) => decodeURI(a.href)));
   ok(guides.length === 6 && guides.every((h) => h.startsWith('https://cyberguard.co.il/')), '6 guide links to the site');
   const waAll = await p.$$eval('[data-wa]', (a) => a.filter((x) => !x.href.startsWith('https://wa.me/972523001030')).length);

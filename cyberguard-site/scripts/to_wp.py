@@ -55,6 +55,8 @@ assert not left, f'unrenamed animations: {left}'
 RESET = ('html,body{margin:0!important;background:oklch(0.165 0.028 278)!important}\n'
   # the site injects its own ticker and bottom dock on every page; this design has both, so hide the site's copies on this page only
   'body > .cg-tk,.cg-pgdock{display:none!important}\n'
+  # on phones this page has its own bottom call/WhatsApp bar; keep the site's cookie notice above it instead of on top of it
+  '@media (max-width:720px){#cg-pgck{bottom:calc(84px + env(safe-area-inset-bottom))!important}}\n'
   # the site's Elementor kit and Hello theme style a/h1-h4/label/input/button directly; undo that inside #cgx only
   '#cgx :is(a,h1,h2,h3,h4,h5,h6,p,span,b,small,em,i,li,ul,ol,label,input,select,option,button,blockquote,div,nav,header,footer,section,aside,article,figure){font-family:inherit;line-height:inherit;letter-spacing:inherit;text-transform:none}\n'
   '#cgx button{padding:0;border-radius:0;font-weight:inherit;text-align:center}\n'

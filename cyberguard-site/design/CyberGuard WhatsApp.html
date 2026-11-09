@@ -1162,7 +1162,7 @@ body{background:var(--bg)}
       </div>
       <aside class="card hero-form fx-card" aria-label="השארת פרטים">
         <div class="hf-head"><span class="hf-live" aria-hidden="true"></span><div><b>בדיקה ראשונית חינם</b><small>השאירו שם ונייד — נחזור אליכם בהקדם</small></div></div>
-        <form class="hf" data-lead method="post" novalidate>
+        <form class="hf" data-lead method="post">
           <div class="hf-row">
             <label class="field"><span>שם</span><input name="name" autocomplete="name" placeholder="השם שלכם" required></label>
             <label class="field"><span>נייד</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" dir="ltr" placeholder="050-1234567" pattern="[0-9+\s\-]{9,16}" required></label>
@@ -1341,7 +1341,7 @@ body{background:var(--bg)}
   <section class="sec lead-band" id="callback" data-screen-label="08 Callback"><div class="wrap">
     <div class="lb" data-reveal>
       <div class="lb-text"><p class="eyebrow">בדיקה ראשונית ללא עלות</p><h2 class="h2 lb-h">שיחה עם מומחי הסייבר שלנו</h2><p>השאירו שם ונייד ונחזור אליכם בהקדם עם בדיקה ראשונית, חינם וללא התחייבות. בסופה תדעו בשקיפות אם אפשר לטפל ומה הסיכוי.</p><p class="lb-alt">מעדיפים לדבר עכשיו? <a href="tel:+972523001030" class="ltr">052-3001030</a> או <a data-wa href="#">וואטסאפ</a></p></div>
-      <form class="lb-form" data-lead method="post" novalidate>
+      <form class="lb-form" data-lead method="post">
         <label class="field"><span>שם</span><input name="name" autocomplete="name" placeholder="השם שלכם" required></label>
         <label class="field"><span>נייד</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" dir="ltr" placeholder="050-1234567" pattern="[0-9+\s\-]{9,16}" required></label>
         <label class="field"><span>מה קרה לחשבון?</span><select name="issue" required><option value="" disabled selected>בחרו מה קרה</option><option value="שחרור חשבון וואטסאפ חסום">החשבון נחסם (זמנית)</option><option value="שחרור חשבון וואטסאפ חסום לצמיתות">החשבון נחסם לצמיתות</option><option value="שחרור חשבון וואטסאפ פרוץ">החשבון נפרץ</option><option>WhatsApp Business נחסם</option><option>מישהו הפעיל אימות דו-שלבי (PIN)</option><option>קוד האימות לא מגיע</option><option>לא בטוח/ה מה קרה</option></select></label>
@@ -1576,7 +1576,7 @@ body{background:var(--bg)}
         <button class="btn btn-ghost btn-sm" type="button" data-vcard>שמירה באנשי הקשר</button>
       </div>
     </div>
-    <form class="form" data-reveal id="leadForm" data-lead method="post" novalidate>
+    <form class="form" data-reveal id="leadForm" data-lead method="post">
       <h3>בואו נבדוק את החשבון שלכם</h3>
       <p>מלאו את הפרטים ונחזור אליכם עם בדיקה ראשונית — חינם וללא התחייבות.</p>
       <label class="field"><span>שם</span><input name="name" autocomplete="name" placeholder="השם שלכם" required></label>
@@ -1819,10 +1819,18 @@ new MutationObserver(() => { const b = document.querySelector('[data-qc-result]:
   .observe(document.querySelector('[data-qc]') || document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['hidden'] });
 
 /* Hebrew validation messages */
-const HE_MSG = (el) => el.type === 'checkbox' ? 'נא לאשר את מדיניות הפרטיות' : el.tagName === 'SELECT' ? 'נא לבחור מה קרה' : el.name === 'phone' ? (el.value ? 'נא להזין מספר נייד בן 10 ספרות, למשל 050-1234567' : 'נא למלא מספר נייד') : el.name === 'name' ? 'נא למלא שם' : 'נא למלא את השדה';
+const HE_MSG = (el) => el.type === 'checkbox' ? 'נא לאשר את מדיניות הפרטיות' : el.tagName === 'SELECT' ? 'נא לבחור מה קרה' : el.name === 'phone' ? (el.value ? PHONE_MSG : 'נא למלא מספר נייד') : el.name === 'name' ? 'נא למלא שם' : 'נא למלא את השדה';
 document.addEventListener('invalid', (e) => { const el = e.target; if (el.closest && el.closest('form[data-lead]')) el.setCustomValidity(HE_MSG(el)); }, true);
-document.addEventListener('input', (e) => { if (e.target.setCustomValidity) e.target.setCustomValidity(''); }, true);
-document.addEventListener('change', (e) => { if (e.target.setCustomValidity) e.target.setCustomValidity(''); }, true);
+/* The browser's own validation runs before the submit event, so an empty or wrong form never counts as a lead
+   (Tag Manager counts the Google Ads form conversion on submit). The phone must be a 10-digit mobile. */
+const PHONE_MSG = 'נא להזין מספר נייד בן 10 ספרות, למשל 050-1234567';
+const recheck = (el) => {
+  if (!el.setCustomValidity) return;
+  el.setCustomValidity('');
+  if (el.name === 'phone' && el.closest('form[data-lead]') && el.value.trim() && !/^0\d{9}$/.test(normPhone(el.value))) el.setCustomValidity(PHONE_MSG);
+};
+document.addEventListener('input', (e) => recheck(e.target), true);
+document.addEventListener('change', (e) => recheck(e.target), true);
 
 /* ===================== Premium layer ===================== */
 const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -1956,7 +1964,7 @@ document.addEventListener('submit', async (e) => {
   if (!f) return;
   e.preventDefault();
   const ph = f.elements.phone;
-  if (ph && ph.value.trim() && !/^0\d{9}$/.test(normPhone(ph.value))) ph.setCustomValidity('נא להזין מספר נייד בן 10 ספרות, למשל 050-1234567');
+  if (ph) recheck(ph);
   if (!f.reportValidity()) return;
   const btn = f.querySelector('[type=submit]');
   if (btn && btn.dataset.sent) return;

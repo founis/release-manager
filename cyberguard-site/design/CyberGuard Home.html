@@ -940,7 +940,7 @@ body{background:var(--bg)}
       </div>
       <aside class="card hero-form fx-card" aria-label="השארת פרטים">
         <div class="hf-head"><span class="hf-live" aria-hidden="true"></span><div><b>בדיקה ראשונית חינם</b><small>השאירו שם ונייד — נחזור אליכם בהקדם</small></div></div>
-        <form class="hf" data-lead method="post" novalidate>
+        <form class="hf" data-lead method="post">
           <div class="hf-row">
             <label class="field"><span>שם</span><input name="name" autocomplete="name" placeholder="השם שלכם" required></label>
             <label class="field"><span>נייד</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" dir="ltr" placeholder="050-1234567" pattern="[0-9+\s\-]{9,16}" required></label>
@@ -1045,7 +1045,7 @@ body{background:var(--bg)}
   <section class="sec lead-band" id="callback" data-screen-label="08 Callback"><div class="wrap">
     <div class="lb" data-reveal>
       <div class="lb-text"><p class="eyebrow">בדיקה ראשונית ללא עלות</p><h2 class="h2 lb-h">רוצים שנחזור אליכם?</h2><p>השאירו שם ונייד, ונחזור עם בדיקה ראשונית — חינם וללא התחייבות.</p></div>
-      <form class="lb-form" data-lead method="post" novalidate>
+      <form class="lb-form" data-lead method="post">
         <label class="field"><span>שם</span><input name="name" autocomplete="name" placeholder="השם שלכם" required></label>
         <label class="field"><span>נייד</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" dir="ltr" placeholder="050-1234567" pattern="[0-9+\s\-]{9,16}" required></label>
         <label class="field"><span>מה קרה?</span><select name="issue"><option>פרצו לי לפייסבוק</option><option>פרצו לי לאינסטגרם</option><option>פרצו לי לוואטסאפ</option><option>מנהל המודעות נחסם</option><option>חשבון גוגל / Gmail נחסם</option><option>ערוץ יוטיוב נפרץ</option><option>חשבון טיקטוק נחסם</option><option>טלפון נעול</option><option>משהו אחר</option></select></label>
@@ -1215,7 +1215,7 @@ body{background:var(--bg)}
         <button class="btn btn-ghost btn-sm" type="button" data-vcard>שמירה באנשי הקשר</button>
       </div>
     </div>
-    <form class="form" data-reveal id="leadForm" data-lead method="post" novalidate>
+    <form class="form" data-reveal id="leadForm" data-lead method="post">
       <h3>בואו נבדוק את אפשרויות הגישה</h3>
       <p>מלאו את הפרטים ונחזור אליכם עם בדיקה ראשונית — חינם וללא התחייבות.</p>
       <label class="field"><span>שם</span><input name="name" autocomplete="name" placeholder="השם שלכם" required></label>
@@ -1437,7 +1437,7 @@ if (qc) {
       <a class="btn btn-wa btn-lg qc-send" href="${waLink(msg)}" target="_blank" rel="noopener">שלחו לנו את הסיכום בוואטסאפ</a>
       <p class="qc-note">זו הערכה כללית לפי ניסיון, לא הבטחה — ההחלטה הסופית תמיד אצל הפלטפורמה. את המקרה שלכם נבדוק בשיחה הראשונית, חינם.</p>
       <details class="qc-callback"><summary>או השאירו שם ונייד, ונחזור אליכם</summary>
-        <form class="qc-form" data-lead data-context="${esc(`פלטפורמה: ${NAMES[ans[0]]} · מה קרה: ${NAMES[ans[1]]} · ${NAMES[ans[2]]}`)}" method="post" novalidate>
+        <form class="qc-form" data-lead data-context="${esc(`פלטפורמה: ${NAMES[ans[0]]} · מה קרה: ${NAMES[ans[1]]} · ${NAMES[ans[2]]}`)}" method="post">
           <input name="name" aria-label="שם" placeholder="השם שלכם" autocomplete="name" required>
           <input name="phone" type="tel" inputmode="tel" aria-label="נייד" placeholder="050-1234567" autocomplete="tel" dir="ltr" pattern="[0-9+\s\-]{9,16}" required>
           <label class="consent"><input type="checkbox" name="consent" required><span>אני מאשר/ת את <a href="https://cyberguard.co.il/מדיניות-פרטיות/">מדיניות הפרטיות</a></span></label>
@@ -1534,10 +1534,18 @@ new MutationObserver(() => { const b = document.querySelector('[data-qc-result]:
   .observe(document.querySelector('[data-qc]') || document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['hidden'] });
 
 /* Hebrew validation messages */
-const HE_MSG = (el) => el.type === 'checkbox' ? 'נא לאשר את מדיניות הפרטיות' : el.tagName === 'SELECT' ? 'נא לבחור מה קרה' : el.name === 'phone' ? (el.value ? 'נא להזין מספר נייד בן 10 ספרות, למשל 050-1234567' : 'נא למלא מספר נייד') : el.name === 'name' ? 'נא למלא שם' : 'נא למלא את השדה';
+const HE_MSG = (el) => el.type === 'checkbox' ? 'נא לאשר את מדיניות הפרטיות' : el.tagName === 'SELECT' ? 'נא לבחור מה קרה' : el.name === 'phone' ? (el.value ? PHONE_MSG : 'נא למלא מספר נייד') : el.name === 'name' ? 'נא למלא שם' : 'נא למלא את השדה';
 document.addEventListener('invalid', (e) => { const el = e.target; if (el.closest && el.closest('form[data-lead]')) el.setCustomValidity(HE_MSG(el)); }, true);
-document.addEventListener('input', (e) => { if (e.target.setCustomValidity) e.target.setCustomValidity(''); }, true);
-document.addEventListener('change', (e) => { if (e.target.setCustomValidity) e.target.setCustomValidity(''); }, true);
+/* The browser's own validation runs before the submit event, so an empty or wrong form never counts as a lead
+   (Tag Manager counts the Google Ads form conversion on submit). The phone must be a 10-digit mobile. */
+const PHONE_MSG = 'נא להזין מספר נייד בן 10 ספרות, למשל 050-1234567';
+const recheck = (el) => {
+  if (!el.setCustomValidity) return;
+  el.setCustomValidity('');
+  if (el.name === 'phone' && el.closest('form[data-lead]') && el.value.trim() && !/^0\d{9}$/.test(normPhone(el.value))) el.setCustomValidity(PHONE_MSG);
+};
+document.addEventListener('input', (e) => recheck(e.target), true);
+document.addEventListener('change', (e) => recheck(e.target), true);
 
 /* ===================== Premium layer ===================== */
 const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -1671,7 +1679,7 @@ document.addEventListener('submit', async (e) => {
   if (!f) return;
   e.preventDefault();
   const ph = f.elements.phone;
-  if (ph && ph.value.trim() && !/^0\d{9}$/.test(normPhone(ph.value))) ph.setCustomValidity('נא להזין מספר נייד בן 10 ספרות, למשל 050-1234567');
+  if (ph) recheck(ph);
   if (!f.reportValidity()) return;
   const btn = f.querySelector('[type=submit]');
   if (btn && btn.dataset.sent) return;
