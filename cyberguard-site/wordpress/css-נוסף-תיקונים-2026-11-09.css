@@ -1,0 +1,10 @@
+/* CyberGuard 2026-11-09 — fixes from the service-pages check */
+/* 1) On phones the page's floating "leave details" button sat on top of the bottom WhatsApp/call bar (.cg-pgdock, 55px). Keep it above the bar. */
+@media (max-width:1024px){.cg-sticky-lead,.cg-sticky{bottom:calc(66px + env(safe-area-inset-bottom))!important}}
+/* 2) Articles: the article hero (angie-snippets/snippet-5739/parts.css) and the 2026 site header both use the class names .cgh / .cgh-in.
+      Each picked up the other's styles: the header grew to 149px (227px on desktop) with a dark box, and the article title was cut off on phones.
+      Undo the article styles inside the header, and the header styles inside the article hero. */
+[data-elementor-type="header"] .cgh{padding:0!important;overflow:visible!important;background:none!important}
+[data-elementor-type="header"] .cgh::after{content:none!important}
+[data-elementor-type="header"] .cgh .cgh-in{position:static!important;z-index:auto!important}
+.cga.cgh .cgh-in{display:block!important;height:auto!important;width:min(1140px,100%)!important;margin-inline:auto!important}
