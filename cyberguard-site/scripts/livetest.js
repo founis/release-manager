@@ -11,7 +11,7 @@ const URL_ = 'https://cyberguard.co.il/home-preview-2026/';
     await p.goto(URL_, { waitUntil: 'load', timeout: 60000 });
     const gate = await p.$('input[name=post_password]');
     ok(!!gate, `${nm}: page asks for the preview password`);
-    if (gate) { await gate.fill('cg-preview-8074'); await Promise.all([p.waitForNavigation({ waitUntil: 'load', timeout: 60000 }), p.click('form.post-password-form [type=submit], form [name=Submit], form input[type=submit]')]); }
+    if (gate) { await gate.fill(process.env.PREVIEW_PASSWORD || ''); await Promise.all([p.waitForNavigation({ waitUntil: 'load', timeout: 60000 }), p.click('form.post-password-form [type=submit], form [name=Submit], form input[type=submit]')]); }
     await p.mouse.move(700, 600); await p.waitForTimeout(3500);
     const r = await p.evaluate(() => ({
       cgx: !!document.getElementById('cgx'), h1: document.querySelector('#cgx .h1') && document.querySelector('#cgx .h1').innerText.slice(0, 40),

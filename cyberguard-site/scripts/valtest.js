@@ -8,7 +8,7 @@ const { chromium } = require('playwright'); const path = require('path');
   await p.click('.hero-form [type=submit]');
   ok(await msg('.hero-form [name=name]') === 'נא למלא שם', 'empty name -> Hebrew message');
   await p.fill('.hero-form [name=name]', 'דנה'); await p.fill('.hero-form [name=phone]', '12');
-  ok((await msg('.hero-form [name=phone]')).startsWith('נא להזין מספר נייד תקין'), 'short phone -> Hebrew message');
+  ok((await msg('.hero-form [name=phone]')).startsWith('נא להזין מספר נייד בן 10 ספרות'), 'short phone -> Hebrew message');
   await p.fill('.hero-form [name=phone]', '050-1234567'); ok(await msg('.hero-form [name=phone]') === '', 'valid phone accepted');
   await p.fill('.hero-form [name=phone]', '+972 50 123 4567'); ok(await msg('.hero-form [name=phone]') === '', 'international format accepted');
   ok(await msg('.hero-form [name=consent]') === 'נא לאשר את מדיניות הפרטיות', 'consent -> Hebrew message');

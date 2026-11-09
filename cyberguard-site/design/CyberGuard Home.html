@@ -603,7 +603,7 @@ button,input,select{font:inherit;color:inherit}
 @media (max-width:720px){.hero-form{padding:20px}.hf-head b{font-size:18px}}
 
 /* Rotating pain question (first line of the H1) */
-.h1 .pain{display:block;color:var(--text);transition:opacity .35s ease,transform .35s ease}
+.h1 .pain{display:flex;align-items:flex-end;color:var(--text);transition:opacity .35s ease,transform .35s ease}
 .h1 .pain.out{opacity:0;transform:translateY(-12px)}
 .h1 .pain.in{opacity:0;transform:translateY(12px)}
 .h1 .h1-b{display:block;color:var(--accent-ink)}
@@ -940,7 +940,7 @@ body{background:var(--bg)}
       </div>
       <aside class="card hero-form fx-card" aria-label="השארת פרטים">
         <div class="hf-head"><span class="hf-live" aria-hidden="true"></span><div><b>בדיקה ראשונית חינם</b><small>השאירו שם ונייד — נחזור אליכם בהקדם</small></div></div>
-        <form class="hf" data-lead novalidate>
+        <form class="hf" data-lead method="post" novalidate>
           <div class="hf-row">
             <label class="field"><span>שם</span><input name="name" autocomplete="name" placeholder="השם שלכם" required></label>
             <label class="field"><span>נייד</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" dir="ltr" placeholder="050-1234567" pattern="[0-9+\s\-]{9,16}" required></label>
@@ -1045,7 +1045,7 @@ body{background:var(--bg)}
   <section class="sec lead-band" id="callback" data-screen-label="08 Callback"><div class="wrap">
     <div class="lb" data-reveal>
       <div class="lb-text"><p class="eyebrow">בדיקה ראשונית ללא עלות</p><h2 class="h2 lb-h">רוצים שנחזור אליכם?</h2><p>השאירו שם ונייד, ונחזור עם בדיקה ראשונית — חינם וללא התחייבות.</p></div>
-      <form class="lb-form" data-lead novalidate>
+      <form class="lb-form" data-lead method="post" novalidate>
         <label class="field"><span>שם</span><input name="name" autocomplete="name" placeholder="השם שלכם" required></label>
         <label class="field"><span>נייד</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" dir="ltr" placeholder="050-1234567" pattern="[0-9+\s\-]{9,16}" required></label>
         <label class="field"><span>מה קרה?</span><select name="issue"><option>פרצו לי לפייסבוק</option><option>פרצו לי לאינסטגרם</option><option>פרצו לי לוואטסאפ</option><option>מנהל המודעות נחסם</option><option>חשבון גוגל / Gmail נחסם</option><option>ערוץ יוטיוב נפרץ</option><option>חשבון טיקטוק נחסם</option><option>טלפון נעול</option><option>משהו אחר</option></select></label>
@@ -1215,7 +1215,7 @@ body{background:var(--bg)}
         <button class="btn btn-ghost btn-sm" type="button" data-vcard>שמירה באנשי הקשר</button>
       </div>
     </div>
-    <form class="form" data-reveal id="leadForm" data-lead novalidate>
+    <form class="form" data-reveal id="leadForm" data-lead method="post" novalidate>
       <h3>בואו נבדוק את אפשרויות הגישה</h3>
       <p>מלאו את הפרטים ונחזור אליכם עם בדיקה ראשונית — חינם וללא התחייבות.</p>
       <label class="field"><span>שם</span><input name="name" autocomplete="name" placeholder="השם שלכם" required></label>
@@ -1437,7 +1437,7 @@ if (qc) {
       <a class="btn btn-wa btn-lg qc-send" href="${waLink(msg)}" target="_blank" rel="noopener">שלחו לנו את הסיכום בוואטסאפ</a>
       <p class="qc-note">זו הערכה כללית לפי ניסיון, לא הבטחה — ההחלטה הסופית תמיד אצל הפלטפורמה. את המקרה שלכם נבדוק בשיחה הראשונית, חינם.</p>
       <details class="qc-callback"><summary>או השאירו שם ונייד, ונחזור אליכם</summary>
-        <form class="qc-form" data-lead data-context="${esc(`פלטפורמה: ${NAMES[ans[0]]} · מה קרה: ${NAMES[ans[1]]} · ${NAMES[ans[2]]}`)}" novalidate>
+        <form class="qc-form" data-lead data-context="${esc(`פלטפורמה: ${NAMES[ans[0]]} · מה קרה: ${NAMES[ans[1]]} · ${NAMES[ans[2]]}`)}" method="post" novalidate>
           <input name="name" aria-label="שם" placeholder="השם שלכם" autocomplete="name" required>
           <input name="phone" type="tel" inputmode="tel" aria-label="נייד" placeholder="050-1234567" autocomplete="tel" dir="ltr" pattern="[0-9+\s\-]{9,16}" required>
           <label class="consent"><input type="checkbox" name="consent" required><span>אני מאשר/ת את <a href="https://cyberguard.co.il/מדיניות-פרטיות/">מדיניות הפרטיות</a></span></label>
@@ -1475,6 +1475,13 @@ if (revToggle && revAll) revToggle.addEventListener('click', () => {
 const PAINS = ['החשבון שלך נחסם?', 'פרצו לך לאינסטגרם?', 'הוואטסאפ נחסם?', 'הפייסבוק הושבת?', 'מנהל המודעות נחסם?', 'שינו לך את הסיסמה?', 'לא מצליח להתחבר?'];
 const painEl = document.getElementById('pain');
 let pi = 0;
+/* The question line keeps the height of its longest version, so the rotation never moves the page */
+const fitPain = () => {
+  const now = painEl.textContent; painEl.style.minHeight = '';
+  let h = 0; PAINS.forEach((t) => { painEl.textContent = t; h = Math.max(h, painEl.offsetHeight); });
+  painEl.textContent = now; painEl.style.minHeight = h + 'px';
+};
+if (painEl && !calm) { fitPain(); addEventListener('resize', fitPain); if (document.fonts) document.fonts.ready.then(fitPain); }
 if (painEl && !calm) setInterval(() => {
   painEl.classList.add('out');
   setTimeout(() => {
@@ -1525,16 +1532,9 @@ const burst = (el) => {
 };
 new MutationObserver(() => { const b = document.querySelector('[data-qc-result]:not([hidden]) .qc-badge:not([data-burst])'); if (b) { b.dataset.burst = '1'; burst(b); } })
   .observe(document.querySelector('[data-qc]') || document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['hidden'] });
-/* Lead forms: confirm on the button after sending */
-document.addEventListener('submit', (e) => {
-  const f = e.target.closest('form[data-lead]'); if (!f || !f.checkValidity()) return;
-  const btn = f.querySelector('[type=submit]'); if (!btn || btn.dataset.sent) return;
-  const was = btn.innerHTML; btn.dataset.sent = '1'; btn.innerHTML = '✓ פותחים לכם וואטסאפ…';
-  setTimeout(() => { btn.innerHTML = was; delete btn.dataset.sent; }, 2600);
-});
 
 /* Hebrew validation messages */
-const HE_MSG = (el) => el.type === 'checkbox' ? 'נא לאשר את מדיניות הפרטיות' : el.name === 'phone' ? (el.value ? 'נא להזין מספר נייד תקין, למשל 050-1234567' : 'נא למלא מספר נייד') : el.name === 'name' ? 'נא למלא שם' : 'נא למלא את השדה';
+const HE_MSG = (el) => el.type === 'checkbox' ? 'נא לאשר את מדיניות הפרטיות' : el.tagName === 'SELECT' ? 'נא לבחור מה קרה' : el.name === 'phone' ? (el.value ? 'נא להזין מספר נייד בן 10 ספרות, למשל 050-1234567' : 'נא למלא מספר נייד') : el.name === 'name' ? 'נא למלא שם' : 'נא למלא את השדה';
 document.addEventListener('invalid', (e) => { const el = e.target; if (el.closest && el.closest('form[data-lead]')) el.setCustomValidity(HE_MSG(el)); }, true);
 document.addEventListener('input', (e) => { if (e.target.setCustomValidity) e.target.setCustomValidity(''); }, true);
 document.addEventListener('change', (e) => { if (e.target.setCustomValidity) e.target.setCustomValidity(''); }, true);
@@ -1627,17 +1627,76 @@ document.getElementById('modalX').addEventListener('click', close);
 modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
 
-/* Every lead form (quick-check callback, mid-page band, bottom form) hands the details to WhatsApp.
-   On the live site these should post to the existing Elementor form so the ad-tracking fields keep working. */
-document.addEventListener('submit', (e) => {
+/* Lead forms. On cyberguard.co.il they post to the site's existing Elementor lead form (the site-wide popup form),
+   so every lead gets the same email, Make webhook, saved submission and /tnx/ thank-you page as before, with the ad
+   click ids (gclid, gbraid, wbraid, utm_*) the site already stores. Anywhere else, or if sending fails, the details
+   go to WhatsApp instead, so no lead is lost. */
+const LEAD = { ajax: '/wp-admin/admin-ajax.php', post_id: '5777', form_id: '0b89619', thanks: 'https://cyberguard.co.il/tnx/' };
+const ATTR = ['gclid', 'gbraid', 'wbraid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
+const attrGet = (k) => { try { return localStorage.getItem('cg_attr_' + k) || ''; } catch (err) { return ''; } };
+try {
+  const q = new URLSearchParams(location.search);
+  ATTR.forEach((k) => { const v = (q.get(k) || '').trim(); if (v) { localStorage.setItem('cg_attr_' + k, v); localStorage.setItem('cg_attr_' + k + '_ts', String(Date.now())); } });
+} catch (err) { /* storage blocked: the URL still carries the ids */ }
+const onSite = /(^|\.)cyberguard\.co\.il$/.test(location.hostname);
+const leadToWa = (f, d) => {
+  const lines = ['היי, הגעתי מהאתר ואשמח שתחזרו אליי.', `שם: ${d.name}`, `נייד: ${d.phone}`];
+  if (d.issue) lines.push(`מה קרה: ${d.issue}`);
+  return waLink(lines.join('\n'));
+};
+/* Israeli mobile as the site's lead form wants it: 10 digits, no dashes or spaces (+972 becomes 0) */
+const normPhone = (v) => { let n = String(v).replace(/\D/g, ''); if (n.startsWith('972')) n = '0' + n.slice(3); return n; };
+async function sendLead(d, f) {
+  const fd = new FormData();
+  const q = new URLSearchParams(location.search);
+  const pageId = (document.body.className.match(/\bpage-id-(\d+)\b/) || [])[1] || LEAD.post_id;
+  fd.append('action', 'elementor_pro_forms_send_form');
+  fd.append('post_id', LEAD.post_id); fd.append('form_id', LEAD.form_id); fd.append('queried_id', pageId);
+  fd.append('referer_title', document.title); fd.append('referrer', location.href);
+  fd.append('form_fields[name]', d.name); fd.append('form_fields[message]', d.phone);
+  fd.append('form_fields[field_8dcda2c]', d.issue || 'אחר'); fd.append('form_fields[field_c32d2ef]', 'on');
+  fd.append('form_fields[cg_landing_url]', location.href); fd.append('form_fields[cg_referrer]', document.referrer || '');
+  ATTR.forEach((k) => fd.append(`form_fields[cg_${k}]`, (q.get(k) || '').trim() || attrGet(k)));
+  /* the site's anti-spam plugin (Maspik) adds its own fields to every POST form; pass them on as Elementor's form would */
+  f.querySelectorAll('input[name]').forEach((i) => { if (!['name', 'phone', 'consent'].includes(i.name)) fd.append(i.name, i.value); });
+  const g = window.maspikGuardConfig;
+  if (g && g.advancedKey && g.keyName && !fd.has(g.keyName)) fd.append(g.keyName, g.keyValue || '');
+  const r = await fetch(LEAD.ajax, { method: 'POST', body: fd, credentials: 'same-origin' });
+  const j = await r.json();
+  if (!j || !j.success) throw new Error('lead rejected');
+  return (j.data && j.data.data && j.data.data.redirect_url) || LEAD.thanks;
+}
+document.addEventListener('submit', async (e) => {
   const f = e.target.closest('form[data-lead]');
   if (!f) return;
   e.preventDefault();
+  const ph = f.elements.phone;
+  if (ph && ph.value.trim() && !/^0\d{9}$/.test(normPhone(ph.value))) ph.setCustomValidity('נא להזין מספר נייד בן 10 ספרות, למשל 050-1234567');
   if (!f.reportValidity()) return;
-  const lines = ['היי, הגעתי מהאתר ואשמח שתחזרו אליי.', `שם: ${f.elements.name.value}`, `נייד: ${f.elements.phone.value}`];
-  if (f.elements.issue) lines.push(`מה קרה: ${f.elements.issue.value}`);
-  if (f.dataset.context) lines.push(f.dataset.context);
-  window.open(waLink(lines.join('\n')), '_blank', 'noopener');
+  const btn = f.querySelector('[type=submit]');
+  if (btn && btn.dataset.sent) return;
+  const d = {
+    name: f.elements.name.value.trim(),
+    phone: normPhone(f.elements.phone.value),
+    issue: [f.elements.issue && f.elements.issue.value, f.dataset.context].filter(Boolean).join(' · '),
+  };
+  const was = btn ? btn.innerHTML : '';
+  const busy = (t) => { if (btn) { btn.dataset.sent = '1'; btn.innerHTML = t; } };
+  const idle = () => { if (btn) { btn.innerHTML = was; delete btn.dataset.sent; } };
+  if (!onSite) {
+    busy('✓ פותחים לכם וואטסאפ…'); setTimeout(idle, 2600);
+    window.open(leadToWa(f, d), '_blank', 'noopener');
+    return;
+  }
+  busy('שולחים…');
+  try {
+    const next = await sendLead(d, f);
+    busy('✓ הפרטים התקבלו');
+    location.href = next;
+  } catch (err) {
+    idle();
+    location.href = leadToWa(f, d);
+  }
 });
 </script>
 </body>

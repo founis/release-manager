@@ -92,7 +92,7 @@ import base64
 def _pack(m):
     b64 = base64.b64encode(m.group(1).encode('utf-8')).decode('ascii')
     loader = '(function(){var s=atob(document.currentScript.dataset.cgx),b=new Uint8Array(s.length);for(var i=0;i!==s.length;i++)b[i]=s.charCodeAt(i);new Function(new TextDecoder().decode(b))()})()'
-    return f'<script data-cgx="{b64}">{loader}</script>'
+    return f'<script nowprocket data-cfasync="false" data-cgx="{b64}">{loader}</script>'
 body = re.sub(r'<script>(.*?)</script>', _pack, body, flags=re.S)
 assert '&&' not in re.sub(r'data-cgx="[^"]*"', '', body.split('<script data-cgx')[-1]) if '<script data-cgx' in body else True
 content = f'<!-- wp:html -->\n{fonts}\n<style>\n{css2}\n</style>\n<div id="cgx" dir="rtl" lang="he">\n{body}\n</div>\n<!-- /wp:html -->\n'
