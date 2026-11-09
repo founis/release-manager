@@ -30,6 +30,14 @@ go live.
 - **Telegram:** page 5965, `/שחרור-חשבון-טלגרם/`, Elementor Canvas, published
   2026-11-09. Before this, the services page linked to two articles. Its
   Telegram cards now point here, and both Telegram articles link to it.
+- **LinkedIn:** page 5970, `/שחזור-חשבון-לינקדאין/`, published 2026-11-09. It
+  replaces the article as the services-page card, and the article links to it.
+- **Services menu (2026-11-09):** every service, in three groups.
+  - Site header: Elementor template 1213, HTML widget `cgh26w1`. Current
+    markup: `wordpress/הדר-האתר-1213.html`, built by `scripts/menu_build.py`.
+    Backup: post meta `_cg_backup_eldata_20261109`.
+  - New-design pages: the same list as a dropdown.
+  - Phones: 12 services in the menu.
 - **WhatsApp:** page 4608, `/וואטסאפ-חדש/`. The old Elementor layout is backed
   up in post meta `_cg_backup_20261109`.
 

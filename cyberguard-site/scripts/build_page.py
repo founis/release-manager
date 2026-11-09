@@ -40,7 +40,7 @@ ICONS = {
     'sim': '<path d="M6 2h9l5 5v15H6z"/><rect x="9" y="11" width="6" height="7" rx="1"/>',
 }
 sprite = ''.join(f'\n  <symbol id="i-{k}" viewBox="0 0 24 24">{v}</symbol>' for k, v in ICONS.items())
-BRANDS = {'linkedin': ('0 0 448 512', 'M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z')}
+BRANDS = {'_linkedin_unused': ('0 0 448 512', 'M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z')}
 for k in cfg.get('brands', []):
     vb, d = BRANDS[k]
     sprite += f'\n  <symbol id="p-{k}" viewBox="{vb}"><path d="{d}"></path></symbol>'
@@ -50,10 +50,7 @@ rep('  <symbol id="p-facebook"', sprite.lstrip('\n') + '\n  <symbol id="p-facebo
 H = 'https://cyberguard.co.il/'
 rep('<a class="brand" href="#top">', f'<a class="brand" href="{H}">', 0)
 if cfg.get('nav_current_wa'):
-    rep('<a href="https://cyberguard.co.il/וואטסאפ-חדש/">שחרור וואטסאפ</a>\n    <a href="#services">השירותים שלנו</a>',
-        '<a href="#top" aria-current="page">שחרור וואטסאפ</a>\n    <a href="https://cyberguard.co.il/שירותים/">השירותים שלנו</a>')
-else:
-    rep('<a href="#services">השירותים שלנו</a>', '<a href="https://cyberguard.co.il/שירותים/">השירותים שלנו</a>')
+    rep('    <a href="https://cyberguard.co.il/וואטסאפ-חדש/">שחרור וואטסאפ</a>\n', '    <a href="#top" aria-current="page">שחרור וואטסאפ</a>\n')
 rep('<a href="#about">קצת עלינו</a>\n    <a href="#contact">צור קשר</a>', '<a href="https://cyberguard.co.il/קצת-עלינו/">קצת עלינו</a>\n    <a href="#contact">צור קשר</a>')
 m = re.search(r'<div class="mnav-links">.*?</div>', s, re.S)
 s = s[:m.start()] + '<div class="mnav-links">' + ''.join(f'<a href="{h}">{t}<span aria-hidden="true">←</span></a>' for h, t in cfg['mnav_links']) + '</div>' + s[m.end():]
