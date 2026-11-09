@@ -1,0 +1,10 @@
+const { chromium } = require('playwright');
+(async () => { const b = await chromium.launch(); const c = await b.newContext({ viewport: { width: 390, height: 844 }, isMobile: true });
+  const failed = [];
+  c.on('requestfailed', (r) => failed.push(r.failure().errorText + ' ' + r.url().slice(0, 160)));
+  const p = await c.newPage(); const logs = [];
+  p.on('console', (m) => { if (m.type() === 'error' || m.type() === 'warning') logs.push(m.type() + ': ' + m.text().slice(0, 200) + ' @ ' + JSON.stringify(m.location()).slice(0, 160)); });
+  await p.goto(process.argv[2], { waitUntil: 'load', timeout: 60000 }); await p.mouse.move(100, 100); await p.waitForTimeout(4000);
+  const vis = await p.evaluate(() => { const t = document.body.innerText; const hits = []; for (const w of ['undefined', 'NaN', 'null', 'Lorem']) { let i = t.indexOf(w); while (i >= 0 && hits.length < 6) { hits.push(w + ': …' + t.slice(Math.max(0, i - 50), i + 30).replace(/\s+/g, ' ') + '…'); i = t.indexOf(w, i + 1); } } return hits; });
+  console.log('LOGS\n' + logs.join('\n')); console.log('FAILED REQUESTS\n' + failed.filter((f) => !/google|clarity|facebook|doubleclick/.test(f)).join('\n')); console.log('VISIBLE TEXT HITS\n' + vis.join('\n'));
+  await b.close(); })();
