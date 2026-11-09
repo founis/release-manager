@@ -6,10 +6,12 @@ const L = { form: 'N9uvCJXjzpgbEJLR2oY-', wa: 'Inj7CLGxvZgbEJLR2oY-', tel: 'i_75
 const TRACK = /google-analytics\.com|analytics\.google\.com|googleadservices\.com|doubleclick\.net|google\.[a-z.]+\/(pagead|ccm|rmkt|ads)|clarity\.ms|facebook\.(com|net)|bing\.com|tiktok/;
 let pass = 0, fail = 0;
 const ok = (c, m) => { if (c) { pass++; console.log('PASS', m); } else { fail++; console.log('FAIL', m); } };
+const ONLY = process.env.ONLY ? process.env.ONLY.split(',') : null;
 const PAGES = [
+  ['Telegram page', 'https://cyberguard.co.il/%D7%A9%D7%97%D7%A8%D7%95%D7%A8-%D7%97%D7%A9%D7%91%D7%95%D7%9F-%D7%98%D7%9C%D7%92%D7%A8%D7%9D/'],
   ['homepage', 'https://cyberguard.co.il/'],
   ['WhatsApp page', 'https://cyberguard.co.il/%D7%95%D7%95%D7%90%D7%98%D7%A1%D7%90%D7%A4-%D7%97%D7%93%D7%A9/'],
-];
+].filter(([n]) => !ONLY || ONLY.includes(n));
 
 async function open(b, url, mobile) {
   const ctx = await b.newContext(mobile ? { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1' } : { viewport: { width: 1366, height: 900 } });

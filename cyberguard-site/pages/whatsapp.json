@@ -1,0 +1,64 @@
+{
+ "src": "whatsapp",
+ "faq": "whatsapp/faq.json",
+ "title": "וואטסאפ - בדיקת חשבון וליווי מקצועי | CyberGuard",
+ "desc": "בדיקת בעיות גישה בחשבון וואטסאפ וליווי מקצועי וזהיר. שיחת בדיקה ראשונית ללא התחייבות.",
+ "nav_current_wa": true,
+ "mnav_links": [
+  [
+   "#situations",
+   "מה קרה לחשבון?"
+  ],
+  [
+   "#dont",
+   "מה לא לעשות"
+  ],
+  [
+   "#process",
+   "איך זה עובד"
+  ],
+  [
+   "#reviews",
+   "לקוחות ממליצים"
+  ],
+  [
+   "#price",
+   "כמה זה עולה"
+  ],
+  [
+   "#faq",
+   "שאלות נפוצות"
+  ],
+  [
+   "#guides",
+   "מדריכים"
+  ],
+  [
+   "#contact",
+   "צור קשר"
+  ]
+ ],
+ "footer_replace": [
+  [
+   "<li><a href=\"https://cyberguard.co.il/וואטסאפ-חדש/\">וואטסאפ חסום או פרוץ</a></li>",
+   "<li><a href=\"https://cyberguard.co.il/\">עמוד הבית</a></li>"
+  ]
+ ],
+ "select": "<select name=\"issue\" required><option value=\"\" disabled selected>בחרו מה קרה</option><option value=\"שחרור חשבון וואטסאפ חסום\">החשבון נחסם (זמנית)</option><option value=\"שחרור חשבון וואטסאפ חסום לצמיתות\">החשבון נחסם לצמיתות</option><option value=\"שחרור חשבון וואטסאפ פרוץ\">החשבון נפרץ</option><option>WhatsApp Business נחסם</option><option>מישהו הפעיל אימות דו-שלבי (PIN)</option><option>קוד האימות לא מגיע</option><option>לא בטוח/ה מה קרה</option></select>",
+ "live": [
+  "שחרור חשבונות וואטסאפ חסומים",
+  "זמינים עכשיו לבדיקה ראשונית חינם",
+  "ליווי אישי בערוצים הרשמיים"
+ ],
+ "pains": [
+  "חשבון הוואטסאפ שלך נחסם?",
+  "פרצו לך לוואטסאפ?",
+  "WhatsApp Business נחסם?",
+  "קוד האימות לא מגיע?",
+  "מישהו הפעיל קוד PIN?"
+ ],
+ "default_msg": "היי, הגעתי מעמוד הוואטסאפ ואני צריך עזרה עם החשבון",
+ "review_filter": "whatsapp",
+ "lead_intro": "היי, הגעתי מעמוד הוואטסאפ ואשמח שתחזרו אליי.",
+ "cases_first": "whatsapp"
+}

@@ -9,11 +9,13 @@ go live.
 
 - `design/CyberGuard Home.html` — the page. Open it in a browser; it loads
   `logo.webp`, `hero.webp`, `img/` and `thumbs/` from this folder.
-- `design/CyberGuard WhatsApp.html` — the WhatsApp landing page. Built from the
-  homepage (same styles, header, footer, scripts) by `scripts/build_wa.py`; its
-  own sections are in `whatsapp-src/` and its FAQ and guide links in
-  `data/whatsapp-faq.json`. All copy comes from the current live page.
-- `wordpress/קוד-לעמוד-וואטסאפ.html` — the WhatsApp page as WordPress content.
+- `design/CyberGuard WhatsApp.html`, `design/CyberGuard Telegram.html`: service
+  pages. `scripts/build_page.py` builds them from the homepage (same styles,
+  header, footer and scripts) and a config in `pages/<name>.json`. Each page's
+  sections, extra CSS, JS, FAQ and guide links are in `pages/<name>/`. The copy
+  comes from the site's own pages and articles.
+- `wordpress/קוד-לעמוד-וואטסאפ.html`, `wordpress/קוד-לעמוד-טלגרם.html` — the
+  service pages as WordPress content.
 - `wordpress/קוד-לעמוד-וורדפרס.html` — the homepage as WordPress post content
   (one Custom HTML block). All CSS is scoped under `#cgx`, so it doesn't touch
   the rest of the site. Images load from cyberguard.co.il/wp-content/uploads.
@@ -24,6 +26,12 @@ go live.
 - `scripts/` — the converter and the browser tests.
 
 ## Live
+
+- **Telegram:** page 5965, `/שחרור-חשבון-טלגרם/`, Elementor Canvas, published
+  2026-11-09. Before this, the services page linked to two articles. Its
+  Telegram cards now point here, and both Telegram articles link to it.
+- **WhatsApp:** page 4608, `/וואטסאפ-חדש/`. The old Elementor layout is backed
+  up in post meta `_cg_backup_20261109`.
 
 Page 5940 (template Elementor Canvas) is the site's front page
 (`page_on_front`). Its Yoast title and description were copied from the old
@@ -64,9 +72,11 @@ Notes for the WordPress version:
 ## Rebuild
 
 ```bash
-python3 -I scripts/build_wa.py "design/CyberGuard Home.html" whatsapp-src data/whatsapp-faq.json "design/CyberGuard WhatsApp.html"
+python3 -I scripts/build_page.py "design/CyberGuard Home.html" pages/whatsapp.json "design/CyberGuard WhatsApp.html"
+python3 -I scripts/build_page.py "design/CyberGuard Home.html" pages/telegram.json "design/CyberGuard Telegram.html"
 python3 -I scripts/to_wp.py "design/CyberGuard Home.html" data/videos.txt "wordpress/קוד-לעמוד-וורדפרס.html"
 python3 -I scripts/to_wp.py "design/CyberGuard WhatsApp.html" data/videos.txt "wordpress/קוד-לעמוד-וואטסאפ.html"
+python3 -I scripts/to_wp.py "design/CyberGuard Telegram.html" data/videos.txt "wordpress/קוד-לעמוד-טלגרם.html"
 ```
 
 The converter also marks the script `nowprocket` so WP Rocket's "Delay JS"
@@ -83,6 +93,7 @@ node scripts/motiontest.js "design/CyberGuard Home.html"   # ticker / review wal
 node scripts/qa.js "design/CyberGuard Home.html" <path-to>/axe.min.js  # reduced motion, CLS, axe
 node scripts/watest.js "design/CyberGuard WhatsApp.html"   # WhatsApp page: situations, phone, timeline, forms, reviews
 node scripts/leadtest.js "design/CyberGuard Home.html" 5940 # lead forms → Elementor form → /tnx/
+node scripts/gtmtest.js                                    # live: GTM, GA4, Ads conversions (phone, WhatsApp, form) on the live pages
 node .claude/skills/cc-design/scripts/verify.js "cyberguard-site/design/CyberGuard Home.html" --widths 320,390,1440
 ```
 

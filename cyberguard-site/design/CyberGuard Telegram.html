@@ -1,0 +1,2052 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>שחרור חשבון טלגרם חסום או פרוץ | CyberGuard</title>
+<meta name="description" content="בדיקה וליווי בשחרור חשבון טלגרם שנחסם (Banned) או נפרץ: אבחון, ערעור מסודר ואבטחת החשבון. בדיקה ראשונית ללא עלות.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Hebrew:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:oklch(0.165 0.028 278);--bg-2:oklch(0.185 0.03 278);--surface:oklch(0.205 0.032 278);--raise:oklch(0.235 0.035 278);
+  --line:oklch(0.30 0.03 278);--line-soft:oklch(0.26 0.03 278);
+  --text:oklch(0.965 0.008 278);--muted:oklch(0.76 0.025 278);--faint:oklch(0.60 0.025 278);
+  --accent:oklch(0.70 0.17 292);--accent-ink:oklch(0.80 0.12 292);--accent-soft:oklch(0.70 0.17 292 / .16);
+  --wa:oklch(0.74 0.17 152);--wa-hover:oklch(0.78 0.17 152);--wa-ink:oklch(0.20 0.05 152);
+  --star:oklch(0.83 0.15 85);
+  --r-lg:20px;--r-md:14px;--r-sm:10px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:88px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"IBM Plex Sans Hebrew",sans-serif;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+h1,h2,h3{text-wrap:balance;margin:0}
+p{margin:0}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+.ltr{direction:ltr;unicode-bidi:isolate;display:inline-block}
+.ico{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.wrap{max-width:1200px;margin-inline:auto;padding-inline:32px}
+.sec{padding-block:112px}
+.sec+.sec{border-top:1px solid var(--line-soft)}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;color:var(--accent-ink);font-size:15px;font-weight:600;margin-bottom:16px}
+.eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.h2{font-size:44px;line-height:1.15;font-weight:700;letter-spacing:-0.01em}
+.lead{color:var(--muted);font-size:19px;max-width:34em}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:40px;margin-bottom:48px}
+.sec-head .lead{max-width:30em}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 24px;border-radius:12px;font-weight:600;font-size:16px;white-space:nowrap;border:0;cursor:pointer;transition:transform .15s ease,background .15s ease,border-color .15s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn-wa{background:var(--wa);color:var(--wa-ink)}
+.btn-wa:hover{background:var(--wa-hover)}
+.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+.btn-ghost:hover{background:var(--surface);border-color:var(--faint)}
+.btn-lg{min-height:58px;padding:0 28px;font-size:17px}
+.btn-sm{min-height:44px;padding:0 16px;font-size:15px}
+
+/* Header */
+.head{position:sticky;top:0;z-index:30;background:oklch(0.165 0.028 278 / .72);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);border-bottom:1px solid oklch(1 0 0 / .08)}
+.head .wrap{max-width:1280px;display:flex;align-items:center;gap:36px;height:76px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand img{width:40px;height:40px}
+.brand b{display:block;font-size:20px;font-weight:700;line-height:1.1}
+.brand b span{color:var(--accent-ink)}
+.brand small{display:block;color:var(--faint);font-size:13px;line-height:1.2;white-space:nowrap}
+.nav{display:flex;gap:24px;font-size:15px;color:var(--muted);margin-inline-start:auto}
+.nav a{white-space:nowrap}
+.nav a:hover{color:var(--text)}
+.head-cta{display:flex;gap:10px}
+
+/* Hero */
+.hero{position:relative;overflow:hidden;isolation:isolate;margin-top:-77px;padding-top:77px}
+.hero-bg{position:absolute;inset:-4%;z-index:-2;background:url("hero.webp") 30% 55%/cover no-repeat;animation:drift 26s ease-in-out infinite alternate;will-change:transform}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:
+  linear-gradient(270deg, oklch(0.165 0.028 278 / .86) 0%, oklch(0.165 0.028 278 / .74) 38%, oklch(0.165 0.028 278 / .52) 66%, oklch(0.165 0.028 278 / .70) 100%),
+  linear-gradient(180deg, oklch(0.165 0.028 278 / .35) 0%, transparent 30%, transparent 70%, var(--bg) 100%)}
+@keyframes drift{from{transform:scale(1) translate3d(0,0,0)}to{transform:scale(1.1) translate3d(-2.5%,-1.5%,0)}}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:64px;align-items:center;padding-block:104px 112px;min-height:780px}
+.hero-kicker{display:inline-flex;align-items:center;gap:10px;color:var(--muted);font-size:15px;font-weight:500;margin-bottom:24px;padding:6px 14px 6px 12px;border-radius:999px;background:oklch(0.165 0.028 278 / .55);border:1px solid oklch(1 0 0 / .1)}
+.hero-kicker::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--wa);box-shadow:0 0 0 0 oklch(0.74 0.17 152 / .6);animation:ping 2.4s ease-out infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 oklch(0.74 0.17 152 / .55)}80%,100%{box-shadow:0 0 0 10px oklch(0.74 0.17 152 / 0)}}
+.h1{font-size:66px;line-height:1.07;font-weight:700;letter-spacing:-0.01em;margin-bottom:24px;text-shadow:0 2px 24px oklch(0.12 0.03 278 / .6)}
+.hero .lead,.proof{text-shadow:0 1px 12px oklch(0.12 0.03 278 / .7)}
+.hero .lead{color:oklch(0.86 0.02 278)}
+.h1 span{display:block;color:var(--accent-ink)}
+.hero .lead{font-size:20px;margin-bottom:36px}
+.ctas{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:48px}
+.proof{display:flex;flex-wrap:wrap;border-top:1px solid oklch(1 0 0 / .12);padding-top:24px}
+.proof div{padding-inline-end:32px;margin-inline-end:32px;border-inline-end:1px solid oklch(1 0 0 / .12)}
+.proof div:last-child{border:0;margin:0;padding:0}
+.proof b{display:block;font-size:28px;font-weight:700;line-height:1.2}
+.proof span{color:var(--faint);font-size:14px}
+.card{background:oklch(0.205 0.032 278 / .78);backdrop-filter:blur(18px) saturate(1.3);-webkit-backdrop-filter:blur(18px) saturate(1.3);border:1px solid oklch(1 0 0 / .1);border-radius:var(--r-lg);padding:28px;box-shadow:0 30px 70px oklch(0.08 0.03 278 / .55)}
+.card-h{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:24px}
+.card-h b{font-size:17px;font-weight:600}
+.card-h span{font-size:13px;color:var(--faint)}
+.steps{list-style:none;margin:0;padding:0}
+.steps li{position:relative;display:grid;grid-template-columns:28px 1fr;gap:16px;padding-bottom:22px}
+.steps li:last-child{padding-bottom:0}
+.steps li::after{content:"";position:absolute;inset-inline-start:13px;top:30px;bottom:2px;width:2px;background:var(--line)}
+.steps li:last-child::after{display:none}
+.steps li.done::after{background:var(--accent)}
+.dot{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;border:2px solid var(--line);background:var(--bg);color:var(--faint);font-size:13px;font-weight:600}
+.dot .ico{width:14px;height:14px;stroke-width:3}
+.done .dot{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.now .dot{border-color:var(--accent);color:var(--accent-ink);animation:halo 2.4s ease-in-out infinite}
+@keyframes halo{0%,100%{box-shadow:0 0 0 4px oklch(0.70 0.17 292 / .14)}50%{box-shadow:0 0 0 9px oklch(0.70 0.17 292 / .22)}}
+.steps b{display:block;font-size:16px;font-weight:600;line-height:1.4}
+.steps p{margin-top:2px;color:var(--muted);font-size:14px;line-height:1.55}
+.now b::after{content:"בטיפול";margin-inline-start:10px;font-size:12px;font-weight:600;color:var(--accent-ink);background:var(--accent-soft);padding:2px 8px;border-radius:999px;vertical-align:2px}
+.card-f{display:flex;gap:10px;align-items:center;margin-top:24px;padding-top:18px;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
+.card-f .ico{width:18px;height:18px;color:var(--accent-ink)}
+
+/* Platform strip */
+.strip{border-block:1px solid var(--line-soft);background:var(--bg-2)}
+.strip .wrap{display:flex;align-items:center;gap:32px;padding-block:22px;flex-wrap:wrap}
+.strip small{color:var(--faint);font-size:14px;white-space:nowrap}
+.strip ul{display:flex;flex-wrap:wrap;gap:8px 28px;list-style:none;margin:0;padding:0;color:var(--muted);font-weight:500;font-size:16px}
+
+/* Services */
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.tile{display:flex;justify-content:space-between;align-items:center;gap:16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:24px;transition:border-color .15s ease,background .15s ease,transform .15s ease}
+.tile:hover{border-color:var(--accent);background:var(--raise);transform:translateY(-2px)}
+.tile b{display:block;font-size:18px;font-weight:600}
+.tile span{display:block;color:var(--faint);font-size:14px;line-height:1.5;margin-top:2px}
+.tile i{font-style:normal;color:var(--accent-ink);font-size:20px;flex:none}
+.tile.all{background:transparent;border-style:dashed}
+
+/* Statement / about */
+.statement .wrap{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:80px;align-items:end}
+.big{font-size:58px;line-height:1.12;font-weight:700;letter-spacing:-0.01em}
+.big .l{display:block}
+.big em{font-style:normal;color:var(--accent-ink)}
+.big .sub{display:block;color:var(--faint);font-size:.5em;line-height:1.3;margin-top:20px;font-weight:600}
+.about p+p{margin-top:16px}
+.about p{color:var(--muted)}
+.about b{color:var(--text);font-weight:600}
+
+/* Why */
+.why-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:72px;align-items:start}
+.checks{list-style:none;margin:32px 0 36px;padding:0;display:grid;gap:12px}
+.checks li{display:flex;gap:12px;align-items:center;font-weight:500}
+.checks .ico{color:var(--wa);width:22px;height:22px}
+.features{display:grid;gap:12px}
+.feature{display:grid;grid-template-columns:52px 1fr;gap:20px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:26px 28px}
+.feature .badge{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent-ink)}
+.feature .badge .ico{width:24px;height:24px}
+.feature b{display:block;font-size:19px;font-weight:600;margin-bottom:4px}
+.feature p{color:var(--muted);font-size:16px}
+.numbers{display:grid;grid-template-columns:repeat(4,1fr);margin-top:72px;border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden}
+.numbers div{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px 20px;background:var(--bg-2)}
+.numbers div+div{border-inline-start:1px solid var(--line)}
+.numbers b{display:block;font-size:40px;font-weight:700;line-height:1.1;margin-bottom:6px}
+.numbers span{color:var(--faint);font-size:15px}
+
+/* Video stories */
+.stories{overflow:hidden}
+.rail{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;scrollbar-width:none;margin-inline:-32px;padding-inline:32px}
+.rail::-webkit-scrollbar{display:none}
+.vid{position:relative;flex:0 0 228px;aspect-ratio:9/16;border-radius:18px;overflow:hidden;scroll-snap-align:start;background:var(--surface);border:1px solid var(--line);cursor:pointer;padding:0}
+.vid img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+.vid:hover img{transform:scale(1.04)}
+.vid::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,oklch(0.12 0.03 278 / .85))}
+.play{position:absolute;inset-inline-start:16px;bottom:16px;z-index:1;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:oklch(1 0 0 / .92);color:var(--bg)}
+.play svg{width:18px;height:18px;fill:currentColor;stroke:none;margin-inline-start:2px}
+.rail-nav{display:flex;gap:8px}
+.rail-nav button{width:48px;height:48px;border-radius:50%;border:1px solid var(--line);background:transparent;cursor:pointer;font-size:20px;color:var(--text)}
+.rail-nav button:hover{background:var(--surface)}
+.modal{position:fixed;inset:0;z-index:60;display:none;place-items:center;background:oklch(0.08 0.02 278 / .86);padding:24px}
+.modal.open{display:grid}
+.modal-box{position:relative;width:min(420px,100%);aspect-ratio:9/16;max-height:86vh;border-radius:18px;overflow:hidden;background:#000}
+.modal iframe{width:100%;height:100%;border:0}
+.modal-x{position:absolute;top:16px;inset-inline-end:16px;width:48px;height:48px;border-radius:50%;border:0;background:oklch(1 0 0 / .14);color:#fff;font-size:24px;cursor:pointer}
+
+/* Reviews */
+.rating{display:flex;align-items:center;gap:16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:16px 22px;white-space:nowrap}
+.rating b{font-size:40px;font-weight:700;line-height:1}
+.stars{color:var(--star);letter-spacing:2px;font-size:16px}
+.rating small{display:block;color:var(--faint);font-size:14px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+.chip{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:transparent;cursor:pointer;font-size:15px;font-weight:500;color:var(--muted)}
+.chip span{font-size:13px;color:var(--faint);background:var(--raise);border-radius:999px;padding:1px 8px}
+.chip[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--text)}
+.chip[aria-pressed="true"] span{color:var(--accent-ink);background:oklch(0.70 0.17 292 / .22)}
+.reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.rev{display:flex;flex-direction:column;gap:16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:24px}
+.rev-h{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.rev-h .stars{font-size:14px}
+.rev-tag{font-size:13px;font-weight:600;color:var(--wa);white-space:nowrap}
+.rev p{flex:1;font-size:16px;line-height:1.65}
+.rev-f{display:flex;align-items:center;gap:12px;padding-top:16px;border-top:1px solid var(--line-soft)}
+.av{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent-ink);font-weight:700;flex:none}
+.rev-f b{display:block;font-size:15px;font-weight:600;line-height:1.3}
+.rev-f small{color:var(--faint);font-size:13px}
+.rev-f .net{margin-inline-start:auto;font-size:13px;color:var(--muted);text-align:end;line-height:1.4}
+.more{display:flex;justify-content:center;margin-top:28px}
+
+/* Contact */
+.contact{background:radial-gradient(80% 120% at 85% 0%, oklch(0.70 0.17 292 / .14), transparent 60%),var(--bg)}
+.contact .wrap{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:72px;align-items:center}
+.contact .h2 > span:not(.w-in){display:block;color:var(--accent-ink)}
+.contact .lead{margin:20px 0 32px}
+.contact .ctas{margin-bottom:32px}
+.trust{list-style:none;margin:0;padding:24px 0 0;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(2,auto);justify-content:start;gap:12px 32px;font-size:15px;color:var(--muted)}
+.trust li{display:flex;gap:10px;align-items:center}
+.trust .ico{width:18px;height:18px;color:var(--wa)}
+.form{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:36px;box-shadow:0 30px 70px oklch(0.08 0.03 278 / .45)}
+.form h3{font-size:24px;font-weight:700;margin-bottom:6px}
+.form > p{color:var(--muted);font-size:15px;margin-bottom:24px}
+.field{display:block;margin-bottom:14px}
+.field span{display:block;font-size:14px;font-weight:500;color:var(--muted);margin-bottom:6px}
+.field input,.field select{width:100%;min-height:52px;padding:0 16px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--text);font-size:16px;appearance:none}
+.field select{background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:18px 23px,24px 23px;background-size:6px 6px;background-repeat:no-repeat;padding-inline-start:16px;padding-inline-end:44px;text-overflow:ellipsis}
+.field input:focus,.field select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.field input[dir="ltr"]{text-align:right}
+.consent{display:flex;gap:12px;align-items:flex-start;font-size:14px;color:var(--muted);margin:6px 0 20px;line-height:1.5}
+.consent input{appearance:none;-webkit-appearance:none;width:22px;height:22px;margin:0;flex:none;border:1.5px solid var(--faint);border-radius:6px;background:var(--bg);display:grid;place-items:center;cursor:pointer}
+.consent input:checked{background:var(--accent);border-color:var(--accent)}
+.consent input:checked::after{content:"";width:10px;height:5px;border-left:2px solid var(--bg);border-bottom:2px solid var(--bg);transform:translateY(-1px) rotate(-45deg)}
+.consent a{color:var(--accent-ink);text-decoration:underline;text-underline-offset:3px}
+.form .btn{width:100%}
+
+/* Footer */
+.foot{background:oklch(0.14 0.025 278);border-top:1px solid var(--line-soft);padding-block:72px 32px;font-size:15px}
+.foot-grid{display:grid;grid-template-columns:minmax(0,4fr) repeat(3,minmax(0,2.4fr));gap:48px}
+.foot h4{margin:0 0 16px;font-size:15px;font-weight:600;color:var(--text)}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:10px;color:var(--muted)}
+.foot ul a:hover{color:var(--text)}
+.foot-brand p{color:var(--muted);margin-top:16px;max-width:26em}
+.foot-brand .tag{color:var(--text);font-weight:600;font-size:18px;margin-top:20px}
+.socials{display:flex;gap:10px;margin-top:20px}
+.legal{margin-top:56px;padding-top:24px;border-top:1px solid var(--line-soft);color:var(--faint);font-size:13px;display:grid;gap:12px}
+.legal-row{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 24px}
+.legal-row nav{display:flex;gap:20px}
+
+/* Live ticker */
+.tk{position:relative;z-index:31;height:40px;display:flex;align-items:center;overflow:hidden;background:oklch(0.13 0.025 278);border-bottom:1px solid oklch(1 0 0 / .07)}
+.tk-track{display:flex;width:max-content;animation:tk 46s linear infinite}
+.tk:hover .tk-track{animation-play-state:paused}
+.tk-group{display:flex;gap:56px;padding-inline-end:56px}
+.tk-item{display:inline-flex;align-items:center;gap:10px;font-size:14px;color:var(--muted);white-space:nowrap}
+.tk-dot{width:7px;height:7px;border-radius:50%;background:var(--wa);box-shadow:0 0 8px oklch(0.74 0.17 152 / .8)}
+.tk-brand{color:var(--wa);font-weight:600}
+.tk-pill{display:inline-flex;align-items:center;gap:5px;border:1px solid oklch(0.74 0.17 152 / .35);background:oklch(0.74 0.17 152 / .08);color:oklch(0.86 0.10 152);border-radius:999px;padding:2px 10px;font-size:12px}
+.tk-pill .ico{width:12px;height:12px;stroke-width:3}
+@keyframes tk{from{transform:translateX(0)}to{transform:translateX(50%)}}
+#liveMsg{transition:opacity .35s ease}
+#liveMsg.out{opacity:0}
+
+/* Brand icons */
+.pi{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;color:#fff;flex:none}
+.pi svg{width:22px;height:22px;fill:currentColor}
+.pi.facebook{background:linear-gradient(135deg,#4798ff 0%,#1877f2 55%,#0f56bd 100%)}
+.pi.instagram{background:linear-gradient(135deg,#feda75 0%,#fa7e1e 24%,#d62976 52%,#962fbf 76%,#4f5bd5 100%)}
+.pi.whatsapp{background:linear-gradient(135deg,#67e589 0%,#25d366 55%,#159447 100%)}
+.pi.tiktok{background:linear-gradient(145deg,#242424 0%,#080808 100%);box-shadow:inset 0 0 0 1px oklch(1 0 0 / .12)}
+.pi.google{background:linear-gradient(135deg,#4285f4 0%,#4285f4 28%,#34a853 45%,#fbbc05 70%,#ea4335 100%)}
+.pi.telegram{background:linear-gradient(135deg,#55bff0 0%,#229ed9 55%,#147eb0 100%)}
+.pi.apple{background:linear-gradient(145deg,#687385 0%,#252a32 48%,#050608 100%)}
+.pi.samsung{background:linear-gradient(135deg,#438cff 0%,#1428a0 60%,#071d70 100%)}
+.pi.samsung svg{width:40px;height:40px}
+.pi.youtube{background:linear-gradient(135deg,#ff4b4b,#cc1111)}
+.pi.sm{width:32px;height:32px}.pi.sm svg{width:15px;height:15px}
+
+/* Platform tiles */
+.plat{border-block:1px solid var(--line-soft);background:var(--bg-2)}
+.plat .wrap{padding-block:28px}
+.plat-cap{color:var(--faint);font-size:14px;margin-bottom:16px}
+.plat ul{display:grid;grid-template-columns:repeat(8,1fr);gap:10px;list-style:none;margin:0;padding:0}
+.plat a{display:flex;flex-direction:column;align-items:center;gap:10px;padding:18px 8px 16px;border-radius:16px;border:1px solid var(--line-soft);background:var(--surface);font-size:14px;font-weight:600;color:var(--muted);text-align:center;transition:transform .2s ease,border-color .2s ease,color .2s ease}
+.plat a:hover{transform:translateY(-3px);border-color:var(--line);color:var(--text)}
+.plat a:hover .pi{animation:bob .6s ease}
+@keyframes bob{50%{transform:translateY(-3px) scale(1.06)}}
+
+/* Service image cards */
+.svc{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.svc-card{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:20px;overflow:hidden;transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}
+.svc-card:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:0 24px 50px -20px oklch(0.70 0.17 292 / .45)}
+.svc-img{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--bg)}
+.svc-img img{width:100%;height:100%;object-fit:cover;transition:transform .8s ease}
+.svc-card:hover .svc-img img{transform:scale(1.07)}
+.svc-img::after{content:"";position:absolute;inset:auto 0 0 0;height:45%;background:linear-gradient(transparent,var(--surface))}
+.svc-body{display:flex;flex-direction:column;gap:12px;flex:1;padding:0 22px 22px;margin-top:-8px;position:relative}
+.svc-body h3{font-size:20px;font-weight:700}
+.svc-body ul{list-style:none;margin:0;padding:0;display:grid;gap:8px;color:var(--muted);font-size:15px;line-height:1.5}
+.svc-body li{display:flex;gap:10px}
+.svc-body li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);margin-top:9px;flex:none}
+.svc-more{margin-top:auto;padding-top:8px;color:var(--accent-ink);font-weight:600;font-size:15px}
+.svc-extra{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:24px}
+.svc-extra-cap{color:var(--faint);font-size:15px;font-weight:500;margin-inline-end:6px}
+.svc-extra a{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding-block:0;padding-inline:7px 18px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--text);font-size:15px;font-weight:500;transition:border-color .2s ease,transform .2s ease}
+.svc-extra a:hover{border-color:var(--accent);transform:translateY(-1px)}
+.svc-extra a.all{margin-inline-start:auto;padding-inline:20px;background:var(--accent-soft);border-color:var(--accent);font-weight:600}
+
+/* Process with images */
+.proc{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;list-style:none;margin:0;padding:0}
+.proc li{background:var(--surface);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.proc-img{aspect-ratio:768/568;overflow:hidden}
+.proc-img img{width:100%;height:100%;object-fit:cover;transition:transform .8s ease}
+.proc li:hover .proc-img img{transform:scale(1.06)}
+.proc-body{padding:20px 22px 24px}
+.proc-body small{color:var(--wa);font-weight:600;font-size:14px}
+.proc-body b{display:block;font-size:19px;font-weight:700;margin:4px 0 6px}
+.proc-body p{color:var(--muted);font-size:15px;line-height:1.6}
+.proc-cta{display:flex;justify-content:space-between;align-items:center;gap:24px;margin-top:24px;padding:20px 24px;border-radius:16px;border:1px solid var(--line);background:linear-gradient(90deg,var(--accent-soft),transparent)}
+.proc-cta p{font-size:17px}
+.proc-cta b{font-weight:700}
+
+/* Review platform badge + socials */
+.rev-f .net{display:flex;align-items:center;gap:10px}
+.socials a{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;color:var(--muted);transition:color .2s,border-color .2s}
+.socials a:hover{color:var(--text);border-color:var(--faint)}
+.socials svg{width:18px;height:18px;fill:currentColor}
+
+@media (prefers-reduced-motion:reduce){.tk-track{animation:none}.svc-img img,.proc-img img{transition:none}}
+@media (max-width:1080px){.plat ul{grid-template-columns:repeat(4,1fr)}.svc,.proc{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:720px){
+  .tk{height:36px}.tk-track{animation-duration:36s}.tk-item{font-size:13px}
+  .plat .wrap{padding-block:22px}.plat ul{gap:8px}.plat a{padding:12px 4px;font-size:12px;gap:8px}.pi{width:40px;height:40px}.pi svg{width:18px;height:18px}.pi.samsung svg{width:34px;height:34px}
+  .svc-card:hover,.svc-card:hover .svc-img img{transform:none}
+  .proc-cta{flex-direction:column;align-items:stretch;text-align:start}
+}
+
+/* Live case card */
+.card-bar{height:4px;border-radius:4px;background:var(--line);margin:-10px 0 22px;overflow:hidden}
+.card-bar span{display:block;height:100%;width:50%;border-radius:4px;background:linear-gradient(270deg,var(--accent),var(--accent-ink));transition:width .7s cubic-bezier(.3,.7,.2,1),background .4s ease}
+.card.complete .card-bar span{background:var(--wa)}
+#caseState{transition:color .3s ease}
+.card.complete #caseState{color:var(--wa);font-weight:600}
+.steps li::after{transition:background .5s ease}
+.dot{transition:background .4s ease,border-color .4s ease,color .4s ease}
+.dot em{font-style:normal}
+.dot .ck{display:none}
+.done .dot .ck{display:block}
+.done .dot em{display:none}
+.card.complete .done .dot{background:var(--wa);border-color:var(--wa)}
+.card.complete .steps li.done::after{background:var(--wa)}
+
+/* Header after scrolling */
+.head{transition:background .3s ease,box-shadow .3s ease}
+.head.scrolled{background:oklch(0.165 0.028 278 / .94);box-shadow:0 12px 30px -14px oklch(0.06 0.03 278 / .8)}
+
+/* Scroll reveal (only elements JS marks as waiting are hidden) */
+[data-reveal]{transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+[data-reveal="wait"]{opacity:0;transform:translateY(24px)}
+
+/* Depth */
+.glow{background:radial-gradient(55% 60% at 0% 0%, oklch(0.70 0.17 292 / .08), transparent 70%),radial-gradient(45% 55% at 100% 100%, oklch(0.74 0.17 152 / .045), transparent 70%)}
+.statement{position:relative;overflow:hidden;isolation:isolate}
+.statement::before{content:"";position:absolute;z-index:-1;inset-inline-start:-170px;top:50%;width:620px;height:620px;transform:translateY(-50%);background:url("img/ChatGPT-Image-Jul-15-2026-11_30_37-PM.webp") center/contain no-repeat;opacity:.08}
+.about .founder{margin-top:20px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted)}
+
+/* FAQ */
+.faq .wrap{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,7fr);gap:72px;align-items:start}
+.faq-side{position:sticky;top:110px}
+.faq-side .lead{margin:16px 0 28px}
+.faq-links{display:flex;flex-wrap:wrap;gap:10px}
+.qa{border-top:1px solid var(--line)}
+.qa details{border-bottom:1px solid var(--line)}
+.qa summary{list-style:none;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:22px 0;cursor:pointer;font-size:18px;font-weight:600;transition:color .2s ease}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary:hover{color:var(--accent-ink)}
+.pm{position:relative;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);flex:none;transition:transform .3s ease,background .3s ease,border-color .3s ease}
+.pm::before,.pm::after{content:"";position:absolute;top:50%;left:50%;width:12px;height:2px;margin:-1px 0 0 -6px;border-radius:2px;background:currentColor}
+.pm::after{transform:rotate(90deg)}
+.qa details[open] .pm{transform:rotate(45deg);background:var(--accent-soft);border-color:var(--accent)}
+.qa details p{color:var(--muted);padding:0 0 24px;max-width:46em;line-height:1.75}
+.qa details[open] p{animation:qa-in .35s ease}
+@keyframes qa-in{from{opacity:0;transform:translateY(-6px)}}
+
+@media (prefers-reduced-motion:reduce){[data-reveal]{transition:none}.card-bar span{transition:none}}
+@media (max-width:1080px){.faq .wrap{grid-template-columns:1fr;gap:32px}.faq-side{position:static}}
+@media (max-width:720px){
+  .steps p{display:none}.steps li{padding-bottom:16px}.card-h{margin-bottom:20px}
+  .statement::before{width:360px;height:360px;inset-inline-start:-150px;top:40px;transform:none}
+  .qa summary{font-size:17px;padding:18px 0}
+}
+
+/* Skip link */
+.skip{position:absolute;inset-inline-start:12px;top:-80px;z-index:100;background:var(--wa);color:var(--wa-ink);padding:12px 18px;border-radius:10px;font-weight:600}
+.skip:focus{top:12px}
+
+/* Hero light that follows the pointer (drifts on touch screens) */
+.hero-light{position:absolute;z-index:-1;top:0;left:0;width:760px;height:760px;margin:-380px 0 0 -380px;border-radius:50%;pointer-events:none;background:radial-gradient(closest-side,oklch(0.86 0.09 292 / .32),oklch(0.80 0.10 292 / .10) 48%,transparent 76%);mix-blend-mode:screen;transform:translate3d(var(--lx,34vw),var(--ly,400px),0);transition:transform .35s cubic-bezier(.2,.7,.2,1);will-change:transform}
+@media (hover:none){.hero-light{transition:none;animation:light-drift 18s ease-in-out infinite alternate}}
+@keyframes light-drift{0%{transform:translate3d(15vw,200px,0)}50%{transform:translate3d(75vw,380px,0)}100%{transform:translate3d(30vw,560px,0)}}
+.hero-check{display:inline-flex;align-items:center;gap:8px;margin:-28px 0 36px;color:var(--accent-ink);font-weight:600;font-size:16px;border-bottom:1px solid oklch(0.80 0.12 292 / .35);padding-block:8px 2px}
+.hero-check:hover{border-color:var(--accent-ink)}
+
+/* WhatsApp pulse */
+.btn-pulse{position:relative}
+.btn-pulse::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;animation:wa-pulse 2.8s ease-out infinite}
+@keyframes wa-pulse{0%{box-shadow:0 0 0 0 oklch(0.74 0.17 152 / .5)}70%,100%{box-shadow:0 0 0 14px oklch(0.74 0.17 152 / 0)}}
+
+/* Quick check */
+.qc-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:72px;align-items:center}
+.qc-points{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:12px;color:var(--muted)}
+.qc-points li{display:flex;gap:10px;align-items:center}
+.qc-points .ico{color:var(--wa);width:20px;height:20px}
+.qc{position:relative;background:oklch(0.205 0.032 278 / .88);border:1px solid var(--line);border-radius:24px;padding:32px;min-height:460px;box-shadow:0 34px 80px -24px oklch(0.06 0.03 278 / .75),inset 0 1px 0 oklch(1 0 0 / .05)}
+.qc-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
+.qc-count{font-size:14px;color:var(--faint);font-weight:500}
+.qc-dots{display:flex;gap:6px}
+.qc-dots i{width:28px;height:4px;border-radius:4px;background:var(--line);transition:background .3s ease}
+.qc-dots i.on{background:var(--accent)}
+.qc-dots.done i{background:var(--wa)}
+.qc h3{font-size:24px;font-weight:700;line-height:1.3;margin-bottom:20px;outline:none}
+.qc-opts{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.qc-opts.one{grid-template-columns:1fr}
+.qc-opt{display:flex;align-items:center;gap:12px;min-height:58px;padding:10px 16px;border-radius:14px;border:1px solid var(--line);background:var(--bg);color:var(--text);font-size:16px;font-weight:500;text-align:start;cursor:pointer;transition:border-color .2s ease,background .2s ease,transform .15s ease}
+.qc-opt:hover{border-color:var(--accent);background:var(--raise);transform:translateY(-1px)}
+.qc-opt[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.pi.neutral{background:var(--raise);color:var(--accent-ink);box-shadow:inset 0 0 0 1px var(--line)}
+.pi .ico{fill:none;stroke:currentColor;width:16px;height:16px}
+.qc-step,.qc-result{animation:qc-in .4s ease}
+@keyframes qc-in{from{opacity:0;transform:translateX(-16px)}}
+.qc-back,.qc-restart{background:none;border:0;cursor:pointer;margin-top:16px;padding:12px 0;color:var(--faint);font-size:14px;font-weight:500}
+.qc-back:hover,.qc-restart:hover{color:var(--text)}
+.qc-res-head{display:flex;gap:14px;align-items:center;margin-bottom:20px}
+.qc-badge{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:oklch(0.74 0.17 152 / .15);color:var(--wa);flex:none}
+.qc-badge .ico{width:22px;height:22px;stroke-width:2.5}
+.qc-res-head b{display:block;font-size:20px;line-height:1.3}
+.qc-res-head small{display:block;color:var(--faint);font-size:14px;margin-top:2px}
+.qc-res{margin:0 0 20px;display:grid;gap:12px}
+.qc-res>div{padding:14px 18px;border-radius:14px;background:var(--bg);border:1px solid var(--line-soft)}
+.qc-res dt{font-size:13px;font-weight:600;color:var(--accent-ink);margin-bottom:4px}
+.qc-res dd{margin:0;font-size:15px;line-height:1.6}
+.qc-res ul{margin:0;padding-inline-start:18px;color:var(--muted)}
+.qc-res dd p+p{margin-top:8px}
+.qc-send{width:100%}
+.qc-note{font-size:13px;color:var(--faint);margin-top:12px;line-height:1.55}
+
+/* Process timeline */
+.proc{position:relative;padding-top:66px}
+.proc::before{content:"";position:absolute;top:21px;inset-inline:calc(12.5% - 6px);height:2px;background:linear-gradient(270deg,var(--accent),oklch(0.74 0.17 152 / .85))}
+.proc li{position:relative;overflow:visible}
+.proc-img{border-radius:20px 20px 0 0}
+.proc-node{position:absolute;top:-66px;left:50%;transform:translateX(-50%);width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--bg);border:2px solid var(--accent);color:var(--accent-ink);font-weight:700;font-size:15px;box-shadow:0 0 0 6px var(--bg)}
+.proc li:last-child .proc-node{border-color:var(--wa);color:var(--wa)}
+
+/* Commitments */
+.why-intro .lead{margin:16px 0 32px}
+.promises{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.promises-cap{grid-column:1/-1;color:var(--faint);font-size:14px;font-weight:600}
+.promise{display:flex;flex-direction:column;gap:8px;padding:24px;border-radius:18px;background:var(--surface);border:1px solid var(--line);transition:border-color .2s ease,transform .2s ease}
+.promise:hover{border-color:var(--accent);transform:translateY(-2px)}
+.promise .badge{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent-ink);margin-bottom:6px}
+.promise .badge .ico{width:24px;height:24px}
+.promise b{font-size:18px;font-weight:700}
+.promise p{color:var(--muted);font-size:15px;line-height:1.6}
+.numbers b{background:linear-gradient(180deg,var(--text) 30%,var(--accent-ink));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* Review wall */
+#reviews{overflow:hidden}
+.wall{display:grid;gap:14px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+.wall-row{overflow:hidden}
+.wall-track{display:flex;width:max-content;animation:tk 140s linear infinite}
+.wall-row.rev2 .wall-track{animation-direction:reverse;animation-duration:160s}
+.wall:hover .wall-track{animation-play-state:paused}
+.wall-group{display:flex;gap:14px;padding-inline-end:14px}
+.wcard{width:340px;flex:none;display:flex;flex-direction:column;gap:12px;padding:20px 22px;border-radius:16px;background:var(--surface);border:1px solid var(--line)}
+.wcard-h{display:flex;justify-content:space-between;align-items:center}
+.wcard-h .stars{font-size:13px}
+.wcard p{font-size:15px;line-height:1.6;flex:1}
+.wcard-f{display:flex;align-items:center;gap:10px;font-size:14px}
+.wcard-f b{font-weight:600}
+.wcard-f small{display:block;color:var(--faint);font-size:13px}
+.wcard-f .pi{margin-inline-start:auto}
+.wall-cta{display:flex;justify-content:center;margin-top:36px}
+.rev-all{margin-top:36px}
+
+@media (prefers-reduced-motion:reduce){.hero-light,.btn-pulse::after,.wall-track{animation:none}.wall-row{overflow-x:auto}.qc-step,.qc-result{animation:none}}
+@media (max-width:1080px){.qc-grid{grid-template-columns:1fr;gap:40px}}
+@media (max-width:720px){
+  .hero-check{margin:0 0 24px;font-size:15px;padding-block:12px 4px}
+  .qc{padding:22px;min-height:0;border-radius:20px}
+  .qc h3{font-size:20px}
+  .qc-opts{gap:8px}.qc-opt{min-height:52px;font-size:15px;padding:8px 12px;gap:10px}
+  .proc{padding-top:0}.proc::before,.proc-node{display:none}.proc-img{border-radius:20px 20px 0 0}
+  .promises{grid-template-columns:1fr}.promise{padding:20px}
+  .wcard{width:290px;padding:18px}
+  .wall{-webkit-mask-image:none;mask-image:none}
+}
+
+/* Callback band */
+.sec.lead-band{padding-block:72px}
+.lb{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,7fr);gap:48px;align-items:center;padding:40px;border-radius:24px;border:1px solid oklch(0.70 0.17 292 / .35);background:linear-gradient(135deg,oklch(0.70 0.17 292 / .18),oklch(0.205 0.032 278 / .92) 45%,oklch(0.74 0.17 152 / .10));box-shadow:0 30px 70px -30px oklch(0.70 0.17 292 / .35)}
+.lb-h{font-size:36px}
+.lb-text p:last-child{color:var(--muted);margin-top:10px}
+.lb-form{display:grid;grid-template-columns:1fr 1fr 1.25fr auto;gap:12px;align-items:end}
+.lb-form .field{margin:0}
+.lb-form .consent{grid-column:1/-1;margin:0}
+.lb-form .btn{min-height:52px}
+
+/* Callback inside the quick-check result */
+.qc-callback{margin-top:14px;border-top:1px solid var(--line-soft);padding-top:6px}
+.qc-callback summary{list-style:none;cursor:pointer;padding:12px 0;color:var(--accent-ink);font-weight:600;font-size:15px}
+.qc-callback summary::-webkit-details-marker{display:none}
+.qc-form{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px;animation:qc-in .35s ease}
+.qc-form input:not([type=checkbox]){width:100%;min-height:50px;padding:0 14px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--text);font-size:16px}
+.qc-form input:not([type=checkbox]):focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.qc-form input[dir="ltr"]{text-align:right}
+.qc-form .consent,.qc-form .btn{grid-column:1/-1}
+.qc-form .consent{margin:0}
+
+@media (max-width:1080px){.lb{grid-template-columns:1fr;gap:24px}.lb-form{grid-template-columns:1fr 1fr}.lb-form .btn{grid-column:1/-1}}
+@media (max-width:720px){.sec.lead-band{padding-block:56px}.lb{padding:24px;border-radius:20px}.lb-h{font-size:28px}.lb-form{grid-template-columns:1fr}.qc-form{grid-template-columns:1fr}}
+
+/* Mobile: no hidden sideways scrolling for services and process — everything stacks */
+@media (max-width:720px){
+  .svc-extra{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:20px}
+  .svc-extra-cap{grid-column:1/-1;margin:0 0 2px;font-size:14px}
+  .svc-extra a{min-height:52px;border-radius:14px;padding-inline:6px 10px;gap:8px;font-size:14px;line-height:1.25}
+  .svc-extra a.all{grid-column:1/-1;justify-content:center;margin:4px 0 0}
+  .svc{display:grid;grid-template-columns:1fr;gap:12px}
+  .svc-card{flex-direction:row;align-items:stretch;border-radius:18px}
+  .svc-img{flex:0 0 112px;aspect-ratio:auto;min-height:100%}
+  .svc-img::after{inset:0;height:auto;background:linear-gradient(270deg,transparent 55%,var(--surface))}
+  .svc-body{margin-top:0;padding:16px 16px 16px 14px;gap:8px}
+  .svc-body h3{font-size:18px}
+  .svc-body ul{font-size:14px;gap:4px}
+  .svc-body li::before{margin-top:8px;width:5px;height:5px}
+  .svc-more{padding-top:4px;font-size:14px}
+  .proc{display:grid;grid-template-columns:1fr;gap:0;padding:0}
+  .proc::before{display:none}
+  .proc li:not(:last-child)::after{content:"";position:absolute;inset-inline-start:33px;top:72px;bottom:0;width:2px;background:var(--accent);opacity:.8}
+  .proc li:nth-child(3)::after{background:linear-gradient(180deg,var(--accent),var(--wa))}
+  .proc li{display:grid;grid-template-columns:68px 1fr;gap:16px;align-items:start;padding:0 0 26px;background:none;border:0;border-radius:0}
+  .proc li:last-child{padding-bottom:0}
+  .proc-img{width:68px;height:68px;aspect-ratio:1;border-radius:50%;border:2px solid var(--accent);position:relative;z-index:1;box-shadow:0 0 0 5px var(--bg)}
+  .proc li:last-child .proc-img{border-color:var(--wa)}
+  .proc-img img,.proc li:hover .proc-img img{transform:scale(1.7)}
+  .proc-body{padding:6px 0 0}
+  .proc-body b{font-size:18px;margin:2px 0 4px}
+  .proc-body p{font-size:15px}
+}
+
+/* Menu button + full-screen menu (below 1180px, where the inline nav is hidden) */
+.menu-btn{display:none;width:46px;height:46px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--text);place-items:center;cursor:pointer;flex:none}
+.menu-btn .bars{position:relative;width:20px;height:14px;display:block}
+.menu-btn .bars i{position:absolute;inset-inline:0;height:2px;border-radius:2px;background:currentColor;transition:transform .25s ease,opacity .2s ease}
+.menu-btn .bars i:nth-child(1){top:0}.menu-btn .bars i:nth-child(2){top:6px}.menu-btn .bars i:nth-child(3){top:12px}
+.mnav{position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;gap:22px;padding:14px 20px calc(20px + env(safe-area-inset-bottom));overflow-y:auto;background:oklch(0.14 0.025 278 / .985);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);animation:mnav-in .25s ease}
+.mnav[hidden]{display:none}
+@keyframes mnav-in{from{opacity:0;transform:translateY(-8px)}}
+.mnav-top{display:flex;justify-content:space-between;align-items:center;min-height:52px}
+.mnav-x{width:46px;height:46px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--text);font-size:28px;line-height:1;cursor:pointer}
+.mnav-links{display:flex;flex-direction:column}
+.mnav-links a{display:flex;justify-content:space-between;align-items:center;min-height:56px;font-size:20px;font-weight:600;border-bottom:1px solid var(--line-soft)}
+.mnav-links a span{color:var(--accent-ink);font-size:18px}
+.mnav-cap{color:var(--faint);font-size:14px;font-weight:600;margin-bottom:12px}
+.mnav-plat{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.mnav-plat a{display:flex;flex-direction:column;align-items:center;gap:8px;padding:12px 4px;border-radius:14px;border:1px solid var(--line-soft);background:var(--surface);font-size:13px;font-weight:500;color:var(--muted);text-align:center}
+.mnav-more{display:flex;flex-wrap:wrap;gap:8px}
+.mnav-more a{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);color:var(--muted);font-size:15px}
+.mnav-cta{display:grid;grid-template-columns:1fr 2fr;gap:8px;margin-top:auto}
+@media (max-width:1180px){.menu-btn{display:grid}}
+@media (min-width:1181px){.mnav{display:none!important}}
+
+/* Platform strip head */
+.plat-head{display:flex;justify-content:space-between;align-items:baseline;gap:24px;flex-wrap:wrap;margin-bottom:16px}
+.plat-head .plat-cap{margin:0}
+.plat-note{display:flex;align-items:center;gap:8px;color:var(--faint);font-size:13px}
+.plat-note .ico{width:16px;height:16px;color:var(--wa)}
+
+/* Real case files */
+.stories .sec-head .lead{max-width:28em}
+.cases{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:56px}
+.case{display:grid;grid-template-columns:120px 1fr;gap:18px;align-items:start;padding:16px;border-radius:20px;background:var(--surface);border:1px solid var(--line)}
+.case-media{position:relative;width:120px;aspect-ratio:9/14;border-radius:14px;overflow:hidden;border:0;padding:0;cursor:pointer;background:var(--bg)}
+.case-media img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.case-media:hover img{transform:scale(1.06)}
+.case-media .play{inset-inline-start:50%;bottom:50%;width:42px;height:42px;transform:translate(50%,50%)}
+.case-dur{position:absolute;bottom:8px;inset-inline-end:8px;padding:2px 7px;border-radius:6px;background:oklch(0 0 0 / .6);color:#fff;font-size:12px;font-weight:600}
+.case-body{display:flex;flex-direction:column;gap:10px;min-height:100%;padding-top:4px}
+.case-tag{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:var(--text);line-height:1.35}
+.case-tag .pi{flex:none}
+.case-body p{color:var(--muted);font-size:15px;line-height:1.6;flex:1}
+.case-play{align-self:flex-start;background:none;border:0;padding:6px 0;cursor:pointer;color:var(--accent-ink);font-weight:600;font-size:15px}
+.case-play:hover{color:var(--text)}
+.rail-title{color:var(--faint);font-size:14px;font-weight:600;margin-bottom:14px}
+
+@media (max-width:1080px){.cases{grid-template-columns:1fr}}
+@media (max-width:720px){
+  .plat-head{display:block}.plat-note{margin-top:8px;align-items:flex-start;line-height:1.5}
+  .cases{gap:10px;margin-bottom:40px}.case{grid-template-columns:96px 1fr;gap:14px;padding:12px}.case-media{width:96px}
+  .case-body p{font-size:14px}
+}
+
+/* All video stories as case cards */
+.case[hidden]{display:none}
+.case-meta{font-size:13px;color:var(--faint)}
+.cases{margin-bottom:0}
+.cases-more{display:flex;justify-content:center;margin-top:28px}
+.cases-more[hidden]{display:none}
+
+/* Lead form in the hero */
+.hero-form{padding:26px}
+.hf-head{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.hf-head b{display:block;font-size:20px;font-weight:700;line-height:1.3}
+.hf-head small{display:block;color:var(--muted);font-size:14px}
+.hf-live{width:12px;height:12px;border-radius:50%;background:var(--wa);flex:none;animation:ping 2.4s ease-out infinite}
+.hf .field{margin-bottom:12px}
+.hf .field input,.hf .field select{min-height:50px;background:oklch(0.165 0.028 278 / .85)}
+.hf-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hf .consent{margin:4px 0 16px}
+.hf .btn{width:100%}
+.hero-form .card-f{margin-top:18px}
+@media (max-width:720px){.hero-form{padding:20px}.hf-head b{font-size:18px}}
+
+/* Rotating pain question (first line of the H1) */
+.h1 .pain{display:flex;align-items:flex-end;color:var(--text);transition:opacity .35s ease,transform .35s ease}
+.h1 .pain.out{opacity:0;transform:translateY(-12px)}
+.h1 .pain.in{opacity:0;transform:translateY(12px)}
+.h1 .h1-b{display:block;color:var(--accent-ink)}
+
+/* Save our number */
+.save-card{display:flex;align-items:center;gap:16px;margin-top:24px;padding:18px 20px;border-radius:18px;border:1px dashed oklch(0.70 0.17 292 / .5);background:oklch(0.70 0.17 292 / .07)}
+.save-card .badge{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent-ink);flex:none}
+.save-card .badge .ico{width:22px;height:22px}
+.save-card b{display:block;font-size:17px;font-weight:700}
+.save-card p{color:var(--muted);font-size:14px;line-height:1.5}
+.save-card .btn{margin-inline-start:auto;flex:none}
+.foot-save{background:none;border:0;padding:10px 0;cursor:pointer;color:var(--accent-ink);font-weight:600;font-size:15px}
+.foot-save:hover{color:var(--text)}
+.mnav-save{display:flex;align-items:center;gap:10px;min-height:52px;padding:0 16px;border-radius:14px;border:1px dashed oklch(0.70 0.17 292 / .5);background:oklch(0.70 0.17 292 / .07);color:var(--text);font-size:15px;font-weight:600;cursor:pointer;text-align:start}
+.mnav-save .ico{color:var(--accent-ink)}
+.save-toast{position:fixed;inset-inline:16px;bottom:96px;z-index:80;margin:0 auto;max-width:420px;padding:14px 18px;border-radius:14px;background:var(--text);color:var(--bg);font-weight:600;text-align:center;box-shadow:0 18px 40px oklch(0 0 0 / .4);animation:mnav-in .25s ease}
+
+/* Catch-all after the services */
+.svc-other{display:flex;align-items:center;gap:18px;margin-top:16px;padding:20px 24px;border-radius:20px;border:1px solid oklch(0.74 0.17 152 / .35);background:linear-gradient(90deg,oklch(0.74 0.17 152 / .10),transparent 70%)}
+.svc-other .badge{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:oklch(0.74 0.17 152 / .15);color:var(--wa);flex:none}
+.svc-other .badge .ico{width:24px;height:24px}
+.svc-other b{display:block;font-size:18px;font-weight:700}
+.svc-other p{color:var(--muted);font-size:15px}
+.svc-other .btn{margin-inline-start:auto;flex:none}
+
+@media (max-width:720px){
+  .save-card{flex-wrap:wrap;padding:16px}.save-card .btn{width:100%;margin:4px 0 0}
+  .svc-other{flex-wrap:wrap;padding:18px}.svc-other .btn{width:100%;margin:4px 0 0}
+}
+@media (prefers-reduced-motion:reduce){.h1 .pain{transition:none}}
+
+/* ===================== Effects ===================== */
+@property --trace{syntax:'<angle>';inherits:false;initial-value:0deg}
+
+/* Hero entrance: everything rises in, in reading order */
+.fx-in{animation:fx-up .8s cubic-bezier(.2,.7,.2,1) var(--d,0s) backwards}
+@keyframes fx-up{from{opacity:0;transform:translateY(22px)}}
+.fx-line{animation:fx-line .9s cubic-bezier(.2,.7,.2,1) var(--d,0s) backwards}
+@keyframes fx-line{from{opacity:0;transform:translateY(55%);clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 -20% 0)}}
+.hero-bg{animation:fx-bg-in 1.6s cubic-bezier(.2,.7,.2,1) backwards,drift 26s ease-in-out 1.6s infinite alternate}
+@keyframes fx-bg-in{from{opacity:0;transform:scale(1.14);filter:blur(8px)}}
+
+/* Second H1 line: one light sweep after it lands */
+.h1 .h1-b{background:linear-gradient(100deg,var(--accent-ink) 42%,#fff 50%,var(--accent-ink) 58%) 100% 0/260% 100% no-repeat;-webkit-background-clip:text;background-clip:text;color:transparent;animation:fx-line .9s cubic-bezier(.2,.7,.2,1) var(--d,0s) backwards,fx-shimmer 1.4s ease-in-out 1.5s both}
+@keyframes fx-shimmer{from{background-position:100% 0}to{background-position:0 0}}
+
+/* Security scan sweeping the hero once */
+.hero-scan{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.hero-scan::before{content:"";position:absolute;inset:0;background-image:linear-gradient(oklch(0.80 0.12 292 / .10) 1px,transparent 1px),linear-gradient(90deg,oklch(0.80 0.12 292 / .10) 1px,transparent 1px);background-size:56px 56px;-webkit-mask-image:radial-gradient(70% 60% at 60% 45%,#000,transparent);mask-image:radial-gradient(70% 60% at 60% 45%,#000,transparent);animation:fx-grid 2.6s ease .1s both}
+@keyframes fx-grid{0%{opacity:0}25%{opacity:1}100%{opacity:0}}
+.hero-scan .beam{position:absolute;inset-inline:0;top:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent) 25%,var(--wa) 75%,transparent);box-shadow:0 0 28px 8px oklch(0.70 0.17 292 / .45),0 0 80px 20px oklch(0.74 0.17 152 / .15);animation:fx-scan 1.9s cubic-bezier(.45,0,.25,1) .15s both}
+@keyframes fx-scan{0%{transform:translateY(0);opacity:0}10%{opacity:1}85%{opacity:1}100%{transform:translateY(var(--scan-h,900px));opacity:0}}
+
+/* Lock in the kicker: shakes, opens, turns green */
+.hero-kicker::before{display:none}
+.kick-lock{display:inline-grid;place-items:center;width:20px;height:20px;color:oklch(0.70 0.19 25)}
+.kick-lock svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;overflow:visible}
+.kick-lock .sh{transform-origin:16px 11px}
+.kick-lock{animation:fx-lock-color .5s ease 1.75s both,fx-lock-shake .45s ease 1.25s both}
+.kick-lock .sh{animation:fx-unlock .55s cubic-bezier(.3,1.6,.5,1) 1.75s both}
+@keyframes fx-lock-shake{0%,100%{transform:none}20%{transform:rotate(-12deg)}40%{transform:rotate(10deg)}60%{transform:rotate(-7deg)}80%{transform:rotate(4deg)}}
+@keyframes fx-unlock{to{transform:translate(5px,-3px) rotate(28deg)}}
+@keyframes fx-lock-color{to{color:var(--wa)}}
+
+/* Lead card: slides in, then a light runs once around its border */
+.hero-form{position:relative;animation:fx-card 1s cubic-bezier(.2,.7,.2,1) .55s backwards}
+@keyframes fx-card{from{opacity:0;transform:translateX(-36px) scale(.97);filter:blur(6px)}}
+.hero-form::before{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1.5px;pointer-events:none;background:conic-gradient(from var(--trace),transparent 0 62%,var(--accent) 76%,var(--wa) 86%,transparent 94%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:fx-trace 2.6s ease-in-out 1.3s both}
+@keyframes fx-trace{0%{--trace:0deg;opacity:0}12%{opacity:1}85%{opacity:1}100%{--trace:360deg;opacity:0}}
+
+/* Shine across the main WhatsApp button */
+.btn-shine{position:relative;overflow:hidden;isolation:isolate}
+.btn-shine::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(105deg,transparent 35%,oklch(1 0 0 / .55) 50%,transparent 65%);transform:translateX(130%);animation:fx-shine 4.8s ease-in-out 2.4s infinite}
+@keyframes fx-shine{0%,70%{transform:translateX(130%)}100%{transform:translateX(-130%)}}
+.btn:active{transform:scale(.97)}
+
+/* Scroll progress line under the header */
+.scroll-prog{position:absolute;inset-inline:0;bottom:-1px;height:2px;pointer-events:none}
+.scroll-prog span{display:block;height:100%;background:linear-gradient(270deg,var(--accent),var(--wa));transform-origin:right;transform:scaleX(0);will-change:transform}
+
+/* Spotlight that follows the pointer inside cards */
+@media (hover:hover){
+  :is(.svc-card,.promise,.case,.feature){position:relative}
+  :is(.svc-card,.promise,.case,.feature)::before{content:"";position:absolute;inset:0;z-index:2;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .3s ease;background:radial-gradient(380px circle at var(--mx,50%) var(--my,50%),oklch(0.80 0.12 292 / .13),transparent 50%)}
+  :is(.svc-card,.promise,.case,.feature):hover::before{opacity:1}
+}
+
+/* Quick-check success: the check draws itself, confetti bursts */
+.qc-badge{position:relative}
+.qc-badge .ico{stroke-dasharray:28;stroke-dashoffset:28;animation:fx-draw .6s ease .2s forwards}
+@keyframes fx-draw{to{stroke-dashoffset:0}}
+.fx-confetti{position:absolute;left:50%;top:50%;width:7px;height:10px;border-radius:2px;pointer-events:none}
+
+@media (prefers-reduced-motion:reduce){
+  .fx-in,.fx-line,.hero-form,.hero-form::before,.hero-scan,.hero-scan::before,.hero-scan .beam,.kick-lock,.kick-lock .sh,.btn-shine::before,.h1 .h1-b{animation:none!important}
+  .hero-scan{display:none}
+  .hf-live{animation:none}
+  .h1 .h1-b{background:none;color:var(--accent-ink)}
+  .qc-badge .ico{animation:none;stroke-dashoffset:0}
+}
+
+/* Very narrow phones (≤380px): icon-only WhatsApp in the header (the bottom bar has the full button) */
+@media (max-width:380px){
+  .head .wrap{gap:8px;padding-inline:14px}
+  .brand{gap:8px}.brand small{display:none}.brand b{font-size:17px}
+  .head-cta .btn-wa{width:44px;padding:0;font-size:0;gap:0}
+  .head-cta .btn-wa .ico{width:22px;height:22px}
+  .menu-btn{width:44px;height:44px}
+}
+@media (max-width:380px){.btn{white-space:normal;line-height:1.3;text-align:center;padding-inline:16px}.btn-lg{min-height:56px}.qc{padding:18px}.qc-opt{padding:8px 10px;gap:8px;font-size:14px}}
+@media (max-width:340px){.wrap{padding-inline:16px}.h1{font-size:min(40px, calc((100vw - 32px) / 9.5))}}
+
+/* ===================== Forms: light, obvious fields ===================== */
+.field span{color:var(--text);font-size:15px;font-weight:600;margin-bottom:8px}
+.field input,.field select,.hf .field input,.hf .field select,.qc-form input:not([type=checkbox]){background-color:#fff;color:oklch(0.20 0.03 278);border:2px solid oklch(1 0 0 / .9);font-size:16px;font-weight:500;box-shadow:inset 0 1px 2px oklch(0.2 0.03 278 / .08)}
+.field input::placeholder,.qc-form input::placeholder{color:oklch(0.58 0.02 278);font-weight:400;opacity:1}
+.field input:focus,.field select:focus,.qc-form input:not([type=checkbox]):focus{outline:none;border-color:var(--wa);box-shadow:0 0 0 4px oklch(0.74 0.17 152 / .32)}
+.field select{background-image:linear-gradient(45deg,transparent 50%,oklch(0.30 0.03 278) 50%),linear-gradient(135deg,oklch(0.30 0.03 278) 50%,transparent 50%)}
+.consent{color:oklch(0.86 0.02 278)}
+.consent input{border-color:oklch(1 0 0 / .85);background:transparent;width:24px;height:24px}
+.consent a{color:#fff}
+.hf .field select{background-image:linear-gradient(45deg,transparent 50%,oklch(0.30 0.03 278) 50%),linear-gradient(135deg,oklch(0.30 0.03 278) 50%,transparent 50%);background-position:18px 22px,24px 22px;background-size:6px 6px;background-repeat:no-repeat}
+form.tried input:invalid,form.tried select:invalid{border-color:oklch(0.68 0.2 25);box-shadow:0 0 0 4px oklch(0.68 0.2 25 / .25)}
+form.tried .consent input:invalid{border-color:oklch(0.68 0.2 25);box-shadow:0 0 0 3px oklch(0.68 0.2 25 / .3)}
+
+/* ===================== Premium layer ===================== */
+/* Aurora: slow colour fields drifting behind the page */
+.aurora{position:fixed;inset:0;z-index:-5;pointer-events:none;overflow:hidden}
+.aurora i{position:absolute;width:62vmax;height:62vmax;border-radius:50%;opacity:.55;will-change:transform}
+.aurora i:nth-child(1){top:-22vmax;left:-14vmax;background:radial-gradient(closest-side,oklch(0.55 0.20 292 / .55),transparent);animation:au1 28s ease-in-out infinite alternate}
+.aurora i:nth-child(2){bottom:-26vmax;right:-18vmax;background:radial-gradient(closest-side,oklch(0.62 0.15 160 / .32),transparent);animation:au2 34s ease-in-out infinite alternate}
+.aurora i:nth-child(3){top:30%;left:35%;width:44vmax;height:44vmax;background:radial-gradient(closest-side,oklch(0.50 0.16 260 / .35),transparent);animation:au3 40s ease-in-out infinite alternate}
+@keyframes au1{to{transform:translate(18vmax,22vmax) scale(1.15)}}
+@keyframes au2{to{transform:translate(-20vmax,-16vmax) scale(1.1)}}
+@keyframes au3{to{transform:translate(-22vmax,10vmax) scale(.9)}}
+body{background:var(--bg)}
+.sec,.strip,.plat{background-color:transparent}
+.grain{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.045;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");mix-blend-mode:overlay}
+
+/* Headings appear word by word, from blur to sharp */
+.w-in{display:inline-block!important;color:inherit;opacity:0;filter:blur(10px);transform:translateY(.35em);transition:opacity .7s ease,filter .7s ease,transform .7s cubic-bezier(.2,.7,.2,1);transition-delay:calc(var(--wi,0) * 55ms)}
+.words-on .w-in{opacity:1;filter:none;transform:none}
+
+/* Images wipe in */
+.img-wipe{clip-path:inset(0 0 0 100%);transition:clip-path 1.1s cubic-bezier(.7,0,.2,1)}
+.img-wipe.on{clip-path:inset(0)}
+
+/* Premium buttons: depth, inner highlight, soft glow */
+.btn-wa{background:linear-gradient(180deg,oklch(0.80 0.16 152),oklch(0.70 0.17 152));box-shadow:inset 0 1px 0 oklch(1 0 0 / .45),0 10px 28px -10px oklch(0.74 0.17 152 / .75),0 2px 6px oklch(0 0 0 / .25)}
+.btn-wa:hover{background:linear-gradient(180deg,oklch(0.84 0.16 152),oklch(0.74 0.17 152));box-shadow:inset 0 1px 0 oklch(1 0 0 / .5),0 16px 36px -10px oklch(0.74 0.17 152 / .85),0 2px 6px oklch(0 0 0 / .25)}
+.btn-ghost{background:oklch(1 0 0 / .03);box-shadow:inset 0 1px 0 oklch(1 0 0 / .06)}
+.btn{transition:transform .2s cubic-bezier(.2,.7,.2,1),background .2s ease,box-shadow .25s ease,border-color .2s ease}
+
+/* Slow rotating light border on the quick check and the callback band */
+@property --spin{syntax:'<angle>';inherits:false;initial-value:0deg}
+.qc,.lb{position:relative;isolation:isolate}
+.qc::after,.lb::after{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1.5px;pointer-events:none;z-index:1;background:conic-gradient(from var(--spin),transparent 0 55%,oklch(0.80 0.12 292 / .9) 70%,oklch(0.80 0.16 152 / .8) 80%,transparent 92%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:spin 7s linear infinite}
+@keyframes spin{to{--spin:360deg}}
+
+/* 3D tilt with a light glare (desktop) */
+@media (hover:hover){
+  .tilt{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(var(--ty,0));transition:transform .5s cubic-bezier(.2,.7,.2,1),border-color .25s ease,box-shadow .25s ease;transform-style:preserve-3d}
+  .tilt.tilting{transition:transform .08s linear,border-color .25s ease,box-shadow .25s ease}
+  .svc-card.tilt:hover{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(-6px)}
+}
+
+/* Big brand mark behind the footer */
+.foot{position:relative;overflow:hidden}
+.foot-mark{position:absolute;inset-inline:0;bottom:-.18em;text-align:center;font-size:clamp(80px,17vw,260px);font-weight:700;letter-spacing:-.02em;line-height:1;direction:ltr;color:transparent;-webkit-text-stroke:1px oklch(0.80 0.12 292 / .16);background:linear-gradient(180deg,oklch(0.80 0.12 292 / .10),transparent 75%);-webkit-background-clip:text;background-clip:text;pointer-events:none;user-select:none}
+.foot .wrap{position:relative}
+
+@media (prefers-reduced-motion:reduce){
+  .aurora i:nth-child(n),.qc::after,.lb::after{animation:none}
+  .w-in{opacity:1;filter:none;transform:none;transition:none}
+  .img-wipe{clip-path:none;transition:none}
+}
+@media (max-width:720px){.grain{opacity:.035}.aurora i{opacity:.45}}
+
+/* Mobile contact bar */
+.mbar{display:none}
+
+@media (prefers-reduced-motion:reduce){
+  .hero-bg,.hero-kicker::before,.now .dot{animation:none}
+  html{scroll-behavior:auto}
+  .btn,.tile,.vid img{transition:none}
+}
+@media (max-width:1180px){.nav{display:none}}
+@media (max-width:1080px){
+  .hero .wrap,.statement .wrap,.why-grid,.contact .wrap{grid-template-columns:1fr;gap:48px}
+  .hero .wrap{min-height:0}
+  .grid3,.reviews{grid-template-columns:repeat(2,1fr)}
+  .numbers{grid-template-columns:repeat(2,1fr)}
+  .numbers div:nth-child(3){border-inline-start:0}
+  .numbers div:nth-child(n+3){border-top:1px solid var(--line)}
+  .foot-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:720px){
+  body{font-size:16px;padding-bottom:76px}
+  .wrap{padding-inline:20px}
+  .sec{padding-block:72px}
+  .h2{font-size:32px}
+  .lead{font-size:17px}
+  .sec-head{display:block;margin-bottom:32px}.sec-head .lead{margin-top:12px}
+  .head .wrap{height:64px;gap:12px}
+  .brand img{width:34px;height:34px}.brand b{font-size:18px}
+  .head-cta .btn-ghost{display:none}
+  .hero{margin-top:-65px;padding-top:65px}
+  .hero-bg{background-position:22% 60%}
+  .hero::before{background:
+    linear-gradient(180deg, oklch(0.165 0.028 278 / .60) 0%, oklch(0.165 0.028 278 / .74) 40%, oklch(0.165 0.028 278 / .9) 70%, var(--bg) 100%)}
+  .hero .wrap{padding-block:40px 56px;gap:36px}
+  .h1{font-size:min(40px, calc((100vw - 40px) / 9.5))}
+  .h1 .pain{white-space:nowrap}
+  .hero .lead{font-size:17px;margin-bottom:28px}
+  .hero .ctas{display:none}
+  .proof{display:grid;grid-template-columns:repeat(3,1fr)}
+  .proof div{padding-inline-end:12px;margin-inline-end:12px}
+  .proof b{font-size:22px}.proof span{font-size:13px;line-height:1.35;display:block}
+  .card{padding:22px}
+  .strip .wrap{gap:12px}
+  .strip ul{gap:6px 18px;font-size:15px}
+  .grid3,.reviews{grid-template-columns:1fr}
+  .big{font-size:36px}
+  .feature{grid-template-columns:44px 1fr;gap:16px;padding:20px}
+  .feature .badge{width:44px;height:44px;border-radius:12px}
+  .numbers{margin-top:48px}
+  .numbers div{padding:22px 12px}.numbers b{font-size:30px}.numbers span{font-size:14px;line-height:1.4}
+  .rail{margin-inline:-20px;padding-inline:20px}
+  .vid{flex-basis:180px}
+  .rail-nav{display:none}
+  .rating{margin-top:20px;display:inline-flex}
+  .form{padding:24px}
+  .trust{grid-template-columns:1fr}
+  .contact .ctas{display:none}
+  .foot{padding-block:56px 24px}
+  .foot-grid{grid-template-columns:1fr 1fr;gap:32px 20px}.foot-brand,.foot-grid>div:last-child{grid-column:1/-1}
+  .foot ul{gap:2px}.foot ul a{display:inline-block;padding-block:10px}
+  .legal-row nav a{display:inline-block;padding-block:12px}
+  .mbar{display:grid;grid-template-columns:1fr 2fr;gap:8px;position:fixed;inset-inline:0;bottom:0;z-index:40;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:oklch(0.165 0.028 278 / .92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line)}
+  .mbar a{display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;border-radius:12px;font-weight:600;font-size:16px}
+  .mbar a:first-child{border:1px solid var(--line)}
+  .mbar a:last-child{background:var(--wa);color:var(--wa-ink)}
+}
+
+/* ===================== Service page (Telegram) ===================== */
+:root{--danger:oklch(0.70 0.19 25);--danger-ink:oklch(0.80 0.13 25);--warn:oklch(0.84 0.14 80)}
+.nav a[aria-current="page"]{color:var(--text);box-shadow:inset 0 -2px 0 var(--wa);padding-bottom:4px}
+
+/* Points under the hero */
+.wa-strip{border-block:1px solid var(--line-soft);background:var(--bg-2)}
+.wa-strip .wrap{padding-block:24px}
+.wa-points{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;list-style:none;margin:0 0 14px;padding:0}
+.wa-points li{display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:16px;background:var(--surface);border:1px solid var(--line-soft)}
+.wa-points .badge{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent-ink);flex:none}
+.wa-points b{display:block;font-size:16px;font-weight:700;line-height:1.3}
+.wa-points small{color:var(--faint);font-size:13px}
+
+/* Situations + phone */
+.sit-grid{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:48px;align-items:start}
+.sit-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.sit{display:flex;flex-direction:column;gap:10px;padding:22px;border-radius:18px;background:var(--surface);border:1px solid var(--line);transition:border-color .25s ease,background .25s ease,box-shadow .25s ease}
+.sit.on{border-color:var(--accent);background:var(--raise);box-shadow:0 18px 40px -24px oklch(0.70 0.17 292 / .6)}
+.sit-h{display:flex;align-items:center;gap:12px}
+.sit-h h3{font-size:19px;font-weight:700;line-height:1.3}
+.sit .badge{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent-ink);flex:none}
+.sit.hot .badge{background:oklch(0.70 0.19 25 / .14);color:var(--danger-ink)}
+.sit p{color:var(--muted);font-size:15px;line-height:1.6}
+.sit .sit-do{padding:12px 14px;border-radius:12px;background:oklch(0.165 0.028 278 / .6);border:1px solid var(--line-soft);font-size:14px}
+.sit-do b{color:var(--text)}
+.sit-go{margin-top:auto;align-self:flex-start;color:var(--wa);font-weight:600;font-size:15px;padding-block:6px}
+.sit-go:hover{color:var(--wa-hover)}
+.phone{position:sticky;top:110px}
+.ph{width:300px;margin-inline:auto;aspect-ratio:9/18.4;border-radius:46px;padding:12px;background:linear-gradient(160deg,oklch(0.34 0.03 278),oklch(0.20 0.03 278));box-shadow:inset 0 0 0 1px oklch(1 0 0 / .1),0 40px 80px -24px oklch(0.08 0.03 278 / .85),0 0 100px -30px oklch(0.74 0.17 152 / .5)}
+.ph-in{height:100%;border-radius:35px;overflow:hidden;display:flex;flex-direction:column;padding:12px 18px 18px;background:radial-gradient(120% 55% at 50% 0%,oklch(0.74 0.17 152 / .18),transparent 62%),oklch(0.14 0.025 278)}
+.ph-bar{display:flex;justify-content:space-between;align-items:center;height:26px;direction:ltr;font-size:12px;font-weight:600;color:var(--muted)}
+.ph-island{width:86px;height:24px;border-radius:999px;background:#000}
+.ph-sig{display:flex;align-items:flex-end;gap:2px}
+.ph-sig i{width:3px;border-radius:1px;background:var(--muted)}
+.ph-sig i:nth-child(1){height:5px}.ph-sig i:nth-child(2){height:8px}.ph-sig i:nth-child(3){height:11px}
+.ph-app{display:flex;flex-direction:column;align-items:center;gap:10px;margin:30px 0 22px}
+.ph-logo{position:relative;width:80px;height:80px;border-radius:24px;display:grid;place-items:center;background:linear-gradient(160deg,oklch(0.80 0.17 152),oklch(0.60 0.16 152));box-shadow:0 12px 34px -10px oklch(0.74 0.17 152 / .8)}
+.ph-logo > svg{width:44px;height:44px;fill:#fff}
+.ph-lock{position:absolute;bottom:-7px;inset-inline-start:-7px;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--danger);color:#fff;border:3px solid oklch(0.14 0.025 278);transition:background .4s ease}
+.ph-lock .ico{width:14px;height:14px;stroke-width:2.6}
+.phone[data-state="0"] .ph-lock,.phone[data-state="4"] .ph-lock,.phone[data-state="5"] .ph-lock{background:oklch(0.72 0.15 70)}
+.ph-app b{font-size:18px;font-weight:700;direction:ltr}
+.ph-states{position:relative;flex:1}
+.ph-state{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;opacity:0;transform:translateY(12px);transition:opacity .45s ease,transform .45s ease}
+.ph-state.on{opacity:1;transform:none}
+.ph-state p{color:var(--muted);font-size:13px;line-height:1.5}
+.ph-chip{display:inline-block;padding:4px 12px;border-radius:999px;font-size:12px;font-weight:700;background:oklch(0.72 0.15 70 / .16);color:var(--warn)}
+.ph-chip.red{background:oklch(0.70 0.19 25 / .16);color:var(--danger-ink)}
+.ph-box{width:100%;padding:16px 12px;border-radius:16px;background:oklch(1 0 0 / .04);border:1px solid var(--line-soft)}
+.ph-box small{display:block;color:var(--faint);font-size:12px}
+.ph-time{display:block;margin-top:4px;direction:ltr;font-size:32px;font-weight:700;letter-spacing:.04em;font-variant-numeric:tabular-nums}
+.ph-msg{width:100%;padding:14px;border-radius:14px;background:oklch(0.70 0.19 25 / .10);border:1px solid oklch(0.70 0.19 25 / .32);font-size:13px;line-height:1.55;text-align:start}
+.ph-msg b{display:block;color:var(--danger-ink);font-size:12px;margin-bottom:2px}
+.ph-alert{display:flex;align-items:center;gap:12px}
+.ph-dev{position:relative;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:oklch(0.70 0.19 25 / .18);color:var(--danger-ink);flex:none}
+.ph-dev::after{content:"";position:absolute;inset:0;border-radius:inherit;animation:ph-ring 1.8s ease-out infinite}
+@keyframes ph-ring{0%{box-shadow:0 0 0 0 oklch(0.70 0.19 25 / .55)}80%,100%{box-shadow:0 0 0 12px oklch(0.70 0.19 25 / 0)}}
+.ph-biz{list-style:none;margin:0;padding:0;width:100%;display:grid;gap:8px}
+.ph-biz li{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:11px 12px;border-radius:12px;background:oklch(1 0 0 / .04);border:1px solid var(--line-soft);font-size:13px;font-weight:600}
+.ph-biz span{font-size:12px;font-weight:700;color:var(--danger-ink)}
+.pin-dots{display:flex;justify-content:center;gap:10px;margin:12px 0;direction:ltr}
+.pin-dots i{width:14px;height:14px;border-radius:50%;border:2px solid var(--muted)}
+.ph-state.on .pin-dots{animation:pin-shake 3.2s ease infinite}
+.ph-state.on .pin-dots i{animation:pin-fill 3.2s ease infinite}
+.pin-dots i:nth-child(2){animation-delay:.12s!important}.pin-dots i:nth-child(3){animation-delay:.24s!important}.pin-dots i:nth-child(4){animation-delay:.36s!important}.pin-dots i:nth-child(5){animation-delay:.48s!important}.pin-dots i:nth-child(6){animation-delay:.6s!important}
+@keyframes pin-fill{0%,8%{background:transparent}14%,70%{background:var(--muted)}78%,100%{background:transparent;border-color:var(--muted)}72%{background:var(--danger);border-color:var(--danger)}}
+@keyframes pin-shake{0%,70%,100%{transform:none}73%{transform:translateX(-7px)}76%{transform:translateX(6px)}79%{transform:translateX(-4px)}82%{transform:translateX(2px)}}
+.ph-warn{color:var(--danger-ink)!important}
+.ph-dots{display:flex;justify-content:center;gap:6px;padding-top:10px}
+.ph-dots i{width:6px;height:6px;border-radius:3px;background:var(--line);transition:width .3s ease,background .3s ease}
+.ph-dots i.on{width:18px;background:var(--wa)}
+.ph-cap{margin-top:12px;text-align:center;color:var(--faint);font-size:13px}
+
+/* What not to do */
+.dont-grid{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:64px;align-items:start}
+.dont-main .lead{margin:16px 0 28px}
+.donts{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.donts li{display:grid;grid-template-columns:40px minmax(0,1fr);gap:16px;align-items:start;padding:18px 20px;border-radius:16px;background:var(--surface);border:1px solid var(--line)}
+.donts p{color:var(--muted);font-size:16px;line-height:1.6}
+.donts b{color:var(--text);font-weight:700}
+.donts .x{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:oklch(0.70 0.19 25 / .14);color:var(--danger-ink)}
+.risk{position:sticky;top:110px}
+.risk-cap{font-size:19px;font-weight:700;margin-bottom:16px}
+.risk ul{list-style:none;margin:0 0 20px;padding:0;display:grid;gap:10px}
+.risk li{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:14px;background:oklch(0.165 0.028 278 / .6);border:1px solid var(--line-soft);font-weight:500}
+.risk li .ico{color:var(--warn)}
+.risk .btn{width:100%}
+
+/* 5-step timeline */
+.tl{position:relative;list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
+.tl::before,.tl::after{content:"";position:absolute;top:27px;inset-inline:calc((100% - 64px) / 10);height:2px;background:var(--line)}
+.tl::after{background:linear-gradient(270deg,var(--accent),var(--wa));transform:scaleX(0);transform-origin:right;transition:transform 1.8s cubic-bezier(.3,.7,.2,1) .2s}
+.tl.on::after{transform:scaleX(1)}
+.tl li{position:relative;z-index:1;display:flex;flex-direction:column;gap:14px}
+.tl-n{align-self:center;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:var(--bg);border:2px solid var(--line);color:var(--faint);font-size:17px;font-weight:700;transition:border-color .4s ease,color .4s ease,box-shadow .4s ease}
+.tl.on .tl-n{border-color:var(--accent);color:var(--accent-ink);box-shadow:0 0 0 6px oklch(0.70 0.17 292 / .12)}
+.tl.on li:last-child .tl-n{border-color:var(--wa);color:var(--wa);box-shadow:0 0 0 6px oklch(0.74 0.17 152 / .14)}
+.tl.on li:nth-child(2) .tl-n{transition-delay:.45s}.tl.on li:nth-child(3) .tl-n{transition-delay:.8s}.tl.on li:nth-child(4) .tl-n{transition-delay:1.15s}.tl.on li:nth-child(5) .tl-n{transition-delay:1.5s}
+.tl-card{flex:1;padding:20px;border-radius:18px;background:var(--surface);border:1px solid var(--line)}
+.tl-card b{display:block;font-size:18px;font-weight:700;line-height:1.35;margin-bottom:6px}
+.tl-card p{color:var(--muted);font-size:15px;line-height:1.6}
+.pin-warn{display:flex;align-items:center;gap:16px;margin-top:24px;padding:20px 24px;border-radius:16px;border:1px solid oklch(0.84 0.14 80 / .4);background:linear-gradient(90deg,oklch(0.84 0.14 80 / .10),transparent 70%)}
+.pin-warn .badge{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:oklch(0.84 0.14 80 / .15);color:var(--warn);flex:none}
+.pin-warn .badge .ico{width:24px;height:24px}
+.pin-warn p{color:var(--muted)}
+.pin-warn b{color:var(--text)}
+
+/* Why */
+.why-list{list-style:none;margin:0 0 32px;padding:0;display:grid;gap:10px}
+.why-list li{display:flex;align-items:flex-start;gap:10px;color:var(--muted)}
+.why-list .ico{width:20px;height:20px;margin-top:4px;color:var(--wa)}
+.why-intro .lead{margin:16px 0 24px}
+.lb-alt{margin-top:12px;color:var(--muted);font-size:15px}
+.lb-alt a{color:var(--accent-ink);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+
+/* Alone or with help */
+.solo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
+.solo-col{padding:28px;border-radius:20px;background:var(--surface);border:1px solid var(--line)}
+.solo-col.pro{border-color:oklch(0.74 0.17 152 / .45);background:linear-gradient(160deg,oklch(0.74 0.17 152 / .10),var(--surface) 60%)}
+.solo-col h3{display:flex;align-items:center;gap:12px;font-size:22px;font-weight:700;margin-bottom:18px}
+.solo-col .badge{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent-ink);flex:none}
+.solo-col.pro .badge{background:oklch(0.74 0.17 152 / .15);color:var(--wa)}
+.solo-col ul{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.solo-col li{display:flex;align-items:flex-start;gap:12px;line-height:1.55}
+.solo-col li .ico{width:20px;height:20px;margin-top:3px;color:var(--faint)}
+.solo-col.pro li .ico{color:var(--wa)}
+.solo-col .btn{width:100%;margin-top:24px;white-space:normal;text-align:center;line-height:1.3;padding-block:12px}
+
+/* WhatsApp quotes */
+.quotes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-bottom:48px}
+.quote{position:relative;margin:0;display:flex;flex-direction:column;gap:16px;padding:28px 28px 24px;border-radius:20px;background:var(--surface);border:1px solid var(--line)}
+.q-mark{position:absolute;top:6px;inset-inline-end:22px;font-size:76px;font-weight:700;line-height:1;color:oklch(0.70 0.17 292 / .28)}
+.quote blockquote{margin:0}
+.quote blockquote b{display:block;font-size:19px;font-weight:700;line-height:1.35;margin-bottom:8px}
+.quote blockquote > :first-child{padding-inline-end:40px}
+.quote blockquote p{color:var(--muted);line-height:1.7}
+.quote figcaption{display:flex;align-items:center;gap:10px;margin-top:auto;color:var(--faint);font-size:14px}
+.quote .stars{color:var(--star);letter-spacing:1px}
+
+/* Price */
+.price-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.price-steps li{padding:28px;border-radius:20px;background:var(--surface);border:1px solid var(--line)}
+.price-steps li:last-child{border-color:oklch(0.74 0.17 152 / .45);background:linear-gradient(160deg,oklch(0.74 0.17 152 / .10),var(--surface) 60%)}
+.ps-n{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;margin-bottom:16px;background:var(--accent-soft);color:var(--accent-ink);font-weight:700}
+.price-steps li:last-child .ps-n{background:oklch(0.74 0.17 152 / .15);color:var(--wa)}
+.price-steps b{display:block;font-size:20px;font-weight:700;margin-bottom:6px}
+.price-steps p{color:var(--muted)}
+.price-note{display:flex;align-items:center;gap:10px;margin-top:20px;color:var(--faint);font-size:14px}
+.price-note .ico{width:18px;height:18px;color:var(--wa)}
+
+/* Guides */
+.guides{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.guide{display:flex;align-items:center;gap:16px;padding:20px 22px;border-radius:18px;background:var(--surface);border:1px solid var(--line);transition:border-color .2s ease,transform .2s ease}
+.guide:hover{border-color:var(--accent);transform:translateY(-2px)}
+.guide .badge{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:oklch(0.74 0.17 152 / .13);color:var(--wa);flex:none}
+.guide b{flex:1;font-size:16px;font-weight:600;line-height:1.45}
+.guide .g-go{flex:none;color:var(--accent-ink);font-size:20px}
+.sec-head > .btn{flex:none}
+
+@media (hover:hover){
+  :is(.sit,.guide,.quote,.tl-card){position:relative}
+  :is(.sit,.guide,.quote,.tl-card)::before{content:"";position:absolute;inset:0;z-index:2;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .3s ease;background:radial-gradient(380px circle at var(--mx,50%) var(--my,50%),oklch(0.80 0.12 292 / .12),transparent 50%)}
+  :is(.sit,.guide,.quote,.tl-card):hover::before{opacity:1}
+}
+@media (prefers-reduced-motion:reduce){
+  .ph-state,.tl::after,.tl-n,.sit{transition:none}
+  .ph-state.on .pin-dots,.ph-state.on .pin-dots i,.ph-dev::after{animation:none}
+  .ph-state.on .pin-dots i{background:var(--muted)}
+}
+@media (max-width:1080px){
+  .wa-points{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sit-grid,.dont-grid{grid-template-columns:minmax(0,1fr);gap:32px}
+  .phone{display:none}
+  .risk{position:static}
+  .tl{grid-template-columns:minmax(0,1fr);gap:12px}
+  .tl::before,.tl::after{top:28px;bottom:28px;inset-inline:27px auto;width:2px;height:auto}
+  .tl::after{transform:scaleY(0);transform-origin:top}
+  .tl.on::after{transform:scaleY(1)}
+  .tl li{flex-direction:row;align-items:flex-start;gap:16px}
+  .tl-n{align-self:flex-start}
+  .guides{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .price-steps{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:720px){
+  .wa-strip .wrap{padding-block:18px}
+  .wa-points{gap:8px}
+  .wa-points li{flex-direction:column;align-items:flex-start;gap:10px;padding:14px}
+  .wa-points .badge{width:38px;height:38px}
+  .wa-points b{font-size:15px}
+  .sit-list{grid-template-columns:minmax(0,1fr)}
+  .sit{padding:18px}
+  .donts li{grid-template-columns:36px minmax(0,1fr);gap:12px;padding:16px}
+  .donts .x{width:36px;height:36px}
+  .donts p{font-size:15px}
+  .tl-n{width:48px;height:48px;font-size:15px}
+  .tl::before,.tl::after{top:24px;bottom:24px;inset-inline:23px auto}
+  .tl-card{padding:16px}
+  .pin-warn{align-items:flex-start;padding:18px}
+  .pin-warn .badge{width:40px;height:40px}
+  .solo{grid-template-columns:minmax(0,1fr)}
+  .solo-col{padding:22px}
+  .solo-col h3{font-size:19px}
+  .quotes{grid-template-columns:minmax(0,1fr);gap:12px;margin-bottom:32px}
+  .quote{padding:22px}
+  .guides{grid-template-columns:minmax(0,1fr)}
+  .guide{padding:16px 18px}
+  .sec-head > .btn{align-self:flex-start}
+}
+
+/* Telegram look for the phone mock-up */
+.ph-tg .ph-in{background:radial-gradient(120% 55% at 50% 0%,oklch(0.72 0.13 235 / .22),transparent 62%),oklch(0.14 0.025 278)}
+.ph-tg .ph-logo{background:linear-gradient(160deg,oklch(0.78 0.12 230),oklch(0.62 0.14 240));box-shadow:0 12px 34px -10px oklch(0.70 0.13 235 / .8)}
+.ph-tg{box-shadow:inset 0 0 0 1px oklch(1 0 0 / .1),0 40px 80px -24px oklch(0.08 0.03 278 / .85),0 0 100px -30px oklch(0.70 0.13 235 / .5)}
+.ph-msg.en{direction:ltr;text-align:left}
+.ph-msg.calm{background:oklch(1 0 0 / .04);border-color:var(--line-soft)}
+.ph-msg.calm b{color:var(--muted)}
+/* Odds: what usually comes back and what rarely does */
+.odds{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.odds li{display:grid;grid-template-columns:44px minmax(0,1fr);gap:16px;align-items:center;padding:20px 22px;border-radius:18px;background:var(--surface);border:1px solid var(--line)}
+.odds .badge{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:oklch(0.74 0.17 152 / .14);color:var(--wa)}
+.odds li.no .badge{background:oklch(0.70 0.19 25 / .14);color:var(--danger-ink)}
+.odds b{display:block;font-size:18px;font-weight:700;line-height:1.35}
+.odds span{color:var(--muted);font-size:15px}
+.odds-note{margin-top:16px;color:var(--faint);font-size:14px}
+@media (max-width:720px){.odds{grid-template-columns:minmax(0,1fr)}.odds li{padding:16px;gap:12px}}
+</style>
+</head>
+<body>
+<div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+<div class="grain" aria-hidden="true"></div>
+<a class="skip" href="#top">דלגו לתוכן</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5z"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+  <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-headset" viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1v-6h3zM3 19a2 2 0 0 0 2 2h1v-6H3z"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M6 4v16l14-8z"/></symbol>
+  <symbol id="i-useradd" viewBox="0 0 24 24"><circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0M19 8v6M16 11h6"/></symbol>
+  <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01"/></symbol>
+  <symbol id="i-brief" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2L3 9.6l6.2-.9z"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></symbol>
+  <symbol id="i-chev-l" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></symbol>
+  <symbol id="i-chev-r" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></symbol>
+  <symbol id="i-badge" viewBox="0 0 24 24"><path d="M12 2.5l2.6 1.9 3.2-.1 1 3.1 2.6 1.9-1 3 1 3-2.6 1.9-1 3.1-3.2-.1L12 21.5l-2.6-1.9-3.2.1-1-3.1L2.6 14.7l1-3-1-3 2.6-1.9 1-3.1 3.2.1z"/><path d="m8.5 12 2.4 2.4 4.6-4.8"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-mega" viewBox="0 0 24 24"><path d="M3 10v4a1 1 0 0 0 1 1h3l6 5V4L7 9H4a1 1 0 0 0-1 1z"/><path d="M17 9a4 4 0 0 1 0 6"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-ban" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m5.6 5.6 12.8 12.8"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="4.5"/><path d="m10.7 12.3 9.3-9.3M17 6l3 3M14.5 8.5l2 2"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0M16 3.1a4 4 0 0 1 0 7.8M22 21a7 7 0 0 0-5-6.7"/></symbol>
+  <symbol id="i-device" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></symbol>
+  <symbol id="i-store" viewBox="0 0 24 24"><path d="M3 9l1.5-5h15L21 9M3 9v11h18V9M3 9h18"/><path d="M9 20v-6h6v6"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></symbol>
+  <symbol id="i-sim" viewBox="0 0 24 24"><path d="M6 2h9l5 5v15H6z"/><rect x="9" y="11" width="6" height="7" rx="1"/></symbol>
+  <symbol id="p-facebook" viewBox="0 0 320 512"><path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"></path></symbol>
+  <symbol id="p-instagram" viewBox="0 0 448 512"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"></path></symbol>
+  <symbol id="p-whatsapp" viewBox="0 0 448 512"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"></path></symbol>
+  <symbol id="p-tiktok" viewBox="0 0 448 512"><path d="M448,209.91a210.06,210.06,0,0,1-122.77-39.25V349.38A162.55,162.55,0,1,1,185,188.31V278.2a74.62,74.62,0,1,0,52.23,71.18V0l88,0a121.18,121.18,0,0,0,1.86,22.17h0A122.18,122.18,0,0,0,381,102.39a121.43,121.43,0,0,0,67,20.14Z"></path></symbol>
+  <symbol id="p-google" viewBox="0 0 488 512"><path d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"></path></symbol>
+  <symbol id="p-telegram" viewBox="0 0 496 512"><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm121.8 169.9l-40.7 191.8c-3 13.6-11.1 16.9-22.4 10.5l-62-45.7-29.9 28.8c-3.3 3.3-6.1 6.1-12.5 6.1l4.4-63.1 114.9-103.8c5-4.4-1.1-6.9-7.7-2.5l-142 89.4-61.2-19.1c-13.3-4.2-13.6-13.3 2.8-19.7l239.1-92.2c11.1-4 20.8 2.7 17.2 19.5z"></path></symbol>
+  <symbol id="p-apple" viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"></path></symbol>
+  <symbol id="p-youtube" viewBox="0 0 576 512"><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></symbol>
+  <symbol id="p-samsung" viewBox="0 0 64 64"><text x="32" y="36" text-anchor="middle" font-size="10.5" font-weight="700" font-family="Arial,sans-serif" letter-spacing=".4" fill="currentColor">SAMSUNG</text></symbol>
+</svg>
+
+<aside class="tk" aria-label="מקרים אחרונים">
+  <div class="tk-track"><div class="tk-group"><span class="tk-item"><span class="tk-dot"></span><span class="tk-brand ltr">Instagram</span>חשבון עסקי קיבל ליווי מסודר<span class="tk-pill"><svg class="ico"><use href="#i-check"/></svg>בדיקה</span></span><span class="tk-item"><span class="tk-dot"></span><span class="tk-brand ltr">Facebook Ads</span>קמפיין עסקי עבר בדיקת גישה<span class="tk-pill"><svg class="ico"><use href="#i-check"/></svg>ליווי</span></span><span class="tk-item"><span class="tk-dot"></span><span class="tk-brand ltr">WhatsApp Business</span>חשבון עסקי עבר בדיקה ואבטחה<span class="tk-pill"><svg class="ico"><use href="#i-check"/></svg>אבטחה</span></span><span class="tk-item"><span class="tk-dot"></span><span class="tk-brand ltr">Instagram</span>חשבון יוצר קיבל ליווי לאחר פריצה<span class="tk-pill"><svg class="ico"><use href="#i-check"/></svg>תהליך מסודר</span></span><span class="tk-item"><span class="tk-dot"></span><span class="tk-brand ltr">Instagram</span>חשבון עסקי קיבל ליווי מסודר<span class="tk-pill"><svg class="ico"><use href="#i-check"/></svg>בדיקה</span></span><span class="tk-item"><span class="tk-dot"></span><span class="tk-brand ltr">Facebook Ads</span>קמפיין עסקי עבר בדיקת גישה<span class="tk-pill"><svg class="ico"><use href="#i-check"/></svg>ליווי</span></span><span class="tk-item"><span class="tk-dot"></span><span class="tk-brand ltr">WhatsApp Business</span>חשבון עסקי עבר בדיקה ואבטחה<span class="tk-pill"><svg class="ico"><use href="#i-check"/></svg>אבטחה</span></span><span class="tk-item"><span class="tk-dot"></span><span class="tk-brand ltr">Instagram</span>חשבון יוצר קיבל ליווי לאחר פריצה<span class="tk-pill"><svg class="ico"><use href="#i-check"/></svg>תהליך מסודר</span></span></div><div class="tk-group" aria-hidden="true"><span class="tk-item"><span class="tk-dot"></span><span class="tk-brand ltr">Instagram</span>חשבון עסקי קיבל ליווי מסודר<span class="tk-pill"><svg class="ico"><use href="#i-check"/></svg>בדיקה</span></span><span class="tk-item"><span class="tk-dot"></span><span class="tk-brand ltr">Facebook Ads</span>קמפיין עסקי עבר בדיקת גישה<span class="tk-pill"><svg class="ico"><use href="#i-check"/></svg>ליווי</span></span><span class="tk-item"><span class="tk-dot"></span><span class="tk-brand ltr">WhatsApp Business</span>חשבון עסקי עבר בדיקה ואבטחה<span class="tk-pill"><svg class="ico"><use href="#i-check"/></svg>אבטחה</span></span><span class="tk-item"><span class="tk-dot"></span><span class="tk-brand ltr">Instagram</span>חשבון יוצר קיבל ליווי לאחר פריצה<span class="tk-pill"><svg class="ico"><use href="#i-check"/></svg>תהליך מסודר</span></span><span class="tk-item"><span class="tk-dot"></span><span class="tk-brand ltr">Instagram</span>חשבון עסקי קיבל ליווי מסודר<span class="tk-pill"><svg class="ico"><use href="#i-check"/></svg>בדיקה</span></span><span class="tk-item"><span class="tk-dot"></span><span class="tk-brand ltr">Facebook Ads</span>קמפיין עסקי עבר בדיקת גישה<span class="tk-pill"><svg class="ico"><use href="#i-check"/></svg>ליווי</span></span><span class="tk-item"><span class="tk-dot"></span><span class="tk-brand ltr">WhatsApp Business</span>חשבון עסקי עבר בדיקה ואבטחה<span class="tk-pill"><svg class="ico"><use href="#i-check"/></svg>אבטחה</span></span><span class="tk-item"><span class="tk-dot"></span><span class="tk-brand ltr">Instagram</span>חשבון יוצר קיבל ליווי לאחר פריצה<span class="tk-pill"><svg class="ico"><use href="#i-check"/></svg>תהליך מסודר</span></span></div></div>
+</aside>
+
+<header class="head"><div class="wrap">
+  <a class="brand" href="https://cyberguard.co.il/"><img src="logo.webp" alt=""><div><b>Cyber<span>Guard</span></b><small>שחרור ושחזור חשבונות</small></div></a>
+  <nav class="nav" aria-label="ראשי">
+    <a href="https://cyberguard.co.il/וואטסאפ-חדש/">שחרור וואטסאפ</a>
+    <a href="https://cyberguard.co.il/שירותים/">השירותים שלנו</a>
+    <a href="#reviews">לקוחות ממליצים</a>
+    <a href="https://cyberguard.co.il/עדכונים-אחרונים/">עדכונים ומדריכים</a>
+    <a href="https://cyberguard.co.il/קצת-עלינו/">קצת עלינו</a>
+    <a href="#contact">צור קשר</a>
+  </nav>
+  <div class="head-cta">
+    <a class="btn btn-ghost btn-sm" href="tel:+972523001030"><svg class="ico"><use href="#i-phone"/></svg><span class="ltr">052-3001030</span></a>
+    <a class="btn btn-wa btn-sm" data-wa href="#"><svg class="ico"><use href="#i-chat"/></svg>וואטסאפ</a>
+  </div>
+  <button class="menu-btn" type="button" aria-label="פתיחת התפריט" aria-expanded="false" aria-controls="mnav"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span></button>
+</div><div class="scroll-prog" aria-hidden="true"><span id="scrollProg"></span></div></header>
+
+<nav class="mnav" id="mnav" aria-label="תפריט ראשי" hidden>
+  <div class="mnav-top"><a class="brand" href="https://cyberguard.co.il/"><img src="logo.webp" alt=""><div><b>Cyber<span>Guard</span></b><small>שחרור ושחזור חשבונות</small></div></a><button class="mnav-x" type="button" aria-label="סגירת התפריט">×</button></div>
+  <div class="mnav-links"><a href="#situations">מה קרה לחשבון?<span aria-hidden="true">←</span></a><a href="#dont">מה לא לעשות<span aria-hidden="true">←</span></a><a href="#process">איך זה עובד<span aria-hidden="true">←</span></a><a href="#chances">מה הסיכוי<span aria-hidden="true">←</span></a><a href="#reviews">לקוחות ממליצים<span aria-hidden="true">←</span></a><a href="#price">כמה זה עולה<span aria-hidden="true">←</span></a><a href="#faq">שאלות נפוצות<span aria-hidden="true">←</span></a><a href="#contact">צור קשר<span aria-hidden="true">←</span></a></div>
+  <div class="mnav-sec"><p class="mnav-cap">שחרור חשבונות לפי פלטפורמה</p><div class="mnav-plat"><a href="https://cyberguard.co.il/שחרור-חשבון-פייסבוק/"><span class="pi sm facebook"><svg aria-hidden="true"><use href="#p-facebook"/></svg></span>פייסבוק</a><a href="https://cyberguard.co.il/שחרור-חשבון-אינסטגרם/"><span class="pi sm instagram"><svg aria-hidden="true"><use href="#p-instagram"/></svg></span>אינסטגרם</a><a href="https://cyberguard.co.il/וואטסאפ-חדש/"><span class="pi sm whatsapp"><svg aria-hidden="true"><use href="#p-whatsapp"/></svg></span>וואטסאפ</a><a href="https://cyberguard.co.il/שחרור-חשבון-טיקטוק/"><span class="pi sm tiktok"><svg aria-hidden="true"><use href="#p-tiktok"/></svg></span>טיקטוק</a><a href="https://cyberguard.co.il/שחרור-חשבון-gmail/"><span class="pi sm google"><svg aria-hidden="true"><use href="#p-google"/></svg></span>גוגל</a><a href="https://cyberguard.co.il/שחרור-חשבון-יוטיוב/"><span class="pi sm youtube"><svg aria-hidden="true"><use href="#p-youtube"/></svg></span>יוטיוב</a><a href="https://cyberguard.co.il/שחרור-טלפון-ננעל/"><span class="pi sm apple"><svg aria-hidden="true"><use href="#p-apple"/></svg></span>טלפון נעול</a><a href="https://cyberguard.co.il/שירותים/"><span class="pi sm telegram"><svg aria-hidden="true"><use href="#p-telegram"/></svg></span>כל השירותים</a></div></div>
+  <div class="mnav-more"><a href="https://cyberguard.co.il/">עמוד הבית</a><a href="https://cyberguard.co.il/וואטסאפ-חדש/">שחרור וואטסאפ</a><a href="https://cyberguard.co.il/עדכונים-אחרונים/">עדכונים ומדריכים</a><a href="https://cyberguard.co.il/faq/">כל השאלות</a></div>
+  <button class="mnav-save" type="button" data-vcard><svg class="ico"><use href="#i-useradd"/></svg>שמרו את המספר — כי פריצה לא מודיעה מראש</button>
+  <div class="mnav-cta"><a class="btn btn-ghost" href="tel:+972523001030"><svg class="ico"><use href="#i-phone"/></svg>חיוג</a><a class="btn btn-wa" data-wa href="#"><svg class="ico"><use href="#i-chat"/></svg>וואטסאפ — בדיקה חינם</a></div>
+</nav>
+
+<main id="top">
+  <!-- 01 Hero -->
+  <section class="hero" data-screen-label="01 Hero">
+    <div class="hero-bg" role="img" aria-label="מקלדת עם מקשי פייסבוק, וואטסאפ, גוגל וסנאפצ'ט"></div>
+    <div class="hero-light" aria-hidden="true"></div>
+    <div class="hero-scan" aria-hidden="true"><span class="beam"></span></div>
+    <div class="wrap">
+      <div>
+        <p class="hero-kicker fx-in" style="--d:.15s" aria-live="polite"><span class="kick-lock" aria-hidden="true"><svg viewBox="0 0 24 24"><path class="sh" d="M8 11V7a4 4 0 0 1 8 0v4"/><rect x="4" y="11" width="16" height="10" rx="2"/></svg></span><span id="liveMsg">שחרור חשבונות טלגרם חסומים</span></p>
+        <h1 class="h1"><span class="pain fx-line" style="--d:.3s" id="pain" aria-live="off">חשבון הטלגרם שלך נחסם?</span><span class="h1-b fx-line" style="--d:.45s">אנחנו מחזירים לך את השליטה.</span></h1>
+        <p class="lead fx-in" style="--d:.6s">בדיקה וליווי מקצועי בשחרור חשבונות טלגרם: חסימה זמנית או קבועה (Banned), פריצה והשתלטות, או סיסמה שהפורץ הגדיר. נבדוק מה קרה ונגיד לכם בכנות מה אפשר לעשות.</p>
+        <div class="ctas fx-in" style="--d:.72s">
+          <a class="btn btn-wa btn-lg btn-shine" data-wa="היי, הגעתי מעמוד הטלגרם ואני צריך עזרה עם החשבון" href="#"><svg class="ico"><use href="#i-chat"/></svg>כתבו לנו בוואטסאפ — בדיקה חינם</a>
+          <a class="btn btn-ghost btn-lg" href="tel:+972523001030"><svg class="ico"><use href="#i-phone"/></svg>חייגו <span class="ltr">052-3001030</span></a>
+        </div>
+        <a class="hero-check fx-in" style="--d:.82s" href="#situations">חסום, נמחק או נפרץ? זהו את המצב שלכם <span aria-hidden="true">↓</span></a>
+        <div class="proof fx-in" style="--d:.9s">
+          <div><b class="ltr" data-count="2000" data-pre="+">+2,000</b><span>מקרים שטופלו</span></div>
+          <div><b data-count="4.9" data-dec="1">4.9</b><span>מתוך 42 ביקורות</span></div>
+          <div><b>ללא הצלחה</b><span>אין חיוב</span></div>
+        </div>
+      </div>
+      <aside class="card hero-form fx-card" aria-label="השארת פרטים">
+        <div class="hf-head"><span class="hf-live" aria-hidden="true"></span><div><b>בדיקה ראשונית חינם</b><small>השאירו שם ונייד — נחזור אליכם בהקדם</small></div></div>
+        <form class="hf" data-lead method="post">
+          <div class="hf-row">
+            <label class="field"><span>שם</span><input name="name" autocomplete="name" placeholder="השם שלכם" required></label>
+            <label class="field"><span>נייד</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" dir="ltr" placeholder="050-1234567" pattern="[0-9+\s\-]{9,16}" required></label>
+          </div>
+          <label class="field"><span>מה קרה לחשבון?</span><select name="issue" required><option value="" disabled selected>בחרו מה קרה</option><option value="טלגרם: חסימה זמנית (Limited)">חסימה זמנית (Limited)</option><option value="טלגרם: חסימה קבועה (Banned)">חסימה קבועה (Banned)</option><option value="טלגרם: החשבון נפרץ">החשבון נפרץ</option><option value="טלגרם: הפורץ הגדיר סיסמה">הפורץ הגדיר סיסמה</option><option value="טלגרם: החשבון נמחק">החשבון נמחק</option><option value="טלגרם: לא בטוח/ה מה קרה">לא בטוח/ה מה קרה</option></select></label>
+          <label class="consent"><input type="checkbox" name="consent" required><span>אני מאשר/ת את <a href="https://cyberguard.co.il/מדיניות-פרטיות/">מדיניות הפרטיות</a></span></label>
+          <button class="btn btn-wa btn-lg" type="submit">חזרו אליי — בדיקה חינם</button>
+        </form>
+        <div class="card-f"><svg class="ico"><use href="#i-lock"/></svg>אנחנו לעולם לא מבקשים קוד כניסה או סיסמה.</div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- 02 Points -->
+  <div class="wa-strip" data-screen-label="02 Points"><div class="wrap">
+    <ul class="wa-points">
+      <li><span class="badge"><svg class="ico"><use href="#i-search"/></svg></span><div><b>בדיקה ראשונית חינם</b><small>שיחת בדיקה ללא התחייבות</small></div></li>
+      <li><span class="badge"><svg class="ico"><use href="#i-shield"/></svg></span><div><b>ללא הצלחה, אין חיוב</b><small>משלמים רק על תוצאה</small></div></li>
+      <li><span class="badge"><svg class="ico"><use href="#i-users"/></svg></span><div><b>מעל 2,000 מקרים</b><small>שטופלו בכל הפלטפורמות</small></div></li>
+      <li><span class="badge"><svg class="ico"><use href="#i-chat"/></svg></span><div><b>מענה מהיר</b><small>בוואטסאפ ובטלפון</small></div></li>
+    </ul>
+    <p class="plat-note"><svg class="ico"><use href="#i-shield"/></svg>חברה עצמאית — לא קשורה ל-Telegram. מלווים אתכם בפנייה דרך הערוצים הרשמיים בלבד.</p>
+  </div></div>
+
+  <!-- 03 Statement -->
+  <section class="sec statement" id="about" data-screen-label="03 Statement"><div class="wrap">
+    <h2 class="big" data-reveal><span class="l">חסום, נמחק או נפרץ?</span><span class="l">לכל מצב</span><em class="l">מסלול אחר.</em></h2>
+    <div class="about" data-reveal>
+      <p>כשהחשבון לא עובד, לא תמיד מדובר בחסימה, והטיפול בכל מצב שונה לגמרי. לכן לפני שמנסים לשחרר, מזהים באיזה מצב אתם נמצאים.</p>
+      <p>המטרה היא לא רק להחזיר גישה, אלא גם <b>לעצור נזק, לשמור ראיות ולמנוע חזרה של הבעיה</b> — בשיחות, בקבוצות, בערוצים ובהפעלות הפתוחות.</p>
+    </div>
+  </div></section>
+
+  <!-- 04 Situations -->
+  <section class="sec glow" id="situations" data-screen-label="04 Situations"><div class="wrap">
+    <div class="sec-head" data-reveal>
+      <div><p class="eyebrow">זהו את המצב שלכם</p><h2 class="h2">מה קרה לחשבון הטלגרם?</h2></div>
+      <p class="lead">זו הנקודה שבה נופלים הרבה משתמשים: פועלים לפי המצב הלא נכון, ומחמירים אותו. בחרו את מה שאתם רואים, ותראו מה עושים.</p>
+    </div>
+    <div class="sit-grid">
+      <div class="sit-list" data-sit-list>
+        <article class="sit" data-sit="0" data-reveal>
+          <div class="sit-h"><span class="badge"><svg class="ico"><use href="#i-clock"/></svg></span><h3>חסימה זמנית (Limited)</h3></div>
+          <p>החשבון קיים, אבל טלגרם הגבילה את הפעולות שלו. למשל, אי אפשר לשלוח הודעות לאנשים שלא שמרו אתכם.</p>
+          <p class="sit-do"><b>מה עושים:</b> בודקים את הסטטוס בבוט הרשמי @SpamBot. הוא מראה אם יש הגבלה ומתי היא צפויה להסתיים, ולפעמים מאפשר לערער.</p>
+          <a class="sit-go" data-wa="היי, הגעתי מעמוד הטלגרם. המצב שלי: חסימה זמנית" href="#">זה המצב שלי — בדיקה חינם <span aria-hidden="true">←</span></a>
+        </article>
+        <article class="sit hot" data-sit="1" data-reveal>
+          <div class="sit-h"><span class="badge"><svg class="ico"><use href="#i-ban"/></svg></span><h3>חסימה קבועה (Banned)</h3></div>
+          <p>המספר נחסם לחלוטין, ומופיעה ההודעה <span class="ltr">This phone number is banned</span>. אי אפשר לפתוח חשבון חדש עם אותו מספר.</p>
+          <p class="sit-do"><b>מה עושים:</b> שולחים ערעור אחד, מסודר וענייני, לטלגרם, וממתינים. אם אין תשובה אחרי שבוע, שולחים Follow-up.</p>
+          <a class="sit-go" data-wa="היי, הגעתי מעמוד הטלגרם. המצב שלי: חסימה קבועה (Banned)" href="#">זה המצב שלי — בדיקה חינם <span aria-hidden="true">←</span></a>
+        </article>
+        <article class="sit hot" data-sit="2" data-reveal>
+          <div class="sit-h"><span class="badge"><svg class="ico"><use href="#i-alert"/></svg></span><h3>החשבון נפרץ</h3></div>
+          <p>מכשיר לא מוכר ברשימת המכשירים, הודעות שלא שלחתם לאנשי קשר ולקבוצות, או קוד כניסה שהגיע בלי שביקשתם.</p>
+          <p class="sit-do"><b>מה עושים:</b> אם יש עדיין גישה, מנתקים את כל ההפעלות האחרות ומגדירים סיסמת אימות דו-שלבי. מכשיר חדש לא יכול לנתק הפעלות במשך 24 שעות, ולכן מנתקים מהמכשיר הוותיק.</p>
+          <a class="sit-go" data-wa="היי, הגעתי מעמוד הטלגרם. המצב שלי: החשבון נפרץ" href="#">זה המצב שלי — בדיקה חינם <span aria-hidden="true">←</span></a>
+        </article>
+        <article class="sit" data-sit="3" data-reveal>
+          <div class="sit-h"><span class="badge"><svg class="ico"><use href="#i-key"/></svg></span><h3>הפורץ הגדיר סיסמה</h3></div>
+          <p>הפורץ הפעיל סיסמת אימות דו-שלבי, ועכשיו גם עם קוד הכניסה אי אפשר להיכנס בלי הסיסמה.</p>
+          <p class="sit-do"><b>מה עושים:</b> אם המייל לשחזור בשליטתכם, מאפסים דרכו. אם הוא של הפורץ, נשאר איפוס חשבון, וההודעות והקבוצות הקודמות לא חוזרות.</p>
+          <a class="sit-go" data-wa="היי, הגעתי מעמוד הטלגרם. המצב שלי: הפורץ הגדיר סיסמה" href="#">זה המצב שלי — בדיקה חינם <span aria-hidden="true">←</span></a>
+        </article>
+        <article class="sit" data-sit="4" data-reveal>
+          <div class="sit-h"><span class="badge"><svg class="ico"><use href="#i-trash"/></svg></span><h3>החשבון נמחק</h3></div>
+          <p>חשבון שלא נכנסו אליו תקופה ארוכה נמחק אוטומטית, וחשבון שנמחק ידנית לא חוזר. מחיקה גם לא מבטלת חסימה.</p>
+          <p class="sit-do"><b>מה עושים:</b> קודם מוודאים שזו באמת מחיקה ולא חסימה. אחרי מחיקה אפשר להירשם מחדש עם אותו מספר, אבל ההיסטוריה ואנשי הקשר לא חוזרים.</p>
+          <a class="sit-go" data-wa="היי, הגעתי מעמוד הטלגרם. המצב שלי: החשבון נמחק" href="#">זה המצב שלי — בדיקה חינם <span aria-hidden="true">←</span></a>
+        </article>
+        <article class="sit hot" data-sit="5" data-reveal>
+          <div class="sit-h"><span class="badge"><svg class="ico"><use href="#i-sim"/></svg></span><h3>המספר עצמו נגנב</h3></div>
+          <p>הטלפון איבד קליטה פתאום, והקודים לא מגיעים אליכם. ייתכן שהמספר הועבר לכרטיס SIM של מישהו אחר (SIM Swap).</p>
+          <p class="sit-do"><b>מה עושים:</b> פונים מיד לחברת הסלולר כדי להחזיר את המספר, ורק אחר כך מטפלים בחשבון הטלגרם.</p>
+          <a class="sit-go" data-wa="היי, הגעתי מעמוד הטלגרם. המצב שלי: המספר נגנב (SIM)" href="#">זה המצב שלי — בדיקה חינם <span aria-hidden="true">←</span></a>
+        </article>
+      </div>
+      <div class="phone" aria-hidden="true" data-phone>
+        <div class="ph ph-tg"><div class="ph-in">
+          <div class="ph-bar"><span>9:41</span><span class="ph-island"></span><span class="ph-sig"><i></i><i></i><i></i></span></div>
+          <div class="ph-app"><span class="ph-logo"><svg><use href="#p-telegram"/></svg><span class="ph-lock"><svg class="ico"><use href="#i-lock"/></svg></span></span><b>Telegram</b></div>
+          <div class="ph-states">
+            <div class="ph-state on" data-i="0"><span class="ph-chip">חסימה זמנית</span><div class="ph-box"><small>@SpamBot: ההגבלה תוסר בעוד</small><b class="ph-time" data-timer="86399">23:59:59</b></div><p>אי אפשר לשלוח הודעות לאנשים זרים</p></div>
+            <div class="ph-state" data-i="1"><span class="ph-chip red">חסימה קבועה</span><div class="ph-msg en"><b>Telegram</b>This phone number is banned.</div><p>נדרש ערעור מסודר לטלגרם</p></div>
+            <div class="ph-state" data-i="2"><span class="ph-chip red">החשבון נפרץ</span><div class="ph-msg ph-alert"><span class="ph-dev"><svg class="ico"><use href="#i-device"/></svg></span><div><b>כניסה חדשה לחשבון</b>ממכשיר ומיקום לא מוכרים</div></div><p>מנתקים את ההפעלות הזרות</p></div>
+            <div class="ph-state" data-i="3"><span class="ph-chip">אימות דו-שלבי</span><div class="ph-box ph-pin"><small>הזינו את הסיסמה</small><span class="pin-dots"><i></i><i></i><i></i><i></i><i></i><i></i></span><small class="ph-warn">סיסמה שהפורץ הגדיר</small></div></div>
+            <div class="ph-state" data-i="4"><span class="ph-chip">החשבון נמחק</span><div class="ph-msg calm"><b>Telegram</b>חשבון שלא היה פעיל תקופה ארוכה נמחק אוטומטית.</div><p>מחיקה לא מבטלת חסימה</p></div>
+            <div class="ph-state" data-i="5"><span class="ph-chip red">המספר נגנב</span><ul class="ph-biz"><li>קליטה<span>אין שירות</span></li><li>קוד כניסה<span>לא מגיע</span></li><li>חברת הסלולר<span>פונים מיד</span></li></ul></div>
+          </div>
+          <div class="ph-dots"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div></div>
+        <p class="ph-cap">המחשה</p>
+      </div>
+    </div>
+  </div></section>
+
+  <!-- 05 What not to do -->
+  <section class="sec" id="dont" data-screen-label="05 What not to do"><div class="wrap dont-grid">
+    <div class="dont-main">
+      <div data-reveal>
+        <p class="eyebrow">טעויות נפוצות</p>
+        <h2 class="h2">רגע לפני שמנסים שוב: מה לא לעשות</h2>
+        <p class="lead">הטעויות האלה רק מחמירות את המצב, ובחלק מהמקרים כבר אי אפשר לחזור מהן.</p>
+      </div>
+      <ol class="donts">
+        <li data-reveal><span class="x"><svg class="ico"><use href="#i-x"/></svg></span><p><b>לא למחוק את החשבון כדי "להתחיל מחדש".</b> מחיקה מוחקת את ההודעות, הקבוצות והערוצים שניהלתם, לא מבטלת את החסימה, וההגבלה עלולה לחזור גם לחשבון החדש באותו מספר.</p></li>
+        <li data-reveal><span class="x"><svg class="ico"><use href="#i-x"/></svg></span><p><b>לא לשלוח עשרות מיילים לטלגרם.</b> פנייה אחת עניינית עדיפה, ו-Follow-up רק אחרי שבוע בלי תשובה.</p></li>
+        <li data-reveal><span class="x"><svg class="ico"><use href="#i-x"/></svg></span><p><b>לא לנסות לפתוח שוב עם אותו מספר, ולא להשתמש בבוטים.</b> החסימה קשורה למספר, וניסיונות חוזרים רק מחמירים.</p></li>
+        <li data-reveal><span class="x"><svg class="ico"><use href="#i-x"/></svg></span><p><b>לא למסור את קוד הכניסה לאף אחד.</b> טלגרם לא מבקשת אותו בהודעה, וגם לא מי שמציג את עצמו כתמיכה של טלגרם.</p></li>
+      </ol>
+    </div>
+    <div class="card risk" data-reveal>
+      <p class="risk-cap">מה עלול להיפגע בזמן שהחשבון חסום או בידי פורץ:</p>
+      <ul>
+        <li><svg class="ico"><use href="#i-users"/></svg>קבוצות וערוצים שאתם מנהלים</li>
+        <li><svg class="ico"><use href="#i-image"/></svg>היסטוריית השיחות ואנשי הקשר</li>
+        <li><svg class="ico"><use href="#i-alert"/></svg>אנשי קשר שמקבלים הודעות מהפורץ</li>
+        <li><svg class="ico"><use href="#i-device"/></svg>הפעלות פתוחות במכשירים לא מוכרים</li>
+        <li><svg class="ico"><use href="#i-brief"/></svg>לקוחות וקבוצות של העסק</li>
+      </ul>
+      <a class="btn btn-wa" data-wa="היי, הגעתי מעמוד הטלגרם. אני רוצה לספר מה קרה לחשבון:" href="#"><svg class="ico"><use href="#i-chat"/></svg>ספרו לנו מה קרה</a>
+    </div>
+  </div></section>
+
+  <!-- 06 Process -->
+  <section class="sec glow" id="process" data-screen-label="06 Process"><div class="wrap">
+    <div class="sec-head" data-reveal>
+      <div><p class="eyebrow">איך זה עובד</p><h2 class="h2">תהליך מסודר, לפי מצב החשבון</h2></div>
+      <p class="lead">שחרור חשבון טלגרם הוא תהליך אפשרי, אבל הוא דורש פעולה נכונה, סבלנות והבנה של המערכת. ככה אנחנו עובדים:</p>
+    </div>
+    <ol class="tl" data-tl>
+      <li data-reveal><span class="tl-n" aria-hidden="true">01</span><div class="tl-card"><b>אבחון: חסימה, מחיקה או פריצה</b><p>בודקים את הסטטוס ב-@SpamBot ואת רשימת המכשירים, ומזהים באיזה מצב החשבון. לכל מצב מסלול אחר.</p></div></li>
+      <li data-reveal><span class="tl-n" aria-hidden="true">02</span><div class="tl-card"><b>עצירת הנזק</b><p>כשיש גישה: ניתוק הפעלות זרות, אזהרה לאנשי הקשר ולקבוצות, ושמירת ראיות.</p></div></li>
+      <li data-reveal><span class="tl-n" aria-hidden="true">03</span><div class="tl-card"><b>ערעור מסודר לטלגרם</b><p>פנייה אחת, עניינית וקצרה, בערוץ הרשמי, במקום הצפה של מיילים זהים.</p></div></li>
+      <li data-reveal><span class="tl-n" aria-hidden="true">04</span><div class="tl-card"><b>מעקב עד תשובה</b><p>חסימה זמנית: שעות עד ימים. חסימה קבועה: לרוב 3 עד 14 ימים. אם אין תשובה אחרי שבוע, שולחים Follow-up.</p></div></li>
+      <li data-reveal><span class="tl-n" aria-hidden="true">05</span><div class="tl-card"><b>אבטחה אחרי החזרה</b><p>סיסמת אימות דו-שלבי עם מייל לשחזור בשליטתכם, ניתוק אוטומטי של הפעלות ישנות, והסתרת מספר הטלפון.</p></div></li>
+    </ol>
+    <div class="pin-warn" data-reveal><span class="badge"><svg class="ico"><use href="#i-lock"/></svg></span><p><b>חשוב:</b> לעולם אל תמסרו את קוד הכניסה או את הסיסמה לאף אחד. טלגרם לא מבקשת אותם בהודעה, ואנחנו לא מבקשים אותם. מי שמבקש אותם מנסה להשתלט על החשבון.</p></div>
+    <div class="proc-cta" data-reveal><p><b>לא בטוחים באיזה מצב החשבון שלכם?</b> נתחיל באבחון, חינם.</p><a class="btn btn-wa" data-wa="היי, הגעתי מעמוד הטלגרם ואשמח לאבחון של החשבון" href="#"><svg class="ico"><use href="#i-chat"/></svg>כתבו לנו בוואטסאפ — בדיקה חינם</a></div>
+  </div></section>
+
+  <!-- 07 Odds -->
+  <section class="sec" id="chances" data-screen-label="07 Odds"><div class="wrap">
+    <div class="sec-head" data-reveal>
+      <div><p class="eyebrow">מהניסיון שלנו</p><h2 class="h2">מה הסיכוי שהחשבון יחזור?</h2></div>
+      <p class="lead">מניסיון בטיפול במאות מקרים, אלה התוצאות שאנחנו רואים בטלגרם. אומרים את זה ביושר, כולל מתי קשה.</p>
+    </div>
+    <ul class="odds">
+      <li data-reveal><span class="badge"><svg class="ico"><use href="#i-check"/></svg></span><div><b>חשבונות שנחסמו בטעות</b><span>נפתחים לרוב.</span></div></li>
+      <li data-reveal><span class="badge"><svg class="ico"><use href="#i-check"/></svg></span><div><b>חשבונות שנפרצו</b><span>אחוז הצלחה גבוה, במיוחד כשפועלים מהר.</span></div></li>
+      <li data-reveal><span class="badge"><svg class="ico"><use href="#i-check"/></svg></span><div><b>משתמשים עסקיים</b><span>מקבלים עדיפות מסוימת.</span></div></li>
+      <li class="no" data-reveal><span class="badge"><svg class="ico"><use href="#i-x"/></svg></span><div><b>מי שביצע ספאם חוזר</b><span>קשה מאוד לשחרר. נגיד לכם את זה כבר בבדיקה הראשונית.</span></div></li>
+    </ul>
+    <p class="odds-note">ההחלטה הסופית תמיד אצל טלגרם, ולכן בודקים כל מקרה לפני שמתחייבים אליו.</p>
+  </div></section>
+
+  <!-- 08 Why us -->
+  <section class="sec why" id="why" data-screen-label="08 Why us"><div class="wrap why-grid">
+    <div class="why-intro" data-reveal>
+      <p class="eyebrow">למה לבחור ב-CyberGuard</p>
+      <h2 class="h2">הביטחון שלכם מתחיל בגישה לחשבון</h2>
+      <p class="lead">שחזור חשבונות חסומים, פרוצים או מוגבלים באמצעות תהליך מקצועי, שקוף ומדויק — החל מבדיקת המקרה ועד להחזרת השליטה המלאה ואבטחת החשבון מחדש.</p>
+      <a class="btn btn-wa btn-lg" data-wa="היי, הגעתי מעמוד הטלגרם ואני צריך עזרה עם החשבון" href="#"><svg class="ico"><use href="#i-chat"/></svg>כתבו לנו בוואטסאפ — בדיקה חינם</a>
+    </div>
+    <div class="promises">
+      <p class="promises-cap">ארבע התחייבויות שלנו אליכם</p>
+      <div class="promise" data-reveal><span class="badge"><svg class="ico"><use href="#i-lock"/></svg></span><b>לא מבקשים סיסמה או קוד</b><p>האבחון נעשה לפי תיאור המקרה, צילומי מסך ופרטים מזהים בלבד.</p></div>
+      <div class="promise" data-reveal><span class="badge"><svg class="ico"><use href="#i-badge"/></svg></span><b>משלמים רק על תוצאה</b><p>המחיר נאמר מראש. אם החשבון לא שוחרר — אין חיוב על הטיפול.</p></div>
+      <div class="promise" data-reveal><span class="badge"><svg class="ico"><use href="#i-eye"/></svg></span><b>אומרים ביושר אם אפשר לעזור</b><p>ההחלטה הסופית אצל הפלטפורמה, ולכן בודקים את המקרה לפני שמתחייבים אליו.</p></div>
+      <div class="promise" data-reveal><span class="badge"><svg class="ico"><use href="#i-headset"/></svg></span><b>ליווי אישי ודיסקרטי</b><p>מעדכנים אתכם בכל שלב עד סיום הטיפול, בדיסקרטיות מלאה.</p></div>
+    </div>
+  </div>
+  <div class="wrap"><div class="numbers" data-reveal>
+    <div><b class="ltr" data-count="2000" data-suf="+">2,000+</b><span>מקרים שטופלו</span></div>
+    <div><b data-count="98" data-suf="%">98%</b><span>הצלחה בשחרור חשבונות</span></div>
+    <div><b data-count="4.9" data-dec="1">4.9</b><span>דירוג ממוצע מ-42 ביקורות</span></div>
+    <div><b>0 ₪</b><span>תשלום אם לא הצלחנו</span></div>
+  </div></div>
+  </section>
+
+  <!-- 09 Callback -->
+  <section class="sec lead-band" id="callback" data-screen-label="09 Callback"><div class="wrap">
+    <div class="lb" data-reveal>
+      <div class="lb-text"><p class="eyebrow">בדיקה ראשונית ללא עלות</p><h2 class="h2 lb-h">רוצים שנחזור אליכם?</h2><p>השאירו שם ונייד, ונחזור עם בדיקה ראשונית של חשבון הטלגרם — חינם וללא התחייבות.</p><p class="lb-alt">מעדיפים לדבר עכשיו? <a href="tel:+972523001030" class="ltr">052-3001030</a> או <a data-wa href="#">וואטסאפ</a></p></div>
+      <form class="lb-form" data-lead method="post">
+        <label class="field"><span>שם</span><input name="name" autocomplete="name" placeholder="השם שלכם" required></label>
+        <label class="field"><span>נייד</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" dir="ltr" placeholder="050-1234567" pattern="[0-9+\s\-]{9,16}" required></label>
+        <label class="field"><span>מה קרה לחשבון?</span><select name="issue" required><option value="" disabled selected>בחרו מה קרה</option><option value="טלגרם: חסימה זמנית (Limited)">חסימה זמנית (Limited)</option><option value="טלגרם: חסימה קבועה (Banned)">חסימה קבועה (Banned)</option><option value="טלגרם: החשבון נפרץ">החשבון נפרץ</option><option value="טלגרם: הפורץ הגדיר סיסמה">הפורץ הגדיר סיסמה</option><option value="טלגרם: החשבון נמחק">החשבון נמחק</option><option value="טלגרם: לא בטוח/ה מה קרה">לא בטוח/ה מה קרה</option></select></label>
+        <button class="btn btn-wa btn-lg" type="submit">חזרו אליי</button>
+        <label class="consent"><input type="checkbox" name="consent" required><span>אני מאשר/ת את <a href="https://cyberguard.co.il/מדיניות-פרטיות/">מדיניות הפרטיות</a> ומסכים/ה שהמידע ישמש למענה לפנייה ולמטרות המפורטות בה</span></label>
+      </form>
+    </div>
+  </div></section>
+
+  <!-- 10 Alone or with help -->
+  <section class="sec" id="solo" data-screen-label="10 Alone or with help"><div class="wrap">
+    <div class="sec-head" data-reveal>
+      <div><p class="eyebrow">לבד או איתנו</p><h2 class="h2">לבד או עם ליווי מקצועי?</h2></div>
+      <p class="lead">בחלק מהמקרים התהליך הרשמי מספיק, וכדאי להתחיל ממנו. אם זה המצב אצלכם, נגיד לכם את זה כבר בבדיקה הראשונית.</p>
+    </div>
+    <div class="solo">
+      <div class="solo-col" data-reveal>
+        <h3><span class="badge"><svg class="ico"><use href="#i-user"/></svg></span>אפשר להתחיל לבד כש…</h3>
+        <ul>
+          <li><svg class="ico"><use href="#i-check"/></svg>@SpamBot מראה הגבלה זמנית עם תאריך סיום</li>
+          <li><svg class="ico"><use href="#i-check"/></svg>עוד לא שלחתם ערעור לטלגרם</li>
+          <li><svg class="ico"><use href="#i-check"/></svg>החשבון נפרץ, אבל יש לכם גישה ממכשיר ותיק שממנו אפשר לנתק את הפורץ</li>
+        </ul>
+      </div>
+      <div class="solo-col pro" data-reveal>
+        <h3><span class="badge"><svg class="ico"><use href="#i-headset"/></svg></span>כדאי ליווי מקצועי כש…</h3>
+        <ul>
+          <li><svg class="ico"><use href="#i-check"/></svg>עברו יותר מ-14 יום מהערעור, ואין תשובה</li>
+          <li><svg class="ico"><use href="#i-check"/></svg>מדובר בחשבון עסקי</li>
+          <li><svg class="ico"><use href="#i-check"/></svg>הייתה פריצה, והפורץ הגדיר סיסמה</li>
+          <li><svg class="ico"><use href="#i-check"/></svg>יש בחשבון מידע, קבוצות או ערוצים שחשוב לא לאבד</li>
+        </ul>
+        <a class="btn btn-wa btn-lg" data-wa="היי, הגעתי מעמוד הטלגרם ואשמח לבדיקה ראשונית" href="#"><svg class="ico"><use href="#i-chat"/></svg>כתבו לנו בוואטסאפ לבדיקה ראשונית חינם</a>
+      </div>
+    </div>
+  </div></section>
+
+  <!-- 11 Video stories -->
+  <section class="sec stories" id="stories" data-screen-label="11 Video stories"><div class="wrap">
+    <div class="sec-head" data-reveal>
+      <div><p class="eyebrow">תוצאות אמיתיות</p><h2 class="h2">אנשים אמיתיים. סיפורי הצלחה בווידאו.</h2></div>
+      <p class="lead">לא "המחשה" ולא שחקנים — לקוחות שלנו, בקול שלהם, מספרים מה קרה ואיך החשבון חזר.</p>
+    </div>
+    <div class="cases" id="cases">
+      <article class="case" data-reveal>
+        <button class="case-media" type="button" data-vimeo="1214971619" aria-label="צפייה בסיפור: וואטסאפ חסום עם 15 שנות שיחות"><img src="thumbs/1214971619.webp" alt="" loading="lazy"><span class="play"><svg><use href="#i-play"/></svg></span><span class="case-dur ltr">1:19</span></button>
+        <div class="case-body"><span class="case-tag"><span class="pi sm whatsapp"><svg aria-hidden="true"><use href="#p-whatsapp"/></svg></span>תיק אמיתי · וואטסאפ חסום עם 15 שנות שיחות</span><p>הוואטסאפ נחסם, ויחד איתו כמעט אבדו 15 שנים של שיחות. בליווי צמוד, כולל מעבר זמני לאייפון, החשבון חזר לטלפון המקורי יחד עם הגיבוי.</p><span class="case-meta">וואטסאפ · אוגוסט 2026</span><button class="case-play" type="button" data-vimeo="1214971619">צפו בלקוח מספר <span aria-hidden="true">▶</span></button></div>
+      </article>
+      <article class="case" data-reveal>
+        <button class="case-media" type="button" data-vimeo="1193234861" aria-label="צפייה בסיפור: וואטסאפ עסקי שנחסם"><img src="thumbs/1193234861.webp" alt="" loading="lazy"><span class="play"><svg><use href="#i-play"/></svg></span><span class="case-dur ltr">0:40</span></button>
+        <div class="case-body"><span class="case-tag"><span class="pi sm whatsapp"><svg aria-hidden="true"><use href="#p-whatsapp"/></svg></span>תיק אמיתי · וואטסאפ עסקי שנחסם</span><p>הוואטסאפ של העסק היה חסום כחודשיים, ומטא אמרו לו שהמספר חסום לתמיד. אחרי הטיפול הוואטסאפ חזר לעבוד.</p><span class="case-meta">וואטסאפ · מאי 2026</span><button class="case-play" type="button" data-vimeo="1193234861">צפו בלקוח מספר <span aria-hidden="true">▶</span></button></div>
+      </article>
+      <article class="case" data-reveal>
+        <button class="case-media" type="button" data-vimeo="1179716466" aria-label="צפייה בסיפור: אינסטגרם שנפרץ אחרי גניבת טלפון"><img src="thumbs/1179716466.webp" alt="" loading="lazy"><span class="play"><svg><use href="#i-play"/></svg></span><span class="case-dur ltr">0:32</span></button>
+        <div class="case-body"><span class="case-tag"><span class="pi sm instagram"><svg aria-hidden="true"><use href="#p-instagram"/></svg></span>תיק אמיתי · אינסטגרם שנפרץ אחרי גניבת טלפון</span><p>הטלפון שלו נגנב בטיול, והפורץ השבית את חשבון האינסטגרם עד שלא נראה אפילו מפרופילים אחרים. בסוף התהליך החשבון חזר.</p><span class="case-meta">אינסטגרם · אפריל 2026</span><button class="case-play" type="button" data-vimeo="1179716466">צפו בלקוח מספר <span aria-hidden="true">▶</span></button></div>
+      </article>
+      <article class="case" data-reveal>
+        <button class="case-media" type="button" data-vimeo="1193234641" aria-label="צפייה בסיפור: חשבון אינסטגרם עסקי שנחסם"><img src="thumbs/1193234641.webp" alt="" loading="lazy"><span class="play"><svg><use href="#i-play"/></svg></span><span class="case-dur ltr">0:26</span></button>
+        <div class="case-body"><span class="case-tag"><span class="pi sm instagram"><svg aria-hidden="true"><use href="#p-instagram"/></svg></span>תיק אמיתי · חשבון אינסטגרם עסקי שנחסם</span><p>חשבון האינסטגרם שדרכו נכנסה הכנסה קבועה לעסק נחסם בגלל תקלה, ונפתח מחדש תוך כשבוע.</p><span class="case-meta">אינסטגרם · מאי 2026</span><button class="case-play" type="button" data-vimeo="1193234641">צפו בלקוח מספר <span aria-hidden="true">▶</span></button></div>
+      </article>
+      <article class="case" data-reveal>
+        <button class="case-media" type="button" data-vimeo="1179716592" aria-label="צפייה בסיפור: חשבון וואטסאפ שנפרץ"><img src="thumbs/1179716592.webp" alt="" loading="lazy"><span class="play"><svg><use href="#i-play"/></svg></span><span class="case-dur ltr">0:15</span></button>
+        <div class="case-body"><span class="case-tag"><span class="pi sm whatsapp"><svg aria-hidden="true"><use href="#p-whatsapp"/></svg></span>תיק אמיתי · חשבון וואטסאפ שנפרץ</span><p>פרצו לו לחשבון הוואטסאפ. בהתחלה היה סקפטי, ובסוף החשבון חזר אליו.</p><span class="case-meta">וואטסאפ · אפריל 2026</span><button class="case-play" type="button" data-vimeo="1179716592">צפו בלקוח מספר <span aria-hidden="true">▶</span></button></div>
+      </article>
+      <article class="case" data-reveal>
+        <button class="case-media" type="button" data-vimeo="1169463692" aria-label="צפייה בסיפור: מספר וואטסאפ שננעל"><img src="thumbs/1169463692.webp" alt="" loading="lazy"><span class="play"><svg><use href="#i-play"/></svg></span><span class="case-dur ltr">0:17</span></button>
+        <div class="case-body"><span class="case-tag"><span class="pi sm whatsapp"><svg aria-hidden="true"><use href="#p-whatsapp"/></svg></span>תיק אמיתי · מספר וואטסאפ שננעל</span><p>מספר הוואטסאפ ננעל ולא היה אפשר להשתמש בו בכלל. תוך כשעה הוא חזר להשתמש בוואטסאפ כרגיל.</p><span class="case-meta">וואטסאפ · מרץ 2026</span><button class="case-play" type="button" data-vimeo="1169463692">צפו בלקוח מספר <span aria-hidden="true">▶</span></button></div>
+      </article>
+      <article class="case" hidden data-reveal>
+        <button class="case-media" type="button" data-vimeo="1123343731" aria-label="צפייה בסיפור: חשבון פייסבוק חסום"><img src="thumbs/1123343731.webp" alt="" loading="lazy"><span class="play"><svg><use href="#i-play"/></svg></span><span class="case-dur ltr">0:25</span></button>
+        <div class="case-body"><span class="case-tag"><span class="pi sm facebook"><svg aria-hidden="true"><use href="#p-facebook"/></svg></span>תיק אמיתי · חשבון פייסבוק חסום</span><p>הלקוח מספר בקול שלו איך נראה התהליך איתנו, ואיך החשבון חזר.</p><span class="case-meta">פייסבוק · ספטמבר 2025</span><button class="case-play" type="button" data-vimeo="1123343731">צפו בלקוח מספר <span aria-hidden="true">▶</span></button></div>
+      </article>
+      <article class="case" hidden data-reveal>
+        <button class="case-media" type="button" data-vimeo="1102965905" aria-label="צפייה בסיפור: חשבון פייסבוק חסום"><img src="thumbs/1102965905.webp" alt="" loading="lazy"><span class="play"><svg><use href="#i-play"/></svg></span><span class="case-dur ltr">1:18</span></button>
+        <div class="case-body"><span class="case-tag"><span class="pi sm facebook"><svg aria-hidden="true"><use href="#p-facebook"/></svg></span>תיק אמיתי · חשבון פייסבוק חסום</span><p>הלקוח מספר בקול שלו איך נראה התהליך איתנו, ואיך החשבון חזר.</p><span class="case-meta">פייסבוק · יולי 2025</span><button class="case-play" type="button" data-vimeo="1102965905">צפו בלקוח מספר <span aria-hidden="true">▶</span></button></div>
+      </article>
+      <article class="case" hidden data-reveal>
+        <button class="case-media" type="button" data-vimeo="1097954170" aria-label="צפייה בסיפור: חשבון וואטסאפ חסום"><img src="thumbs/1097954170.webp" alt="" loading="lazy"><span class="play"><svg><use href="#i-play"/></svg></span><span class="case-dur ltr">0:35</span></button>
+        <div class="case-body"><span class="case-tag"><span class="pi sm whatsapp"><svg aria-hidden="true"><use href="#p-whatsapp"/></svg></span>תיק אמיתי · חשבון וואטסאפ חסום</span><p>הלקוח מספר בקול שלו איך נראה התהליך איתנו, ואיך החשבון חזר.</p><span class="case-meta">וואטסאפ · יולי 2025</span><button class="case-play" type="button" data-vimeo="1097954170">צפו בלקוח מספר <span aria-hidden="true">▶</span></button></div>
+      </article>
+      <article class="case" hidden data-reveal>
+        <button class="case-media" type="button" data-vimeo="1090606651" aria-label="צפייה בסיפור: חשבון פייסבוק"><img src="thumbs/1090606651.webp" alt="" loading="lazy"><span class="play"><svg><use href="#i-play"/></svg></span><span class="case-dur ltr">1:49</span></button>
+        <div class="case-body"><span class="case-tag"><span class="pi sm facebook"><svg aria-hidden="true"><use href="#p-facebook"/></svg></span>תיק אמיתי · חשבון פייסבוק</span><p>הלקוח מספר בקול שלו איך נראה התהליך איתנו, ואיך החשבון חזר.</p><span class="case-meta">פייסבוק · יוני 2025</span><button class="case-play" type="button" data-vimeo="1090606651">צפו בלקוח מספר <span aria-hidden="true">▶</span></button></div>
+      </article>
+      <article class="case" hidden data-reveal>
+        <button class="case-media" type="button" data-vimeo="1084194911" aria-label="צפייה בסיפור: חשבון פייסבוק"><img src="thumbs/1084194911.webp" alt="" loading="lazy"><span class="play"><svg><use href="#i-play"/></svg></span><span class="case-dur ltr">1:47</span></button>
+        <div class="case-body"><span class="case-tag"><span class="pi sm facebook"><svg aria-hidden="true"><use href="#p-facebook"/></svg></span>תיק אמיתי · חשבון פייסבוק</span><p>הלקוח מספר בקול שלו איך נראה התהליך איתנו, ואיך החשבון חזר.</p><span class="case-meta">פייסבוק · מאי 2025</span><button class="case-play" type="button" data-vimeo="1084194911">צפו בלקוח מספר <span aria-hidden="true">▶</span></button></div>
+      </article>
+      <article class="case" hidden data-reveal>
+        <button class="case-media" type="button" data-vimeo="1080236248" aria-label="צפייה בסיפור: סיפור של לקוח"><img src="thumbs/1080236248.webp" alt="" loading="lazy"><span class="play"><svg><use href="#i-play"/></svg></span><span class="case-dur ltr">0:41</span></button>
+        <div class="case-body"><span class="case-tag"><span class="pi sm neutral"><svg class="ico" aria-hidden="true"><use href="#i-chat"/></svg></span>תיק אמיתי · סיפור של לקוח</span><p>הלקוח מספר בקול שלו איך נראה התהליך איתנו, ואיך החשבון חזר.</p><span class="case-meta">סיפור לקוח · אפריל 2025</span><button class="case-play" type="button" data-vimeo="1080236248">צפו בלקוח מספר <span aria-hidden="true">▶</span></button></div>
+      </article>
+      <article class="case" hidden data-reveal>
+        <button class="case-media" type="button" data-vimeo="1075080059" aria-label="צפייה בסיפור: חשבון פייסבוק חסום"><img src="thumbs/1075080059.webp" alt="" loading="lazy"><span class="play"><svg><use href="#i-play"/></svg></span><span class="case-dur ltr">0:55</span></button>
+        <div class="case-body"><span class="case-tag"><span class="pi sm facebook"><svg aria-hidden="true"><use href="#p-facebook"/></svg></span>תיק אמיתי · חשבון פייסבוק חסום</span><p>הלקוח מספר בקול שלו איך נראה התהליך איתנו, ואיך החשבון חזר.</p><span class="case-meta">פייסבוק · אפריל 2025</span><button class="case-play" type="button" data-vimeo="1075080059">צפו בלקוח מספר <span aria-hidden="true">▶</span></button></div>
+      </article>
+      <article class="case" hidden data-reveal>
+        <button class="case-media" type="button" data-vimeo="1057235180" aria-label="צפייה בסיפור: חשבון פייסבוק חסום"><img src="thumbs/1057235180.webp" alt="" loading="lazy"><span class="play"><svg><use href="#i-play"/></svg></span><span class="case-dur ltr">1:04</span></button>
+        <div class="case-body"><span class="case-tag"><span class="pi sm facebook"><svg aria-hidden="true"><use href="#p-facebook"/></svg></span>תיק אמיתי · חשבון פייסבוק חסום</span><p>הלקוח מספר בקול שלו איך נראה התהליך איתנו, ואיך החשבון חזר.</p><span class="case-meta">פייסבוק · פברואר 2025</span><button class="case-play" type="button" data-vimeo="1057235180">צפו בלקוח מספר <span aria-hidden="true">▶</span></button></div>
+      </article>
+      <article class="case" hidden data-reveal>
+        <button class="case-media" type="button" data-vimeo="1038868364" aria-label="צפייה בסיפור: חשבון וואטסאפ חסום"><img src="thumbs/1038868364.webp" alt="" loading="lazy"><span class="play"><svg><use href="#i-play"/></svg></span><span class="case-dur ltr">0:20</span></button>
+        <div class="case-body"><span class="case-tag"><span class="pi sm whatsapp"><svg aria-hidden="true"><use href="#p-whatsapp"/></svg></span>תיק אמיתי · חשבון וואטסאפ חסום</span><p>הלקוח מספר בקול שלו איך נראה התהליך איתנו, ואיך החשבון חזר.</p><span class="case-meta">וואטסאפ · דצמבר 2024</span><button class="case-play" type="button" data-vimeo="1038868364">צפו בלקוח מספר <span aria-hidden="true">▶</span></button></div>
+      </article>
+      <article class="case" hidden data-reveal>
+        <button class="case-media" type="button" data-vimeo="1038868797" aria-label="צפייה בסיפור: שחרור עמוד פייסבוק חסום"><img src="thumbs/1038868797.webp" alt="" loading="lazy"><span class="play"><svg><use href="#i-play"/></svg></span><span class="case-dur ltr">1:38</span></button>
+        <div class="case-body"><span class="case-tag"><span class="pi sm facebook"><svg aria-hidden="true"><use href="#p-facebook"/></svg></span>תיק אמיתי · שחרור עמוד פייסבוק חסום</span><p>הלקוח מספר בקול שלו איך נראה התהליך איתנו, ואיך החשבון חזר.</p><span class="case-meta">פייסבוק · דצמבר 2024</span><button class="case-play" type="button" data-vimeo="1038868797">צפו בלקוח מספר <span aria-hidden="true">▶</span></button></div>
+      </article>
+      <article class="case" hidden data-reveal>
+        <button class="case-media" type="button" data-vimeo="1038123979" aria-label="צפייה בסיפור: חשבון פייסבוק"><img src="thumbs/1038123979.webp" alt="" loading="lazy"><span class="play"><svg><use href="#i-play"/></svg></span><span class="case-dur ltr">0:46</span></button>
+        <div class="case-body"><span class="case-tag"><span class="pi sm facebook"><svg aria-hidden="true"><use href="#p-facebook"/></svg></span>תיק אמיתי · חשבון פייסבוק</span><p>הלקוח מספר בקול שלו איך נראה התהליך איתנו, ואיך החשבון חזר.</p><span class="case-meta">פייסבוק · דצמבר 2024</span><button class="case-play" type="button" data-vimeo="1038123979">צפו בלקוח מספר <span aria-hidden="true">▶</span></button></div>
+      </article>
+      <article class="case" hidden data-reveal>
+        <button class="case-media" type="button" data-vimeo="1027074239" aria-label="צפייה בסיפור: חשבון וואטסאפ פרוץ"><img src="thumbs/1027074239.webp" alt="" loading="lazy"><span class="play"><svg><use href="#i-play"/></svg></span><span class="case-dur ltr">0:46</span></button>
+        <div class="case-body"><span class="case-tag"><span class="pi sm whatsapp"><svg aria-hidden="true"><use href="#p-whatsapp"/></svg></span>תיק אמיתי · חשבון וואטסאפ פרוץ</span><p>הלקוח מספר בקול שלו איך נראה התהליך איתנו, ואיך החשבון חזר.</p><span class="case-meta">וואטסאפ · נובמבר 2024</span><button class="case-play" type="button" data-vimeo="1027074239">צפו בלקוח מספר <span aria-hidden="true">▶</span></button></div>
+      </article>
+      <article class="case" hidden data-reveal>
+        <button class="case-media" type="button" data-vimeo="991633230" aria-label="צפייה בסיפור: חשבון וואטסאפ"><img src="thumbs/991633230.webp" alt="" loading="lazy"><span class="play"><svg><use href="#i-play"/></svg></span><span class="case-dur ltr">0:59</span></button>
+        <div class="case-body"><span class="case-tag"><span class="pi sm whatsapp"><svg aria-hidden="true"><use href="#p-whatsapp"/></svg></span>תיק אמיתי · חשבון וואטסאפ</span><p>הלקוח מספר בקול שלו איך נראה התהליך איתנו, ואיך החשבון חזר.</p><span class="case-meta">וואטסאפ · יולי 2024</span><button class="case-play" type="button" data-vimeo="991633230">צפו בלקוח מספר <span aria-hidden="true">▶</span></button></div>
+      </article>
+      <article class="case" hidden data-reveal>
+        <button class="case-media" type="button" data-vimeo="984427792" aria-label="צפייה בסיפור: חשבון אינסטגרם"><img src="thumbs/984427792.webp" alt="" loading="lazy"><span class="play"><svg><use href="#i-play"/></svg></span><span class="case-dur ltr">1:19</span></button>
+        <div class="case-body"><span class="case-tag"><span class="pi sm instagram"><svg aria-hidden="true"><use href="#p-instagram"/></svg></span>תיק אמיתי · חשבון אינסטגרם</span><p>הלקוח מספר בקול שלו איך נראה התהליך איתנו, ואיך החשבון חזר.</p><span class="case-meta">אינסטגרם · יולי 2024</span><button class="case-play" type="button" data-vimeo="984427792">צפו בלקוח מספר <span aria-hidden="true">▶</span></button></div>
+      </article>
+      <article class="case" hidden data-reveal>
+        <button class="case-media" type="button" data-vimeo="984427077" aria-label="צפייה בסיפור: חשבון אינסטגרם"><img src="thumbs/984427077.webp" alt="" loading="lazy"><span class="play"><svg><use href="#i-play"/></svg></span><span class="case-dur ltr">0:57</span></button>
+        <div class="case-body"><span class="case-tag"><span class="pi sm instagram"><svg aria-hidden="true"><use href="#p-instagram"/></svg></span>תיק אמיתי · חשבון אינסטגרם</span><p>הלקוח מספר בקול שלו איך נראה התהליך איתנו, ואיך החשבון חזר.</p><span class="case-meta">אינסטגרם · יולי 2024</span><button class="case-play" type="button" data-vimeo="984427077">צפו בלקוח מספר <span aria-hidden="true">▶</span></button></div>
+      </article>
+      <article class="case" hidden data-reveal>
+        <button class="case-media" type="button" data-vimeo="984425634" aria-label="צפייה בסיפור: חשבון אינסטגרם"><img src="thumbs/984425634.webp" alt="" loading="lazy"><span class="play"><svg><use href="#i-play"/></svg></span><span class="case-dur ltr">0:29</span></button>
+        <div class="case-body"><span class="case-tag"><span class="pi sm instagram"><svg aria-hidden="true"><use href="#p-instagram"/></svg></span>תיק אמיתי · חשבון אינסטגרם</span><p>הלקוח מספר בקול שלו איך נראה התהליך איתנו, ואיך החשבון חזר.</p><span class="case-meta">אינסטגרם · יולי 2024</span><button class="case-play" type="button" data-vimeo="984425634">צפו בלקוח מספר <span aria-hidden="true">▶</span></button></div>
+      </article>
+    </div>
+    <div class="cases-more"><button class="btn btn-ghost" type="button" data-cases-more>עוד סיפורי לקוחות</button></div>
+  </div></section>
+
+  <!-- 12 Reviews -->
+  <section class="sec" id="reviews" data-screen-label="12 Reviews"><div class="wrap">
+    <div class="sec-head" data-reveal>
+      <div><p class="eyebrow">ביקורות לקוחות · <span class="ltr">2020–2026</span></p><h2 class="h2">מה הלקוחות שלנו מספרים</h2></div>
+      <div class="rating"><b>4.9</b><div><span class="stars" aria-hidden="true">★★★★★</span><small>ממוצע מ-42 ביקורות</small></div></div>
+    </div>
+  </div>
+  <div class="wall" data-reveal aria-label="ביקורות לקוחות זזות">
+    <div class="wall-row"><div class="wall-track" data-row="0"></div></div>
+    <div class="wall-row rev2"><div class="wall-track" data-row="1"></div></div>
+  </div>
+  <div class="wrap">
+    <div class="wall-cta"><button class="btn btn-ghost" type="button" data-rev-toggle aria-expanded="false">לכל 42 הביקורות, עם סינון לפי פלטפורמה</button></div>
+    <div class="rev-all" data-rev-all hidden>
+      <div class="chips" id="chips" role="group" aria-label="סינון לפי פלטפורמה"></div>
+      <div class="reviews" id="reviewList"></div>
+      <div class="more"><button class="btn btn-ghost" id="moreBtn" type="button">עוד ביקורות</button></div>
+    </div>
+  </div></section>
+
+  <!-- 13 Price -->
+  <section class="sec glow" id="price" data-screen-label="13 Price"><div class="wrap">
+    <div class="sec-head" data-reveal>
+      <div><p class="eyebrow">מחיר</p><h2 class="h2">כמה זה עולה? משלמים רק על הצלחה</h2></div>
+      <p class="lead">אין הפתעות ואין תשלום על ניסיון. המחיר נקבע מראש לפי סוג המקרה, ואתם יודעים אותו לפני שמתחילים.</p>
+    </div>
+    <ol class="price-steps">
+      <li data-reveal><span class="ps-n">1</span><b>שיחת בדיקה</b><p>חינם ובלי התחייבות. בסופה תדעו אם אפשר לטפל במקרה.</p></li>
+      <li data-reveal><span class="ps-n">2</span><b>מחיר ידוע מראש</b><p>אם אפשר לטפל, נגיד לכם את המחיר לפני תחילת העבודה.</p></li>
+      <li data-reveal><span class="ps-n">3</span><b>תשלום רק על הצלחה</b><p>התשלום רק על הצלחה. כך הסיכון כולו עלינו, לא עליכם.</p></li>
+    </ol>
+    <p class="price-note"><svg class="ico"><use href="#i-shield"/></svg>CyberGuard היא חברה עצמאית ואינה קשורה ל-Telegram. אנחנו מלווים אתכם בפנייה דרך הערוצים הרשמיים בלבד.</p>
+  </div></section>
+
+  <!-- 14 FAQ -->
+  <section class="sec faq" id="faq" data-screen-label="14 FAQ"><div class="wrap">
+    <div class="faq-side" data-reveal>
+      <p class="eyebrow">שאלות נפוצות</p>
+      <h2 class="h2">שאלות נפוצות על חשבון טלגרם חסום או פרוץ</h2>
+      <p class="lead">התשובות הקצרות לשאלות שהכי הרבה לקוחות שואלים אותנו על טלגרם.</p>
+      <div class="faq-links"><a class="btn btn-ghost" href="https://cyberguard.co.il/faq/">לכל השאלות ←</a><a class="btn btn-wa" data-wa="היי, הגעתי מעמוד הטלגרם ויש לי שאלה:" href="#"><svg class="ico"><use href="#i-chat"/></svg>שאלה אחרת? כתבו לנו</a></div>
+    </div>
+    <div class="qa" data-reveal>
+        <details open><summary>איך יודעים אם החסימה בטלגרם זמנית או קבועה?<span class="pm" aria-hidden="true"></span></summary><p>דרך הבוט הרשמי @SpamBot בטלגרם. הוא מציג אם יש הגבלה על החשבון, אם היא זמנית, ומתי היא צפויה להסתיים.</p></details>
+        <details><summary>האם אפשר לפתוח חשבון חדש עם אותו מספר?<span class="pm" aria-hidden="true"></span></summary><p>לא. החסימה קשורה למספר עצמו, ולכן גם חשבון חדש עם אותו מספר עלול להיחסם שוב.</p></details>
+        <details><summary>כמה זמן לוקח לשחרר חשבון טלגרם?<span class="pm" aria-hidden="true"></span></summary><p>חסימה זמנית מסתיימת לרוב בתוך כמה שעות עד ימים. בחסימה קבועה תשובה לערעור מגיעה בדרך כלל בתוך 3 עד 14 ימים, ולפעמים יותר. אם אין תשובה אחרי שבוע, שולחים Follow-up.</p></details>
+        <details><summary>האם מחיקת החשבון מבטלת את החסימה?<span class="pm" aria-hidden="true"></span></summary><p>לא. מחיקת החשבון לא מבטלת חסימה, והיא מוחקת את ההודעות, הקבוצות והערוצים שניהלתם. הסדר הנכון הוא למצות קודם את הערעור.</p></details>
+        <details><summary>איך מנתקים פורץ מטלגרם?<span class="pm" aria-hidden="true"></span></summary><p>בהגדרות, תחת מכשירים, בוחרים לנתק את כל ההפעלות האחרות, ואז מגדירים סיסמת אימות דו-שלבי חדשה עם מייל לשחזור שנמצא בשליטתכם.</p></details>
+        <details><summary>למה אי אפשר לנתק מכשירים אחרים בטלגרם?<span class="pm" aria-hidden="true"></span></summary><p>טלגרם לא מאפשרת למכשיר שהתחבר לאחרונה לנתק הפעלות אחרות במשך 24 שעות. זו הגנה נגד פורצים, ולכן כדאי לנתק מהמכשיר הוותיק שלכם אם הוא זמין.</p></details>
+        <details><summary>מה עושים אם הפורץ הגדיר סיסמה?<span class="pm" aria-hidden="true"></span></summary><p>אם יש מייל לשחזור בשליטתכם, מאפסים דרכו את הסיסמה. אם המייל שייך לפורץ, אפשר לאפס את החשבון ולפתוח אותו מחדש עם אותו מספר, אבל ההודעות, אנשי הקשר והקבוצות הקודמים לא חוזרים.</p></details>
+        <details><summary>האם CyberGuard קשורה לטלגרם?<span class="pm" aria-hidden="true"></span></summary><p>לא. CyberGuard היא חברה עצמאית ואינה קשורה ל-Telegram. אנחנו מלווים אתכם בפנייה דרך הערוצים הרשמיים בלבד, ולעולם לא מבקשים קוד כניסה או סיסמה.</p></details>
+    </div>
+  </div></section>
+
+  <!-- 15 Guides -->
+  <section class="sec" id="guides" data-screen-label="15 Guides"><div class="wrap">
+    <div class="sec-head" data-reveal>
+      <div><p class="eyebrow">מדריכים</p><h2 class="h2">רוצים לנסות קודם לבד? המדריכים שלנו</h2></div>
+      <a class="btn btn-ghost" href="https://cyberguard.co.il/עדכונים-אחרונים/">לכל המדריכים ←</a>
+    </div>
+    <div class="guides">
+      <a class="guide" data-reveal href="https://cyberguard.co.il/שחרור-חשבון-טלגרם-חסום-banned/"><span class="badge"><svg class="ico"><use href="#i-book"/></svg></span><b>שחרור חשבון טלגרם חסום (Banned): המדריך המלא</b><span class="g-go" aria-hidden="true">←</span></a>
+      <a class="guide" data-reveal href="https://cyberguard.co.il/שחזור-חשבון-טלגרם-שנפרץ/"><span class="badge"><svg class="ico"><use href="#i-book"/></svg></span><b>שחזור חשבון טלגרם שנפרץ: כך מנתקים את הפורץ</b><span class="g-go" aria-hidden="true">←</span></a>
+      <a class="guide" data-reveal href="https://cyberguard.co.il/success-stories/"><span class="badge"><svg class="ico"><use href="#i-book"/></svg></span><b>סיפורי הצלחה של לקוחות CyberGuard</b><span class="g-go" aria-hidden="true">←</span></a>
+    </div>
+  </div></section>
+
+  <!-- 16 Contact -->
+  <section class="sec contact" id="contact" data-screen-label="16 Contact"><div class="wrap">
+    <div>
+      <p class="eyebrow">בדיקה ראשונית ללא עלות</p>
+      <h2 class="h2">הטלגרם נחסם או נפרץ?<span>בואו נבדוק יחד.</span></h2>
+      <p class="lead">ספרו לנו מה קרה, ונגיד לכם ביושר אם אפשר לעזור, איך ומה המחיר. ואם לא מצליחים — לא משלמים.</p>
+      <div class="ctas">
+        <a class="btn btn-wa btn-lg" data-wa="היי, הגעתי מעמוד הטלגרם ואני צריך עזרה עם החשבון" href="#"><svg class="ico"><use href="#i-chat"/></svg>כתבו לנו בוואטסאפ</a>
+        <a class="btn btn-ghost btn-lg" href="tel:+972523001030"><svg class="ico"><use href="#i-phone"/></svg>חייגו <span class="ltr">052-3001030</span></a>
+      </div>
+      <ul class="trust">
+        <li><svg class="ico"><use href="#i-check"/></svg>98% הצלחה בשחרור חשבונות</li>
+        <li><svg class="ico"><use href="#i-check"/></svg>ללא הצלחה — אין חיוב</li>
+        <li><svg class="ico"><use href="#i-check"/></svg>מעל 2,000 מקרים שטופלו</li>
+        <li><svg class="ico"><use href="#i-lock"/></svg>לא מבקשים קוד או סיסמה</li>
+      </ul>
+      <div class="save-card">
+        <span class="badge"><svg class="ico"><use href="#i-useradd"/></svg></span>
+        <div><b>שמרו את המספר שלנו</b><p>כי פריצה לא מודיעה מראש. ביום שזה יקרה — נהיה במרחק לחיצה.</p></div>
+        <button class="btn btn-ghost btn-sm" type="button" data-vcard>שמירה באנשי הקשר</button>
+      </div>
+    </div>
+    <form class="form" data-reveal id="leadForm" data-lead method="post">
+      <h3>בואו נבדוק את החשבון שלכם</h3>
+      <p>מלאו את הפרטים ונחזור אליכם עם בדיקה ראשונית — חינם וללא התחייבות.</p>
+      <label class="field"><span>שם</span><input name="name" autocomplete="name" placeholder="השם שלכם" required></label>
+      <label class="field"><span>נייד</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" dir="ltr" placeholder="050-1234567" pattern="[0-9+\s\-]{9,16}" required></label>
+      <label class="field"><span>מה קרה לחשבון?</span><select name="issue" required><option value="" disabled selected>בחרו מה קרה</option><option value="טלגרם: חסימה זמנית (Limited)">חסימה זמנית (Limited)</option><option value="טלגרם: חסימה קבועה (Banned)">חסימה קבועה (Banned)</option><option value="טלגרם: החשבון נפרץ">החשבון נפרץ</option><option value="טלגרם: הפורץ הגדיר סיסמה">הפורץ הגדיר סיסמה</option><option value="טלגרם: החשבון נמחק">החשבון נמחק</option><option value="טלגרם: לא בטוח/ה מה קרה">לא בטוח/ה מה קרה</option></select></label>
+      <label class="consent"><input type="checkbox" name="consent" required><span>אני מאשר/ת את <a href="https://cyberguard.co.il/מדיניות-פרטיות/">מדיניות הפרטיות</a> ומסכים/ה שהמידע ישמש למענה לפנייה ולמטרות המפורטות בה</span></label>
+      <button class="btn btn-wa btn-lg" type="submit">שלחו לבדיקה חינם</button>
+    </form>
+  </div></section>
+</main>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "איך יודעים אם החסימה בטלגרם זמנית או קבועה?", "acceptedAnswer": {"@type": "Answer", "text": "דרך הבוט הרשמי @SpamBot בטלגרם. הוא מציג אם יש הגבלה על החשבון, אם היא זמנית, ומתי היא צפויה להסתיים."}}, {"@type": "Question", "name": "האם אפשר לפתוח חשבון חדש עם אותו מספר?", "acceptedAnswer": {"@type": "Answer", "text": "לא. החסימה קשורה למספר עצמו, ולכן גם חשבון חדש עם אותו מספר עלול להיחסם שוב."}}, {"@type": "Question", "name": "כמה זמן לוקח לשחרר חשבון טלגרם?", "acceptedAnswer": {"@type": "Answer", "text": "חסימה זמנית מסתיימת לרוב בתוך כמה שעות עד ימים. בחסימה קבועה תשובה לערעור מגיעה בדרך כלל בתוך 3 עד 14 ימים, ולפעמים יותר. אם אין תשובה אחרי שבוע, שולחים Follow-up."}}, {"@type": "Question", "name": "האם מחיקת החשבון מבטלת את החסימה?", "acceptedAnswer": {"@type": "Answer", "text": "לא. מחיקת החשבון לא מבטלת חסימה, והיא מוחקת את ההודעות, הקבוצות והערוצים שניהלתם. הסדר הנכון הוא למצות קודם את הערעור."}}, {"@type": "Question", "name": "איך מנתקים פורץ מטלגרם?", "acceptedAnswer": {"@type": "Answer", "text": "בהגדרות, תחת מכשירים, בוחרים לנתק את כל ההפעלות האחרות, ואז מגדירים סיסמת אימות דו-שלבי חדשה עם מייל לשחזור שנמצא בשליטתכם."}}, {"@type": "Question", "name": "למה אי אפשר לנתק מכשירים אחרים בטלגרם?", "acceptedAnswer": {"@type": "Answer", "text": "טלגרם לא מאפשרת למכשיר שהתחבר לאחרונה לנתק הפעלות אחרות במשך 24 שעות. זו הגנה נגד פורצים, ולכן כדאי לנתק מהמכשיר הוותיק שלכם אם הוא זמין."}}, {"@type": "Question", "name": "מה עושים אם הפורץ הגדיר סיסמה?", "acceptedAnswer": {"@type": "Answer", "text": "אם יש מייל לשחזור בשליטתכם, מאפסים דרכו את הסיסמה. אם המייל שייך לפורץ, אפשר לאפס את החשבון ולפתוח אותו מחדש עם אותו מספר, אבל ההודעות, אנשי הקשר והקבוצות הקודמים לא חוזרים."}}, {"@type": "Question", "name": "האם CyberGuard קשורה לטלגרם?", "acceptedAnswer": {"@type": "Answer", "text": "לא. CyberGuard היא חברה עצמאית ואינה קשורה ל-Telegram. אנחנו מלווים אתכם בפנייה דרך הערוצים הרשמיים בלבד, ולעולם לא מבקשים קוד כניסה או סיסמה."}}]}</script>
+
+<footer class="foot" data-screen-label="13 Footer"><div class="foot-mark" aria-hidden="true">CyberGuard</div><div class="wrap">
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <a class="brand" href="https://cyberguard.co.il/"><img src="logo.webp" alt=""><div><b>Cyber<span>Guard</span></b><small>שחרור ושחזור חשבונות</small></div></a>
+      <p class="tag">אנחנו מחזירים לך שליטה.</p>
+      <p>שחרור ושחזור חשבונות שנפרצו, נחסמו או הושבתו — וואטסאפ, פייסבוק, אינסטגרם, טיקטוק, גוגל ועוד. ליווי אישי בערוצים הרשמיים, עד שהחשבון חוזר.</p>
+      <div class="socials"><a target="_blank" rel="noopener" href="https://www.facebook.com/cyberguardil" aria-label="פייסבוק"><svg><use href="#p-facebook"/></svg></a><a target="_blank" rel="noopener" href="https://www.instagram.com/cyberguardil/" aria-label="אינסטגרם"><svg><use href="#p-instagram"/></svg></a><a target="_blank" rel="noopener" href="https://www.youtube.com/channel/UCcXiQROZ3J1ngdeDjCRT2uw" aria-label="יוטיוב"><svg><use href="#p-youtube"/></svg></a><a target="_blank" rel="noopener" href="https://www.tiktok.com/@founisshlomi" aria-label="טיקטוק"><svg><use href="#p-tiktok"/></svg></a></div>
+    </div>
+    <div>
+      <h4>שחרור חשבונות</h4>
+      <ul>
+        <li><a href="https://cyberguard.co.il/וואטסאפ-חדש/">וואטסאפ חסום או פרוץ</a></li>
+        <li><a href="https://cyberguard.co.il/שחרור-חשבון-פייסבוק/">פייסבוק</a></li>
+        <li><a href="https://cyberguard.co.il/שחרור-חשבון-אינסטגרם/">אינסטגרם</a></li>
+        <li><a href="https://cyberguard.co.il/שחרור-חשבון-טיקטוק/">טיקטוק</a></li>
+        <li><a href="https://cyberguard.co.il/שחרור-חשבון-gmail/">Gmail וחשבון גוגל</a></li>
+        <li><a href="https://cyberguard.co.il/שחרור-חשבון-יוטיוב/">יוטיוב</a></li>
+        <li><a href="https://cyberguard.co.il/שחרור-חשבון-טלגרם/">טלגרם</a></li>
+        <li><a href="https://cyberguard.co.il/שחרור-טלפון-ננעל/">טלפון נעול</a></li>
+        <li><a href="https://cyberguard.co.il/שחרור-ads-manager-חסום/">מנהל מודעות חסום</a></li>
+        <li><a href="https://cyberguard.co.il/שחרור-עמוד-עסקי-פייסבוק/">עמוד עסקי בפייסבוק</a></li>
+        <li><a href="https://cyberguard.co.il/business-verification/">אימות עסק במטא</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>מידע ועזרה</h4>
+      <ul>
+        <li><a href="https://cyberguard.co.il/שירותים/">כל השירותים</a></li>
+        <li><a href="https://cyberguard.co.il/faq/">שאלות נפוצות</a></li>
+        <li><a href="https://cyberguard.co.il/success-stories/">סיפורי הצלחה</a></li>
+        <li><a href="https://cyberguard.co.il/bt/">לקוחות ממליצים</a></li>
+        <li><a href="https://cyberguard.co.il/עדכונים-אחרונים/">עדכונים ומדריכים</a></li>
+        <li><a href="https://cyberguard.co.il/קצת-עלינו/">קצת עלינו</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>דברו איתנו</h4>
+      <ul>
+        <li><a href="tel:+972523001030" class="ltr">052-3001030</a></li>
+        <li><a data-wa href="#">וואטסאפ — תשובה מהירה</a></li>
+        <li><a href="mailto:info@cyberguard.co.il" class="ltr">info@cyberguard.co.il</a></li>
+        <li>מרכז מסחרי פרדסיה</li>
+        <li><button class="foot-save" type="button" data-vcard>שמירת המספר באנשי הקשר ←</button></li>
+      </ul>
+    </div>
+  </div>
+  <div class="legal">
+    <p>CyberGuard היא חברה פרטית לשחרור ושחזור חשבונות, ואינה קשורה ל-Meta, ל-WhatsApp, ל-Google או ל-TikTok. שמות וסימנים מסחריים שייכים לבעליהם. אנחנו לעולם לא מבקשים סיסמה או קוד אימות.</p>
+    <div class="legal-row">
+      <span>© 2026 CyberGuard. כל הזכויות שמורות.</span>
+      <nav aria-label="מידע משפטי"><a href="https://cyberguard.co.il/תקנון/">תקנון</a><a href="https://cyberguard.co.il/מדיניות-פרטיות/">מדיניות פרטיות</a><a href="https://cyberguard.co.il/הצהרת-נגישות/">הצהרת נגישות</a></nav>
+      <span>שיווק דיגיטלי: Hashtag Media</span>
+    </div>
+  </div>
+</div></footer>
+
+<nav class="mbar" aria-label="יצירת קשר"><a href="tel:+972523001030"><svg class="ico"><use href="#i-phone"/></svg>חיוג</a><a class="btn-pulse" data-wa href="#"><svg class="ico"><use href="#i-chat"/></svg>וואטסאפ — בדיקה חינם</a></nav>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="סרטון לקוח">
+  <div class="modal-box"><iframe id="modalFrame" title="סרטון לקוח" allow="autoplay; fullscreen; picture-in-picture"></iframe></div>
+  <button class="modal-x" type="button" id="modalX" aria-label="סגירה">×</button>
+</div>
+
+<script>
+const WA = 'https://wa.me/972523001030?text=';
+const DEFAULT_MSG = 'היי, הגעתי מעמוד הטלגרם ואני צריך עזרה עם החשבון';
+const waLink = (msg) => WA + encodeURIComponent(msg || DEFAULT_MSG);
+document.querySelectorAll('[data-wa]').forEach((a) => { a.href = waLink(a.dataset.wa); a.target = '_blank'; a.rel = 'noopener'; });
+
+/* "Alive" bits: rotating live line, numbers that count up when they come into view */
+const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const LIVE = ['שחרור חשבונות טלגרם חסומים', 'זמינים עכשיו לבדיקה ראשונית חינם', 'ליווי אישי בערוצים הרשמיים'];
+const liveEl = document.getElementById('liveMsg');
+let li = 0;
+if (liveEl && !calm) setInterval(() => {
+  liveEl.classList.add('out');
+  setTimeout(() => { li = (li + 1) % LIVE.length; liveEl.textContent = LIVE[li]; liveEl.classList.remove('out'); }, 350);
+}, 3600);
+const fmt = (el, v) => {
+  const dec = Number(el.dataset.dec || 0);
+  const n = dec ? v.toFixed(dec) : Math.round(v).toLocaleString('en-US');
+  el.textContent = (el.dataset.pre || '') + n + (el.dataset.suf || '');
+};
+const countUp = (el) => {
+  const to = Number(el.dataset.count), t0 = performance.now(), dur = 1400;
+  const tick = (t) => { const k = Math.min(1, (t - t0) / dur); fmt(el, to * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(tick); };
+  requestAnimationFrame(tick);
+};
+if (!calm && 'IntersectionObserver' in window) {
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { io.unobserve(e.target); countUp(e.target); } }), { threshold: 0.6 });
+  document.querySelectorAll('[data-count]').forEach((el) => io.observe(el));
+}
+
+
+
+/* Header gets solid once the page scrolls */
+const head = document.querySelector('.head');
+const onScroll = () => head && head.classList.toggle('scrolled', scrollY > 12);
+addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+/* Reveal on scroll: only elements below the first screen wait; everything is visible without JS */
+if (!calm && 'IntersectionObserver' in window) {
+  const ro = new IntersectionObserver((es) => es.forEach((e) => {
+    if (!e.isIntersecting) return;
+    const el = e.target, sib = [...el.parentElement.children].filter((c) => c.hasAttribute('data-reveal'));
+    el.style.transitionDelay = Math.min(sib.indexOf(el), 4) * 80 + 'ms';
+    el.dataset.reveal = 'in';
+    el.addEventListener('transitionend', () => { el.style.transitionDelay = ''; }, { once: true });
+    ro.unobserve(el);
+  }), { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('[data-reveal]').forEach((el) => {
+    if (el.getBoundingClientRect().top > innerHeight * 0.9) { el.dataset.reveal = 'wait'; ro.observe(el); }
+  });
+}
+
+/* Reviews (all 42 from the current site) */
+const REVIEWS = [{"p": "facebook", "date": "יוני 2026", "days": "שוחזר תוך 4 ימים", "text": "העמוד העסקי נפרץ בזמן קמפיין פעיל. הצוות החזיר שליטה, עצר פרסומים זרים והחזיר לנו את הביטחון לעבוד שוב.", "name": "דניאל ר.", "type": "דף עסקי ופרופיל אישי"}, {"p": "instagram", "date": "מאי 2026", "days": "שוחזר תוך 3 ימים", "text": "איבדתי גישה לפרופיל עם שנים של תוכן. קיבלתי ליווי מסודר, עדכונים ברורים והחשבון חזר אליי מהר מהצפוי.", "name": "נועה ש.", "type": "פרופיל יוצר/תוכן"}, {"p": "tiktok", "date": "אפריל 2026", "days": "שוחזר תוך 5 ימים", "text": "החשבון ננעל אחרי ניסיון התחזות. הטיפול היה מקצועי, רגוע ומדויק, כולל הקשחת אבטחה בסוף התהליך.", "name": "עומר ל.", "type": "חשבון תוכן עם עוקבים"}, {"p": "google", "date": "מרץ 2026", "days": "שוחזר תוך 6 ימים", "text": "חשבון הגוגל העסקי היה חסום והגישה למסמכים נעצרה. קיבלנו פתרון מלא וחזרה לעבודה בלי לאבד מידע.", "name": "מיכל א.", "type": "חשבון Gmail/Business"}, {"p": "youtube", "date": "פברואר 2026", "days": "שוחזר תוך 8 ימים", "text": "הערוץ הושבת בעקבות פעילות חשודה. הצוות ניהל את התהליך מול הפלטפורמה והחזיר לנו ערוץ נקי ומאובטח.", "name": "רועי פ.", "type": "ערוץ יוטיוב"}, {"p": "whatsapp", "date": "ינואר 2026", "days": "שוחזר תוך יומיים", "text": "הוואטסאפ העסקי נלקח מאיתנו באמצע יום עבודה. תוך זמן קצר חזרנו לענות ללקוחות והוגדר אימות דו-שלבי.", "name": "אורית כ.", "type": "חשבון וואטסאפ אישי/עסקי"}, {"p": "facebook", "date": "דצמבר 2025", "days": "שוחזר תוך 5 ימים", "text": "החזירו לי דף עסקי שנוהל שנים. אהבתי במיוחד את השקיפות ואת זה שלא הבטיחו קסמים, פשוט עבדו נכון.", "name": "אבי ק.", "type": "דף עסקי ופרופיל אישי"}, {"p": "instagram", "date": "נובמבר 2025", "days": "שוחזר תוך 4 ימים", "text": "ניסיון פישינג גרם לשינוי פרטי שחזור. קיבלתי טיפול מהיר, והכי חשוב - הסבר ברור איך לא ליפול בזה שוב.", "name": "שיר מ.", "type": "פרופיל יוצר/תוכן"}, {"p": "tiktok", "date": "אוקטובר 2025", "days": "שוחזר תוך 7 ימים", "text": "החשבון עם עשרות אלפי עוקבים חזר לפעילות. הצוות היה זמין, מדויק ולא ויתר גם כשהתהליך הסתבך.", "name": "איתי ג.", "type": "חשבון תוכן עם עוקבים"}, {"p": "google", "date": "ספטמבר 2025", "days": "שוחזר תוך 6 ימים", "text": "הייתה חסימה בחשבון העסקי והיינו בלחץ גדול. קיבלנו סדר, בדיקת בעלות והחזרה מלאה של הגישה.", "name": "ליאת ב.", "type": "חשבון Gmail/Business"}, {"p": "youtube", "date": "אוגוסט 2025", "days": "שוחזר תוך 9 ימים", "text": "הערוץ שלי הוא מקור פרנסה. קיבלתי טיפול רציני, הסרה של תוכן זר והנחיות אבטחה ברורות.", "name": "תומר ד.", "type": "ערוץ יוטיוב"}, {"p": "whatsapp", "date": "יולי 2025", "days": "שוחזר תוך יומיים", "text": "מישהו השתלט על המספר ויצר קשר עם לקוחות. הצוות החזיר לי גישה ועזר לעצור את הנזק מהר.", "name": "מאיה ח.", "type": "חשבון וואטסאפ אישי/עסקי"}, {"p": "facebook", "date": "דצמבר 2024", "days": "שוחזר תוך 6 ימים", "text": "דף החברה נפרץ והוסרו מנהלים. אחרי תהליך מסודר הדף חזר, כולל הרשאות נכונות והגנה טובה יותר.", "name": "אלון ו.", "type": "דף עסקי ופרופיל אישי"}, {"p": "instagram", "date": "נובמבר 2024", "days": "שוחזר תוך 5 ימים", "text": "הפרופיל ננעל אחרי דיווחים שקריים. קיבלתי מענה אנושי, מקצועי וסבלני עד שהחשבון חזר.", "name": "הילה נ.", "type": "פרופיל יוצר/תוכן"}, {"p": "tiktok", "date": "אוקטובר 2024", "days": "שוחזר תוך 8 ימים", "text": "החשבון נחסם ללא הסבר ברור. הצוות בנה תיק מסודר והצליח להחזיר אותו עם כל התוכן.", "name": "גיא צ.", "type": "חשבון תוכן עם עוקבים"}, {"p": "google", "date": "ספטמבר 2024", "days": "שוחזר תוך 7 ימים", "text": "איבדנו גישה למיילים ולדרייב. קיבלנו טיפול מדויק והחזרה מלאה של חשבון הגוגל.", "name": "רונית ס.", "type": "חשבון Gmail/Business"}, {"p": "youtube", "date": "אוגוסט 2024", "days": "שוחזר תוך 10 ימים", "text": "הערוץ הושבת אחרי פריצה. הטיפול היה יסודי, עם תקשורת רציפה עד שהערוץ חזר לעבוד.", "name": "יובל ק.", "type": "ערוץ יוטיוב"}, {"p": "whatsapp", "date": "יולי 2024", "days": "שוחזר תוך 3 ימים", "text": "המספר ננעל ולא הצלחתי לקבל קוד. הצוות פתר את הבעיה והגדיר הגנות שלא הכרתי.", "name": "שי ת.", "type": "חשבון וואטסאפ אישי/עסקי"}, {"p": "facebook", "date": "דצמבר 2023", "days": "שוחזר תוך 7 ימים", "text": "דף עסקי ותיק נלקח מאיתנו. קיבלנו חזרה את הניהול ואת ההמלצות להמשך שמנעו בעיות חוזרות.", "name": "מוטי א.", "type": "דף עסקי ופרופיל אישי"}, {"p": "instagram", "date": "נובמבר 2023", "days": "שוחזר תוך 5 ימים", "text": "הפרופיל נמחק לכאורה אחרי פריצה. הצוות בדק, פעל מול הערוצים הנכונים והחזיר אותו.", "name": "קרן י.", "type": "פרופיל יוצר/תוכן"}, {"p": "tiktok", "date": "אוקטובר 2023", "days": "שוחזר תוך 6 ימים", "text": "איבדתי חשבון עם קהל גדול. קיבלתי מענה רגוע, תיעוד מסודר והחשבון חזר עם אבטחה מחוזקת.", "name": "רז מ.", "type": "חשבון תוכן עם עוקבים"}, {"p": "google", "date": "ספטמבר 2023", "days": "שוחזר תוך 7 ימים", "text": "חשבון הגוגל שלי נחסם בדיוק לפני הגשות חשובות. הטיפול היה ענייני, מהיר ומאוד מקצועי.", "name": "ענת ד.", "type": "חשבון Gmail/Business"}, {"p": "youtube", "date": "אוגוסט 2023", "days": "שוחזר תוך 11 ימים", "text": "הערוץ חזר אחרי תהליך לא פשוט. היו הרבה שלבים, אבל הצוות נשאר איתי עד הסוף.", "name": "ברק ש.", "type": "ערוץ יוטיוב"}, {"p": "whatsapp", "date": "יולי 2023", "days": "שוחזר תוך יומיים", "text": "הצילו לי את הוואטסאפ העסקי. שירות מהיר, ברור וללא תחושה שמסבכים אותי במונחים טכניים.", "name": "טליה ר.", "type": "חשבון וואטסאפ אישי/עסקי"}, {"p": "facebook", "date": "דצמבר 2022", "days": "שוחזר תוך 8 ימים", "text": "הדף עבר לידיים זרות והתחילו פרסומים מזיקים. תוך כמה ימים קיבלנו שליטה מלאה וניקוי של הדף.", "name": "יניב ב.", "type": "דף עסקי ופרופיל אישי"}, {"p": "instagram", "date": "נובמבר 2022", "days": "שוחזר תוך 5 ימים", "text": "החשבון נפרץ אחרי קישור מזויף. הצוות החזיר אותו והסביר לי בדיוק מה לשנות כדי להישאר מוגנת.", "name": "ליאור ע.", "type": "פרופיל יוצר/תוכן"}, {"p": "tiktok", "date": "אוקטובר 2022", "days": "שוחזר תוך 7 ימים", "text": "חשבתי שהחשבון אבוד. קיבלתי טיפול מסודר, מקצועי ומאוד אנושי עד שהכול חזר.", "name": "דנה פ.", "type": "חשבון תוכן עם עוקבים"}, {"p": "google", "date": "ספטמבר 2022", "days": "שוחזר תוך 6 ימים", "text": "הגישה למייל העסקי נחסמה והיה לחץ גדול. הצוות עשה סדר והחזיר אותנו לפעילות.", "name": "ארז ח.", "type": "חשבון Gmail/Business"}, {"p": "youtube", "date": "אוגוסט 2022", "days": "שוחזר תוך 12 ימים", "text": "הערוץ נפרץ ושונו סרטונים. לקח זמן, אבל העבודה הייתה מקצועית והתוצאה הייתה מלאה.", "name": "ניר ל.", "type": "ערוץ יוטיוב"}, {"p": "whatsapp", "date": "יולי 2022", "days": "שוחזר תוך 3 ימים", "text": "הוואטסאפ נחסם אחרי השתלטות. קיבלתי מענה מהיר והדרכה פשוטה להגדרות אבטחה.", "name": "סיון כ.", "type": "חשבון וואטסאפ אישי/עסקי"}, {"p": "facebook", "date": "דצמבר 2021", "days": "שוחזר תוך 5 ימים", "text": "הדף העסקי שלי נפרץ בזמן פעילות שיווקית. הצוות החזיר אותו בצורה מאובטחת והציל לנו את העסק.", "name": "אבי כהן", "type": "דף עסקי ופרופיל אישי"}, {"p": "instagram", "date": "נובמבר 2021", "days": "שוחזר תוך 8 ימים", "text": "הרגשתי שאין לי למי לפנות. קיבלתי יחס אישי, הסבר ברור והחשבון חזר עם כל התוכן.", "name": "שיר לוי", "type": "פרופיל יוצר/תוכן"}, {"p": "tiktok", "date": "אוקטובר 2021", "days": "שוחזר תוך 7 ימים", "text": "חשבון הטיקטוק חזר אחרי נעילה ופעילות חשודה. השירות היה מהיר ומדויק.", "name": "נוי אטיאס", "type": "חשבון תוכן עם עוקבים"}, {"p": "google", "date": "ספטמבר 2021", "days": "שוחזר תוך 12 ימים", "text": "לא ויתרו גם כשהתהליך הסתבך. החזירו לי גישה לחשבון ולמסמכים חשובים.", "name": "גיא מזרחי", "type": "חשבון Gmail/Business"}, {"p": "youtube", "date": "אוגוסט 2021", "days": "שוחזר תוך 14 ימים", "text": "החזירו לי את ערוץ היוטיוב ואת מפעל החיים שלי. תודה ענקית על עבודה רצינית.", "name": "תומר פרץ", "type": "ערוץ יוטיוב"}, {"p": "whatsapp", "date": "יולי 2021", "days": "שוחזר תוך 3 ימים", "text": "טיפול מהיר ויעיל. הוואטסאפ חזר, והחשבון הרבה יותר מאובטח עכשיו.", "name": "רועי בר", "type": "חשבון וואטסאפ אישי/עסקי"}, {"p": "facebook", "date": "דצמבר 2020", "days": "שוחזר תוך 9 ימים", "text": "הדף העסקי נפרץ בתחילת תקופה מאתגרת מאוד. הצוות החזיר שליטה ועזר לנו לחזור לפרסם בביטחון.", "name": "מיכאל ג.", "type": "דף עסקי ופרופיל אישי"}, {"p": "instagram", "date": "נובמבר 2020", "days": "שוחזר תוך 6 ימים", "text": "פרופיל האינסטגרם נלקח ונשלחו הודעות בשמי. קיבלתי טיפול יסודי והחשבון חזר נקי.", "name": "רוני ו.", "type": "פרופיל יוצר/תוכן"}, {"p": "tiktok", "date": "אוקטובר 2020", "days": "שוחזר תוך 8 ימים", "text": "החשבון נחסם אחרי פעילות מוזרה. הצוות ידע בדיוק מה לבקש ואיך לקדם את השחזור.", "name": "עידן ס.", "type": "חשבון תוכן עם עוקבים"}, {"p": "google", "date": "ספטמבר 2020", "days": "שוחזר תוך 7 ימים", "text": "איבדתי גישה למייל ולתמונות. העבודה הייתה מקצועית, רגישה ומאוד מסודרת.", "name": "גלית ט.", "type": "חשבון Gmail/Business"}, {"p": "youtube", "date": "אוגוסט 2020", "days": "שוחזר תוך 13 ימים", "text": "הערוץ נפגע מפריצה והיה חשש לאבד הכול. בסוף הערוץ חזר וההנחיות שקיבלתי היו מצוינות.", "name": "אדם נ.", "type": "ערוץ יוטיוב"}, {"p": "whatsapp", "date": "יולי 2020", "days": "שוחזר תוך 4 ימים", "text": "הוואטסאפ נחטף דרך קוד אימות. הצוות החזיר לי גישה ועזר לי לעצור הודעות מתחזות.", "name": "מורן צ.", "type": "חשבון וואטסאפ אישי/עסקי"}];
+const NETS = { all: 'הכול', facebook: 'פייסבוק', instagram: 'אינסטגרם', tiktok: 'טיקטוק', google: 'גוגל', youtube: 'יוטיוב', whatsapp: 'וואטסאפ' };
+const PAGE = 6;
+let filter = 'all', shown = PAGE;
+const chips = document.getElementById('chips'), list = document.getElementById('reviewList'), more = document.getElementById('moreBtn');
+const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+Object.entries(NETS).forEach(([k, label]) => {
+  const n = k === 'all' ? REVIEWS.length : REVIEWS.filter((r) => r.p === k).length;
+  const b = document.createElement('button');
+  b.type = 'button'; b.className = 'chip'; b.dataset.net = k;
+  b.innerHTML = `${label}<span>${n}</span>`;
+  b.addEventListener('click', () => { filter = k; shown = PAGE; render(); });
+  chips.appendChild(b);
+});
+function render() {
+  const items = REVIEWS.filter((r) => filter === 'all' || r.p === filter);
+  list.innerHTML = items.slice(0, shown).map((r) => `
+    <article class="rev">
+      <div class="rev-h"><span class="stars" aria-label="5 כוכבים">★★★★★</span><span class="rev-tag">${esc(r.days)}</span></div>
+      <p>${esc(r.text)}</p>
+      <div class="rev-f"><span class="av" aria-hidden="true">${esc(r.name[0])}</span><div><b>${esc(r.name)}</b><small>${esc(r.type)}</small></div><span class="net"><span>${NETS[r.p]}<br>${esc(r.date)}</span><span class="pi sm ${r.p}"><svg aria-hidden="true"><use href="#p-${r.p}"/></svg></span></span></div>
+    </article>`).join('');
+  more.hidden = shown >= items.length;
+  chips.querySelectorAll('.chip').forEach((c) => c.setAttribute('aria-pressed', String(c.dataset.net === filter)));
+}
+more.addEventListener('click', () => { shown += PAGE; render(); });
+render();
+
+/* Hero light follows the pointer on devices that have one */
+const heroEl = document.querySelector('.hero'), lightEl = document.querySelector('.hero-light');
+if (heroEl && lightEl && !calm && matchMedia('(hover: hover)').matches) {
+  let raf = 0;
+  heroEl.addEventListener('pointermove', (e) => {
+    const r = heroEl.getBoundingClientRect();
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => { lightEl.style.setProperty('--lx', (e.clientX - r.left) + 'px'); lightEl.style.setProperty('--ly', (e.clientY - r.top) + 'px'); });
+  });
+}
+
+/* Review wall: two rows of all 42 reviews, moving in opposite directions */
+const wallCard = (r) => `<article class="wcard"><div class="wcard-h"><span class="stars" aria-label="5 כוכבים">★★★★★</span><span class="rev-tag">${esc(r.days)}</span></div><p>${esc(r.text)}</p><div class="wcard-f"><div><b>${esc(r.name)}</b><small>${esc(r.type)}</small></div><span class="pi sm ${r.p}"><svg aria-hidden="true"><use href="#p-${r.p}"/></svg></span></div></article>`;
+document.querySelectorAll('.wall-track').forEach((t) => {
+  const half = Math.ceil(REVIEWS.length / 2), rows = t.dataset.row === '0' ? REVIEWS.slice(0, half) : REVIEWS.slice(half);
+  const g = rows.map(wallCard).join('');
+  t.innerHTML = `<div class="wall-group">${g}</div><div class="wall-group" aria-hidden="true">${g}</div>`;
+});
+const revToggle = document.querySelector('[data-rev-toggle]'), revAll = document.querySelector('[data-rev-all]');
+if (revToggle && revAll) revToggle.addEventListener('click', () => {
+  revAll.hidden = !revAll.hidden;
+  revToggle.setAttribute('aria-expanded', String(!revAll.hidden));
+  revToggle.textContent = revAll.hidden ? 'לכל 42 הביקורות, עם סינון לפי פלטפורמה' : 'סגירת הרשימה';
+});
+
+/* Rotating pain question in the H1 */
+const PAINS = ['חשבון הטלגרם שלך נחסם?', 'פרצו לך לטלגרם?', 'המספר נחסם בטלגרם?', 'הפורץ הגדיר סיסמה?', 'הקוד לא מגיע אליך?'];
+const painEl = document.getElementById('pain');
+let pi = 0;
+/* The question line keeps the height of its longest version, so the rotation never moves the page */
+const fitPain = () => {
+  const now = painEl.textContent; painEl.style.minHeight = '';
+  let h = 0; PAINS.forEach((t) => { painEl.textContent = t; h = Math.max(h, painEl.offsetHeight); });
+  painEl.textContent = now; painEl.style.minHeight = h + 'px';
+};
+if (painEl && !calm) { fitPain(); addEventListener('resize', fitPain); if (document.fonts) document.fonts.ready.then(fitPain); }
+if (painEl && !calm) setInterval(() => {
+  painEl.classList.add('out');
+  setTimeout(() => {
+    pi = (pi + 1) % PAINS.length; painEl.textContent = PAINS[pi];
+    painEl.classList.remove('out'); painEl.classList.add('in');
+    requestAnimationFrame(() => requestAnimationFrame(() => painEl.classList.remove('in')));
+  }, 350);
+}, 2800);
+
+/* Save our number: downloads a contact card (.vcf) the phone opens in Contacts */
+const VCARD = ['BEGIN:VCARD', 'VERSION:3.0', 'N:;CyberGuard;;;', 'FN:CyberGuard - שחרור ושחזור חשבונות', 'ORG:CyberGuard', 'TEL;TYPE=CELL:+972523001030', 'EMAIL:info@cyberguard.co.il', 'URL:https://cyberguard.co.il/', 'NOTE:שחרור ושחזור חשבונות שנפרצו\\, נחסמו או הושבתו. וואטסאפ: https://wa.me/972523001030', 'END:VCARD'].join('\r\n');
+document.querySelectorAll('[data-vcard]').forEach((b) => b.addEventListener('click', () => {
+  const url = URL.createObjectURL(new Blob([VCARD], { type: 'text/vcard;charset=utf-8' }));
+  const a = document.createElement('a'); a.href = url; a.download = 'CyberGuard.vcf';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 4000);
+  const t = document.createElement('div'); t.className = 'save-toast'; t.setAttribute('role', 'status');
+  t.textContent = 'כרטיס איש הקשר ירד — פתחו אותו כדי לשמור את המספר';
+  document.body.appendChild(t); setTimeout(() => t.remove(), 3500);
+}));
+
+/* ===================== Effects ===================== */
+/* Scan height = hero height */
+const heroBox = document.querySelector('.hero');
+if (heroBox) heroBox.style.setProperty('--scan-h', heroBox.offsetHeight + 'px');
+/* Scroll progress */
+const progEl = document.getElementById('scrollProg');
+const onProg = () => { const h = document.documentElement.scrollHeight - innerHeight; if (progEl) progEl.style.transform = `scaleX(${h > 0 ? Math.min(1, scrollY / h) : 0})`; };
+addEventListener('scroll', onProg, { passive: true }); onProg();
+/* Spotlight position inside cards */
+if (matchMedia('(hover: hover)').matches) document.addEventListener('pointermove', (e) => {
+  const c = e.target.closest && e.target.closest('.svc-card,.promise,.case,.feature,.sit,.guide,.quote,.tl-card');
+  if (!c) return; const r = c.getBoundingClientRect();
+  c.style.setProperty('--mx', (e.clientX - r.left) + 'px'); c.style.setProperty('--my', (e.clientY - r.top) + 'px');
+}, { passive: true });
+/* Confetti burst (used when the quick check finishes) */
+const burst = (el) => {
+  if (calm || !el || !el.animate) return;
+  const colors = ['#8b5cf6', '#c4b5fd', '#3ddc84', '#a7f3cd', '#ffffff'];
+  for (let i = 0; i < 18; i++) {
+    const s = document.createElement('span'); s.className = 'fx-confetti';
+    s.style.background = colors[i % colors.length]; el.appendChild(s);
+    const a = (Math.PI * 2 * i) / 18 + Math.random() * .4, d = 46 + Math.random() * 46;
+    s.animate([{ transform: 'translate(-50%,-50%) scale(.4) rotate(0)', opacity: 1 },
+               { transform: `translate(calc(-50% + ${Math.cos(a) * d}px), calc(-50% + ${Math.sin(a) * d + 24}px)) scale(1) rotate(${Math.random() * 540}deg)`, opacity: 0 }],
+              { duration: 900 + Math.random() * 400, easing: 'cubic-bezier(.2,.7,.3,1)', delay: 250, fill: 'both' }).onfinish = () => s.remove();
+  }
+};
+new MutationObserver(() => { const b = document.querySelector('[data-qc-result]:not([hidden]) .qc-badge:not([data-burst])'); if (b) { b.dataset.burst = '1'; burst(b); } })
+  .observe(document.querySelector('[data-qc]') || document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['hidden'] });
+
+/* Hebrew validation messages */
+const HE_MSG = (el) => el.type === 'checkbox' ? 'נא לאשר את מדיניות הפרטיות' : el.tagName === 'SELECT' ? 'נא לבחור מה קרה' : el.name === 'phone' ? (el.value ? PHONE_MSG : 'נא למלא מספר נייד') : el.name === 'name' ? 'נא למלא שם' : 'נא למלא את השדה';
+document.addEventListener('invalid', (e) => { const el = e.target; if (el.closest && el.closest('form[data-lead]')) el.setCustomValidity(HE_MSG(el)); }, true);
+/* The browser's own validation runs before the submit event, so an empty or wrong form never counts as a lead
+   (Tag Manager counts the Google Ads form conversion on submit). The phone must be a 10-digit mobile. */
+const PHONE_MSG = 'נא להזין מספר נייד בן 10 ספרות, למשל 050-1234567';
+const recheck = (el) => {
+  if (!el.setCustomValidity) return;
+  el.setCustomValidity('');
+  if (el.name === 'phone' && el.closest('form[data-lead]') && el.value.trim() && !/^0\d{9}$/.test(normPhone(el.value))) el.setCustomValidity(PHONE_MSG);
+};
+document.addEventListener('input', (e) => recheck(e.target), true);
+document.addEventListener('change', (e) => recheck(e.target), true);
+
+/* ===================== Premium layer ===================== */
+const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
+/* Mark forms after a submit attempt so empty fields light up */
+document.addEventListener('submit', (e) => { const f = e.target.closest('form[data-lead]'); if (f) f.classList.add('tried'); }, true);
+document.addEventListener('click', (e) => { const b = e.target.closest('form[data-lead] [type=submit]'); if (b) b.form.classList.add('tried'); }, true);
+if (!calm && 'IntersectionObserver' in window) {
+  /* Split section headings into words (text nodes only, so inner markup stays) */
+  const heads = document.querySelectorAll('.sec .h2, .sec .big, .lb-h');
+  heads.forEach((h) => {
+    let n = 0; const walker = document.createTreeWalker(h, NodeFilter.SHOW_TEXT); const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach((t) => {
+      if (!t.textContent.trim()) return;
+      const frag = document.createDocumentFragment();
+      t.textContent.split(/(\s+)/).forEach((part) => {
+        if (!part) return;
+        if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+        const w = document.createElement('span'); w.className = 'w-in'; w.style.setProperty('--wi', n++); w.textContent = part; frag.appendChild(w);
+      });
+      t.replaceWith(frag);
+    });
+  });
+  const wo = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('words-on'); wo.unobserve(e.target); } }), { threshold: 0.4 });
+  heads.forEach((h) => { if (h.getBoundingClientRect().top < innerHeight * 0.9) h.classList.add('words-on'); else wo.observe(h); });
+  /* Image wipes */
+  /* observe the frame, not the image: a fully clipped image never counts as visible (and lazy images wouldn't load) */
+  const frames = document.querySelectorAll('.svc-img, .proc-img');
+  const io2 = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { const im = e.target.querySelector('img'); if (im) im.classList.add('on'); io2.unobserve(e.target); } }), { threshold: 0.25 });
+  frames.forEach((fr) => { const im = fr.querySelector('img'); if (im && fr.getBoundingClientRect().top > innerHeight * 0.95) { im.loading = 'eager'; im.classList.add('img-wipe'); io2.observe(fr); } });
+  /* Hero parallax: background drifts slower, content eases out */
+  const hb = document.querySelector('.hero-bg');
+  let ticking = false;
+  addEventListener('scroll', () => {
+    if (ticking) return; ticking = true;
+    requestAnimationFrame(() => {
+      const y = scrollY; ticking = false; if (y > innerHeight * 1.2) return;
+      if (hb) hb.style.translate = `0 ${y * 0.35}px`;
+    });
+  }, { passive: true });
+}
+if (!calm && fine) {
+  /* 3D tilt + glare on cards */
+  document.querySelectorAll('.case, .promise, .guide').forEach((c) => {
+    c.classList.add('tilt');
+    c.addEventListener('pointermove', (e) => {
+      const r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+      c.classList.add('tilting'); c.style.setProperty('--rx', `${(-y * 7).toFixed(2)}deg`); c.style.setProperty('--ry', `${(x * 9).toFixed(2)}deg`);
+    });
+    c.addEventListener('pointerleave', () => { c.classList.remove('tilting'); c.style.setProperty('--rx', '0deg'); c.style.setProperty('--ry', '0deg'); });
+  });
+  /* Magnetic primary buttons */
+  document.querySelectorAll('.btn-lg.btn-wa, .head-cta .btn-wa').forEach((b) => {
+    b.addEventListener('pointermove', (e) => { const r = b.getBoundingClientRect(); b.style.translate = `${((e.clientX - r.left) / r.width - 0.5) * 10}px ${((e.clientY - r.top) / r.height - 0.5) * 8}px`; });
+    b.addEventListener('pointerleave', () => { b.style.translate = ''; });
+  });
+}
+
+/* Mobile menu */
+const mnav = document.getElementById('mnav'), menuBtn = document.querySelector('.menu-btn');
+const setMenu = (open) => {
+  mnav.hidden = !open; menuBtn.setAttribute('aria-expanded', String(open));
+  document.documentElement.style.overflow = open ? 'hidden' : '';
+  if (open) mnav.querySelector('.mnav-x').focus(); else menuBtn.focus({ preventScroll: true });
+};
+if (mnav && menuBtn) {
+  menuBtn.addEventListener('click', () => setMenu(true));
+  mnav.querySelector('.mnav-x').addEventListener('click', () => setMenu(false));
+  mnav.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !mnav.hidden) setMenu(false); });
+}
+
+/* Video rail + modal */
+const casesMore = document.querySelector('[data-cases-more]');
+if (casesMore) casesMore.addEventListener('click', () => {
+  const hidden = [...document.querySelectorAll('#cases .case[hidden]')];
+  hidden.slice(0, 6).forEach((c) => { c.hidden = false; });
+  if (hidden.length <= 6) casesMore.parentElement.hidden = true;
+});
+const modal = document.getElementById('modal'), frame = document.getElementById('modalFrame');
+const close = () => { modal.classList.remove('open'); frame.src = 'about:blank'; };
+document.querySelectorAll('[data-vimeo]').forEach((v) => v.addEventListener('click', () => {
+  frame.src = `https://player.vimeo.com/video/${v.dataset.vimeo}?autoplay=1&rel=0`;
+  modal.classList.add('open');
+}));
+document.getElementById('modalX').addEventListener('click', close);
+modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+
+/* Lead forms. On cyberguard.co.il they post to the site's existing Elementor lead form (the site-wide popup form),
+   so every lead gets the same email, Make webhook, saved submission and /tnx/ thank-you page as before, with the ad
+   click ids (gclid, gbraid, wbraid, utm_*) the site already stores. Anywhere else, or if sending fails, the details
+   go to WhatsApp instead, so no lead is lost. */
+const LEAD = { ajax: '/wp-admin/admin-ajax.php', post_id: '5777', form_id: '0b89619', thanks: 'https://cyberguard.co.il/tnx/' };
+const ATTR = ['gclid', 'gbraid', 'wbraid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
+const attrGet = (k) => { try { return localStorage.getItem('cg_attr_' + k) || ''; } catch (err) { return ''; } };
+try {
+  const q = new URLSearchParams(location.search);
+  ATTR.forEach((k) => { const v = (q.get(k) || '').trim(); if (v) { localStorage.setItem('cg_attr_' + k, v); localStorage.setItem('cg_attr_' + k + '_ts', String(Date.now())); } });
+} catch (err) { /* storage blocked: the URL still carries the ids */ }
+const onSite = /(^|\.)cyberguard\.co\.il$/.test(location.hostname);
+const leadToWa = (f, d) => {
+  const lines = ['היי, הגעתי מעמוד הטלגרם ואשמח שתחזרו אליי.', `שם: ${d.name}`, `נייד: ${d.phone}`];
+  if (d.issue) lines.push(`מה קרה: ${d.issue}`);
+  return waLink(lines.join('\n'));
+};
+/* Israeli mobile as the site's lead form wants it: 10 digits, no dashes or spaces (+972 becomes 0) */
+const normPhone = (v) => { let n = String(v).replace(/\D/g, ''); if (n.startsWith('972')) n = '0' + n.slice(3); return n; };
+async function sendLead(d, f) {
+  const fd = new FormData();
+  const q = new URLSearchParams(location.search);
+  const pageId = (document.body.className.match(/\bpage-id-(\d+)\b/) || [])[1] || LEAD.post_id;
+  fd.append('action', 'elementor_pro_forms_send_form');
+  fd.append('post_id', LEAD.post_id); fd.append('form_id', LEAD.form_id); fd.append('queried_id', pageId);
+  fd.append('referer_title', document.title); fd.append('referrer', location.href);
+  fd.append('form_fields[name]', d.name); fd.append('form_fields[message]', d.phone);
+  fd.append('form_fields[field_8dcda2c]', d.issue || 'אחר'); fd.append('form_fields[field_c32d2ef]', 'on');
+  fd.append('form_fields[cg_landing_url]', location.href); fd.append('form_fields[cg_referrer]', document.referrer || '');
+  ATTR.forEach((k) => fd.append(`form_fields[cg_${k}]`, (q.get(k) || '').trim() || attrGet(k)));
+  /* the site's anti-spam plugin (Maspik) adds its own fields to every POST form; pass them on as Elementor's form would */
+  f.querySelectorAll('input[name]').forEach((i) => { if (!['name', 'phone', 'consent'].includes(i.name)) fd.append(i.name, i.value); });
+  const g = window.maspikGuardConfig;
+  if (g && g.advancedKey && g.keyName && !fd.has(g.keyName)) fd.append(g.keyName, g.keyValue || '');
+  const r = await fetch(LEAD.ajax, { method: 'POST', body: fd, credentials: 'same-origin' });
+  const j = await r.json();
+  if (!j || !j.success) throw new Error('lead rejected');
+  return (j.data && j.data.data && j.data.data.redirect_url) || LEAD.thanks;
+}
+document.addEventListener('submit', async (e) => {
+  const f = e.target.closest('form[data-lead]');
+  if (!f) return;
+  e.preventDefault();
+  const ph = f.elements.phone;
+  if (ph) recheck(ph);
+  if (!f.reportValidity()) return;
+  const btn = f.querySelector('[type=submit]');
+  if (btn && btn.dataset.sent) return;
+  const d = {
+    name: f.elements.name.value.trim(),
+    phone: normPhone(f.elements.phone.value),
+    issue: [f.elements.issue && f.elements.issue.value, f.dataset.context].filter(Boolean).join(' · '),
+  };
+  const was = btn ? btn.innerHTML : '';
+  const busy = (t) => { if (btn) { btn.dataset.sent = '1'; btn.innerHTML = t; } };
+  const idle = () => { if (btn) { btn.innerHTML = was; delete btn.dataset.sent; } };
+  if (!onSite) {
+    busy('✓ פותחים לכם וואטסאפ…'); setTimeout(idle, 2600);
+    window.open(leadToWa(f, d), '_blank', 'noopener');
+    return;
+  }
+  busy('שולחים…');
+  try {
+    const next = await sendLead(d, f);
+    busy('✓ הפרטים התקבלו');
+    location.href = next;
+  } catch (err) {
+    idle();
+    location.href = leadToWa(f, d);
+  }
+});
+
+/* ===================== WhatsApp page ===================== */
+/* Situations: the phone shows the screen for the card you point at; on its own it cycles through all six */
+const phone = document.querySelector('[data-phone]');
+const sits = [...document.querySelectorAll('[data-sit]')];
+if (phone && sits.length) {
+  const states = [...phone.querySelectorAll('.ph-state')], dots = [...phone.querySelectorAll('.ph-dots i')];
+  const timers = new Map();
+  let cur = 0, held = 0, seen = false;
+  const pad = (n) => String(n).padStart(2, '0');
+  const fmtT = (s) => `${pad(Math.floor(s / 3600))}:${pad(Math.floor(s / 60) % 60)}:${pad(s % 60)}`;
+  const set = (i) => {
+    cur = i; phone.dataset.state = String(i);
+    states.forEach((s, k) => s.classList.toggle('on', k === i));
+    dots.forEach((d, k) => d.classList.toggle('on', k === i));
+    const vis = phone.offsetParent !== null;
+    sits.forEach((c, k) => c.classList.toggle('on', vis && k === i));
+  };
+  sits.forEach((c, i) => {
+    const pick = () => { held = Date.now(); set(i); };
+    c.addEventListener('pointerenter', pick);
+    c.addEventListener('focusin', pick);
+  });
+  phone.querySelectorAll('[data-timer]').forEach((t) => timers.set(t, Number(t.dataset.timer)));
+  if (!calm) {
+    setInterval(() => {
+      timers.forEach((v, t) => { const n = v > 0 ? v - 1 : Number(t.dataset.timer); timers.set(t, n); t.textContent = fmtT(n); });
+    }, 1000);
+    setInterval(() => { if (seen && Date.now() - held > 7000) set((cur + 1) % states.length); }, 3400);
+    if ('IntersectionObserver' in window) new IntersectionObserver((es) => es.forEach((e) => { seen = e.isIntersecting; })).observe(phone);
+  }
+  set(0);
+}
+/* Timeline: the line draws and the steps light up once it is on screen */
+const tl = document.querySelector('[data-tl]');
+if (tl) {
+  if (calm || !('IntersectionObserver' in window)) tl.classList.add('on');
+  else { const to = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { tl.classList.add('on'); to.disconnect(); } }), { threshold: 0.3 }); to.observe(tl); }
+}
+</script>
+</body>
+</html>
