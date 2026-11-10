@@ -1,0 +1,59 @@
+{
+ "src": "gmail",
+ "faq": "gmail/faq.json",
+ "title": "שחרור חשבון Gmail שנפרץ, ננעל או הושבת | CyberGuard",
+ "desc": "שחרור חשבון Gmail וגוגל שנפרץ, ננעל או הושבת: אבחון לפי המצב, שחזור וערעור בערוצים הרשמיים של Google. ללא הצלחה – אין חיוב. בדיקה ראשונית ללא עלות.",
+ "nav_current_wa": false,
+ "mnav_links": [
+  [
+   "#situations",
+   "מה קרה לחשבון?"
+  ],
+  [
+   "#dont",
+   "מה לא לעשות"
+  ],
+  [
+   "#process",
+   "איך זה עובד"
+  ],
+  [
+   "#chances",
+   "מה הסיכוי"
+  ],
+  [
+   "#reviews",
+   "לקוחות ממליצים"
+  ],
+  [
+   "#price",
+   "כמה זה עולה"
+  ],
+  [
+   "#faq",
+   "שאלות נפוצות"
+  ],
+  [
+   "#contact",
+   "צור קשר"
+  ]
+ ],
+ "footer_replace": [],
+ "select": "<select name=\"issue\" required><option value=\"\" disabled selected>בחרו מה קרה</option><option value=\"Gmail: נפרץ\">החשבון נפרץ</option><option value=\"Gmail: שכחתי סיסמה ואין גישה לשחזור\">שכחתי סיסמה ואין גישה לשחזור</option><option value=\"Gmail: הושבת או הושעה\">החשבון הושבת או הושעה</option><option value=\"Gmail: אימות דו-שלבי חוסם\">האימות הדו-שלבי חוסם אותי</option><option value=\"Gmail: חשבון Workspace או עסקי\">חשבון Workspace או עסקי</option><option value=\"Gmail: ספאם או ערוץ YouTube נפגע\">נשלח ספאם / ערוץ YouTube נפגע</option><option value=\"Gmail: לא בטוח/ה\">לא בטוח/ה מה קרה</option></select>",
+ "live": [
+  "שחרור חשבונות Gmail נעולים ופרוצים",
+  "זמינים עכשיו לבדיקה ראשונית חינם",
+  "ליווי אישי בערוצים הרשמיים"
+ ],
+ "pains": [
+  "פרצו לך ל-Gmail?",
+  "חשבון הגוגל ננעל?",
+  "החשבון שלך הושבת?",
+  "שינו לך את הסיסמה?",
+  "הקוד לא מגיע אליך?"
+ ],
+ "default_msg": "היי, הגעתי מעמוד ה-Gmail ואני צריך עזרה עם החשבון",
+ "review_filter": "all",
+ "lead_intro": "היי, הגעתי מעמוד ה-Gmail ואשמח שתחזרו אליי.",
+ "cases_first": null
+}
